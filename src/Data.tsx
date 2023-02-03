@@ -47,7 +47,7 @@ const ALBUMS_COVER_SRC = [
     './Covers/TalkingHeads.jpg'
 ];
 
-class Author {
+export class Author {
     id: number;
     name: string;
     static nextId: number;
@@ -58,7 +58,7 @@ class Author {
     }
 }
 
-class Album {
+export class Album {
     id: number;
     name: string;
     coverSrc: string;

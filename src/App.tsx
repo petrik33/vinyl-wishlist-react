@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Author, Album } from './Data';
 
 function App() {
   return (
