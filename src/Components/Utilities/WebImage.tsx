@@ -8,7 +8,7 @@ export interface IWebImageProps {
     alt: string;
 }
 
-export function WebImage (props: IWebImageProps) {
+export default function WebImage (props: IWebImageProps) {
   return (
     <picture>
         {props?.sources}
