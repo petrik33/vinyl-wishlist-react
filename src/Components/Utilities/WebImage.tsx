@@ -1,11 +1,13 @@
 import * as React from 'react';
 
 export interface IWebImageProps {
-    sources?: Array<JSX.Element>;
-    srcSet?: string;
-    src: string;
-    sizes?: string;
-    alt: string;
+  src: string;
+  alt: string;
+  sources?: Array<JSX.Element>;
+  srcSet?: string;
+  sizes?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export default function WebImage (props: IWebImageProps) {
@@ -17,6 +19,8 @@ export default function WebImage (props: IWebImageProps) {
             srcSet={props.srcSet}
             sizes={props.sizes}
             alt={props.alt}
+            className={props.className}
+            style={props.style}
         />
     </picture>
   );
