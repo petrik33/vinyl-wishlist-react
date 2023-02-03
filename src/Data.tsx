@@ -46,3 +46,35 @@ const ALBUMS_COVER_SRC = [
     './Covers/BoneMachine.jpg',
     './Covers/TalkingHeads.jpg'
 ];
+
+class Author {
+    id: number;
+    name: string;
+    static nextId: number;
+
+    constructor(name: string) {
+        this.id = Author.nextId++;
+        this.name = name;
+    }
+}
+
+class Album {
+    id: number;
+    name: string;
+    coverSrc: string;
+    static nextId: number;
+
+    constructor(name: string, coverSrc: string) {
+        this.name = name;
+        this.coverSrc = coverSrc;
+        this.id = Album.nextId++;
+    }
+}
+
+export const DATA_ALBUMS = ALBUMS_NAMES.map((name, idx) => {
+    return new Album(name, ALBUMS_COVER_SRC[idx]);
+})
+
+export const DATA_AUTHORS = AUTHORS_NAMES.map((name, idx) => {
+    return new Author(name);
+})
