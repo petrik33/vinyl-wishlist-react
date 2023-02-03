@@ -6,6 +6,22 @@
     --rank-d-color: #beff7f;
 }
 
+body {
+    background-color: #1a1a17;
+}
+
+.item-group {
+    position: relative;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.item-group-name {
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+}
+
 .modal-div {
     position: fixed;
     left: 0px;
