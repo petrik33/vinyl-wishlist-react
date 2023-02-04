@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.6.0"
+    "eslint-config-prettier": "^8.6.0",
+    "gh-pages": "^5.0.0"
   }
 }
