@@ -45,14 +45,17 @@ export default function AlbumItem (props: IAlbumItemProps) {
 const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {
     let colorStr;
     if(tier) {
-        colorStr = `--tier-${tier}-color`;
+        let varStr = `--tier-${tier}-color`;
+        let rootStyle = getComputedStyle(document.documentElement);
+        colorStr = rootStyle.getPropertyValue(varStr);
+        console.log(varStr);
     } else {
-        colorStr = 'black';
+        colorStr = '#000000';
     }
 
     console.log(colorStr);
 
     return {
-        boxShadow: `4px 4px 0px 0px ${colorStr}` 
+        boxShadow: `5px 5px 0px 0px ${colorStr}` 
     }
 }

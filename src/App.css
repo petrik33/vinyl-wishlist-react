@@ -1,9 +1,9 @@
 :root {
-  --tier-s-color: #ff7f7e;
-  --tier-a-color: #ffbf7f;
-  --tier-b-color: #ffdf80;
-  --tier-c-color: #feff7f;
-  --tier-d-color: #beff7f;
+  --tier-S-color: #ff7f7e;
+  --tier-A-color: #ffbf7f;
+  --tier-B-color: #ffdf80;
+  --tier-C-color: #feff7f;
+  --tier-D-color: #beff7f;
 }
 
 body {
@@ -40,12 +40,13 @@ body {
 }
 
 .album {
-  display: inline-block;
+  display: block;
   width: 200px;
   height: 200px;
 
-  border: 1px solid white;
   color: white;
+
+  /* box-shadow: 4px 4px 0px 0px var(--tier-s-color); */
 }
 
 .album-close {
