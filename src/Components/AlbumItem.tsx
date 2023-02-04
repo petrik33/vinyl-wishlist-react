@@ -1,12 +1,12 @@
 import * as React from 'react';
 import WebImage, { IWebImageProps } from './Utilities/WebImage';
 import { useState } from 'react';
-import { AlbumRank } from '../Context/AlbumsContext';
+import { AlbumTier } from '../Context/AlbumsContext';
 
 export interface IAlbumItemProps {
     name: string,
     src: string,
-    rank: AlbumRank
+    tier: AlbumTier
 }
 
 export default function AlbumItem (props: IAlbumItemProps) {
@@ -16,7 +16,7 @@ export default function AlbumItem (props: IAlbumItemProps) {
         src: props.src,
         alt: `${props.name} album cover`,
         className: 'album',
-        style: getRankedStyle(props.rank)
+        style: getTieredStyle(props.tier)
     }
 
     if(isCloseViewed) {
@@ -42,10 +42,10 @@ export default function AlbumItem (props: IAlbumItemProps) {
     return basicView;
 }
 
-const getRankedStyle = (rank: AlbumRank) : React.CSSProperties => {
+const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {
     let colorStr;
-    if(rank) {
-        colorStr = `--rank-${rank}-color`;
+    if(tier) {
+        colorStr = `--tier-${tier}-color`;
     } else {
         colorStr = 'black';
     }

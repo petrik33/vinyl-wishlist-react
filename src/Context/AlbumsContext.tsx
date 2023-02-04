@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { createContext, useReducer, useContext } from 'react';
 import { AlbumData } from '../Data';
-export type AlbumRank = 
+export type AlbumTier = 
     'S' | 'A' | 'B' | 'C' | 'D' | null; 
 
 export class Album extends AlbumData {
-    rank: AlbumRank;
-    constructor (name: string, src: string, rank = null) {
+    tier: AlbumTier;
+    constructor (name: string, src: string, tier = null) {
         super(name, src);
-        this.rank = rank;
+        this.tier = tier;
     }
 }
 

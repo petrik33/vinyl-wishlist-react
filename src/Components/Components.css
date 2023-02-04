@@ -1,9 +1,9 @@
 :root {
-    --rank-s-color: #ff7f7e;
-    --rank-a-color: #ffbf7f;
-    --rank-b-color: #ffdf80;
-    --rank-c-color: #feff7f;
-    --rank-d-color: #beff7f;
+    --tier-s-color: #ff7f7e;
+    --tier-a-color: #ffbf7f;
+    --tier-b-color: #ffdf80;
+    --tier-c-color: #feff7f;
+    --tier-d-color: #beff7f;
 }
 
 body {
