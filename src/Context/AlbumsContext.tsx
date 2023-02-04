@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { createContext, useReducer, useContext } from 'react';
-import { AlbumData } from '../Data';
-export type AlbumTier = 
-    'S' | 'A' | 'B' | 'C' | 'D' | null; 
+import { AlbumData, DATA_ALBUMS } from '../Data';
 
-export class Album extends AlbumData {
+export const AlbumTiers = ['S', 'A', 'B', 'C', 'D', null] as const;
+export type AlbumTier = typeof AlbumTiers[number];
+
+export class Album implements AlbumData {
     tier: AlbumTier;
-    constructor (name: string, src: string, tier = null) {
-        super(name, src);
+    name: string;
+    src: string;
+    id: number;
+    constructor (data: AlbumData, tier = null as AlbumTier) {
         this.tier = tier;
+        this.id = data.id;
+        this.name = data.name;
+        this.src = data.src;
     }
 }
 
@@ -94,4 +100,31 @@ function AlbumsReducer(Albums: AlbumsState, action : AlbumsAction)
     }
 }
 
-const initialAlbums: Album[] = [];
+//Debug
+let initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 4);
+
+function splitAlbumData(data: AlbumData[], parts: number) {
+    let albumsNum = data.length;
+    let albumSplit = Math.floor(albumsNum / parts);
+
+    let albums: Album[] = Array(albumsNum);
+
+    for(let i = 0; i < albumsNum; i++) {
+        let tier: AlbumTier = null;
+        let dataPart = Math.floor(i / albumSplit);
+        if(dataPart < AlbumTiers.length || dataPart > 0) {
+            tier = AlbumTiers[dataPart];
+        }
+
+        let albumData = data[i];
+        let album = new Album(albumData, tier);
+        
+        albums[i] = album;
+    }
+
+    return albums;
+}
+
+
+
+

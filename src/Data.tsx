@@ -47,34 +47,28 @@ const ALBUMS_COVER_SRC = [
     './Covers/TalkingHeads.jpg'
 ];
 
-export class AuthorData {
+export interface AuthorData {
     id: number;
     name: string;
-    static nextId: number;
-
-    constructor(name: string) {
-        this.id = AuthorData.nextId++;
-        this.name = name;
-    }
 }
 
-export class AlbumData {
+export interface AlbumData {
     id: number;
     name: string;
     src: string;
-    static nextId: number;
-
-    constructor(name: string, src: string) {
-        this.name = name;
-        this.src = src;
-        this.id = AlbumData.nextId++;
-    }
 }
 
-export const DATA_ALBUMS = ALBUMS_NAMES.map((name, idx) => {
-    return new AlbumData(name, ALBUMS_COVER_SRC[idx]);
+export const DATA_ALBUMS: AlbumData[] = ALBUMS_NAMES.map((a, idx) => {
+    return {
+        name: ALBUMS_NAMES[idx],
+        src: ALBUMS_COVER_SRC[idx],
+        id: idx
+    };
 })
 
-export const DATA_AUTHORS = AUTHORS_NAMES.map((name, idx) => {
-    return new AuthorData(name);
+export const DATA_AUTHORS: AuthorData[] = AUTHORS_NAMES.map((name, idx) => {
+    return {
+        name: AUTHORS_NAMES[idx],
+        id: idx
+    };
 })
