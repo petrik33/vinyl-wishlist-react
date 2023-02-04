@@ -50,7 +50,7 @@ const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {
         colorStr = rootStyle.getPropertyValue(varStr);
         console.log(varStr);
     } else {
-        colorStr = '#000000';
+        colorStr = 'gray';
     }
 
     console.log(colorStr);

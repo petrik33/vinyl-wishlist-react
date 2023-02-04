@@ -26,7 +26,8 @@ const ALBUMS_NAMES = [
     'Lust for Life',
     'Transformer',
     'Bone Machine',
-    'Talking Heads 77'
+    'Talking Heads 77',
+    '45'
 ];
 
 const ALBUMS_COVER_SRC = [
@@ -44,7 +45,8 @@ const ALBUMS_COVER_SRC = [
     'https://upload.wikimedia.org/wikipedia/ru/thumb/7/72/IggyPopLustForLife.jpg/411px-IggyPopLustForLife.jpg',
     'https://upload.wikimedia.org/wikipedia/ru/thumb/f/f1/Loureedtransformer.jpeg/411px-Loureedtransformer.jpeg',
     'https://upload.wikimedia.org/wikipedia/ru/c/cc/Bone_Machine.jpg',
-    'https://upload.wikimedia.org/wikipedia/ru/thumb/7/7f/Talking_heads_77.jpg/411px-Talking_heads_77.jpg'
+    'https://upload.wikimedia.org/wikipedia/ru/thumb/7/7f/Talking_heads_77.jpg/411px-Talking_heads_77.jpg',
+    'https://avatars.yandex.net/get-music-content/98892/985319cc.a.10562-3/m1000x1000'
 ];
 
 export interface AuthorData {
