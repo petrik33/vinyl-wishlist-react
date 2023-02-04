@@ -12,7 +12,7 @@ enum GroupKind {
 
 export default function GroupView (props: IGroupViewProps) {
     const [groupKind, setGroupKind] = React.useState(GroupKind.TIER);
-    const [editingTiers, setEditingTiers] = React.useState(false);
+    const [editingTiers, setEditingTiers] = React.useState(true);
 
     const groupProps = getGroupProps({
         kind: GroupKind.TIER,

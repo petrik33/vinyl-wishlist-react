@@ -30,9 +30,9 @@ const ALBUMS_NAMES = [
 ];
 
 const ALBUMS_COVER_SRC = [
-    './Covers/R-423056-1479638131-8059.jpg',
-    './Covers/R-216166-1275625649.jpg',
-    './Covers/TheNextDay.jpg',
+    'https://upload.wikimedia.org/wikipedia/ru/0/0e/DavidBowieScaryMonstersCover.jpg',
+    'https://upload.wikimedia.org/wikipedia/ru/thumb/f/fc/David_Bowie_Low_cover.jpg/411px-David_Bowie_Low_cover.jpg',
+    'https://upload.wikimedia.org/wikipedia/ru/thumb/b/b0/David_Bowie_The_Next_Day.jpg/411px-David_Bowie_The_Next_Day.jpg',
     './Covers/Ptiza.jpg',
     './Covers/Bodun.jpg',
     './Covers/LedII.jpg',

@@ -18,10 +18,13 @@ export class Album implements AlbumData {
     }
 }
 
+//Debug
+const initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 5);
+
 export type AlbumsState = Album[] | null;
 export type AlbumsDispatch = React.Dispatch<AlbumsAction> | null;
 
-export const AlbumsContext = createContext<AlbumsState>(null);
+export const AlbumsContext = createContext<AlbumsState>(initialAlbums);
 export const AlbumsDispatchContext = createContext<AlbumsDispatch>(null);
 
 export interface IAlbumsProviderProps {
@@ -101,8 +104,6 @@ function AlbumsReducer(Albums: AlbumsState, action : AlbumsAction)
 }
 
 //Debug
-let initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 4);
-
 function splitAlbumData(data: AlbumData[], parts: number) {
     let albumsNum = data.length;
     let albumSplit = Math.floor(albumsNum / parts);

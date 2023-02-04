@@ -23,7 +23,8 @@ export default function ItemGroup (props: IItemGroupProps) {
   const groupItems = groupAlbums.map((album, idx) => {
       return (
           <AlbumItem
-              {...album}
+            key={idx}
+            {...album}
           ></AlbumItem>  
       );
   })

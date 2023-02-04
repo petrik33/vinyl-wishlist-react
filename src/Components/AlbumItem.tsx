@@ -50,6 +50,8 @@ const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {
         colorStr = 'black';
     }
 
+    console.log(colorStr);
+
     return {
         boxShadow: `4px 4px 0px 0px ${colorStr}` 
     }
