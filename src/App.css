@@ -25,8 +25,8 @@ body {
 
 .item-group-name {
   position: absolute;
-  right: 4%;
-  bottom: 2.5%;
+  left: 96%;
+  top: 90%;
   color: white;
 }
 
