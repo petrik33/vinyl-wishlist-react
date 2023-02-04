@@ -47,18 +47,18 @@ const ALBUMS_COVER_SRC = [
     './Covers/TalkingHeads.jpg'
 ];
 
-export class Author {
+export class AuthorData {
     id: number;
     name: string;
     static nextId: number;
 
     constructor(name: string) {
-        this.id = Author.nextId++;
+        this.id = AuthorData.nextId++;
         this.name = name;
     }
 }
 
-export class Album {
+export class AlbumData {
     id: number;
     name: string;
     coverSrc: string;
@@ -67,14 +67,14 @@ export class Album {
     constructor(name: string, coverSrc: string) {
         this.name = name;
         this.coverSrc = coverSrc;
-        this.id = Album.nextId++;
+        this.id = AlbumData.nextId++;
     }
 }
 
 export const DATA_ALBUMS = ALBUMS_NAMES.map((name, idx) => {
-    return new Album(name, ALBUMS_COVER_SRC[idx]);
+    return new AlbumData(name, ALBUMS_COVER_SRC[idx]);
 })
 
 export const DATA_AUTHORS = AUTHORS_NAMES.map((name, idx) => {
-    return new Author(name);
+    return new AuthorData(name);
 })

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Author, Album } from '../Data';
 import AlbumItem from './AlbumItem';
+import { AlbumRank, Album } from '../Context/AlbumsContext';
 
 export interface IItemGroupProps {
   items: Array<Album>;
@@ -14,6 +14,7 @@ export default function ItemGroup (props: IItemGroupProps) {
         key={item.id}
         name={item.name}
         src={item.coverSrc}
+        rank={null}
       />
     )
   });
@@ -21,7 +22,7 @@ export default function ItemGroup (props: IItemGroupProps) {
   return (
     <section className='item-group'>
       {itemsList}
-      <div className='group-name'>{props.name}</div>
+      <div className='item-group-name'>{props.name}</div>
     </section>
   );
 }
