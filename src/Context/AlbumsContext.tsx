@@ -6,8 +6,8 @@ export type AlbumRank =
 
 export class Album extends AlbumData {
     rank: AlbumRank;
-    constructor (name: string, coverSrc: string, rank = null) {
-        super(name, coverSrc);
+    constructor (name: string, src: string, rank = null) {
+        super(name, src);
         this.rank = rank;
     }
 }

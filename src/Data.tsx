@@ -61,12 +61,12 @@ export class AuthorData {
 export class AlbumData {
     id: number;
     name: string;
-    coverSrc: string;
+    src: string;
     static nextId: number;
 
-    constructor(name: string, coverSrc: string) {
+    constructor(name: string, src: string) {
         this.name = name;
-        this.coverSrc = coverSrc;
+        this.src = src;
         this.id = AlbumData.nextId++;
     }
 }
