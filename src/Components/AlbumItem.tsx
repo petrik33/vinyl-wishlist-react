@@ -10,7 +10,8 @@ export interface IAlbumItemProps {
 }
 
 export default function AlbumItem (props: IAlbumItemProps) {
-    const [isCloseViewed, setIsCloseViewed] = useState(false);
+    const handleClick = (event: React.MouseEvent) => {
+    }
 
     const imageProps : IWebImageProps = {
         src: props.src,
@@ -19,27 +20,13 @@ export default function AlbumItem (props: IAlbumItemProps) {
         style: getTieredStyle(props.tier)
     }
 
-    if(isCloseViewed) {
-        imageProps.className += ' close';
-    }
-
-    const basicView = (
-        <WebImage
-            {...imageProps}
-        />
-    );
-
-    const closeView = (
-        <div className='modal-div'>
-            {basicView}
+    return (
+        <div onClick={handleClick}>
+            <WebImage
+                {...imageProps}
+            />
         </div>
-    );
-
-    if(isCloseViewed) {
-        return closeView;
-    }
-
-    return basicView;
+    )
 }
 
 const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {
@@ -48,12 +35,9 @@ const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {
         let varStr = `--tier-${tier}-color`;
         let rootStyle = getComputedStyle(document.documentElement);
         colorStr = rootStyle.getPropertyValue(varStr);
-        console.log(varStr);
     } else {
         colorStr = 'gray';
     }
-
-    console.log(colorStr);
 
     return {
         boxShadow: `5px 5px 0px 0px ${colorStr}` 

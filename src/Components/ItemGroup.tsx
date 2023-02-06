@@ -31,7 +31,9 @@ export default function ItemGroup (props: IItemGroupProps) {
 
   return (
     <section className='item-group'>
-      {groupItems}
+      <div className='item-group-container'>
+        {groupItems}
+      </div>
       <div className='item-group-name'>{props.name}</div>
     </section>
   );
