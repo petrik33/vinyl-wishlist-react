@@ -2,6 +2,34 @@ import * as React from 'react';
 import { createContext, useReducer, useContext } from 'react';
 import { AlbumData, DATA_ALBUMS } from '../Data';
 
+//Debug
+const initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 5);
+
+export type AlbumsState = Album[] | null;
+export type AlbumsDispatch = React.Dispatch<AlbumsAction> | null;
+
+const AlbumsContext = createContext<AlbumsState>(initialAlbums);
+const AlbumsDispatchContext = createContext<AlbumsDispatch>(null);
+
+export interface IAlbumsProviderProps {
+    children?: React.ReactNode;
+}
+
+export function AlbumsProvider(props: IAlbumsProviderProps) {
+  const [albums, dispatch] = useReducer(
+    AlbumsReducer,
+    initialAlbums
+  );
+
+  return (
+    <AlbumsContext.Provider value={albums}>
+      <AlbumsDispatchContext.Provider value={dispatch}>
+        {props.children}
+      </AlbumsDispatchContext.Provider>
+    </AlbumsContext.Provider>
+  );
+}
+
 export const AlbumTiers = ['S', 'A', 'B', 'C', 'D', null] as const;
 export type AlbumTier = typeof AlbumTiers[number];
 
@@ -16,34 +44,6 @@ export class Album implements AlbumData {
         this.name = data.name;
         this.src = data.src;
     }
-}
-
-//Debug
-const initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 5);
-
-export type AlbumsState = Album[] | null;
-export type AlbumsDispatch = React.Dispatch<AlbumsAction> | null;
-
-export const AlbumsContext = createContext<AlbumsState>(initialAlbums);
-export const AlbumsDispatchContext = createContext<AlbumsDispatch>(null);
-
-export interface IAlbumsProviderProps {
-    children?: React.ReactNode;
-}
-
-export function AlbumsProvider(props: IAlbumsProviderProps) {
-  const [Albums, dispatch] = useReducer(
-    AlbumsReducer,
-    initialAlbums
-  );
-
-  return (
-    <AlbumsContext.Provider value={Albums}>
-      <AlbumsDispatchContext.Provider value={dispatch}>
-        {props.children}
-      </AlbumsDispatchContext.Provider>
-    </AlbumsContext.Provider>
-  );
 }
 
 export function useAlbums() {

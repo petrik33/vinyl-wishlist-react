@@ -3,7 +3,7 @@ import { Album, AlbumTier } from '../Context/AlbumsContext';
 import ItemGroup from './ItemGroup';
 
 export interface IGroupViewProps {
-    
+    onAlbumClick: React.MouseEventHandler;
 }
 
 enum GroupKind {
@@ -29,7 +29,7 @@ export default function GroupView (props: IGroupViewProps) {
     });
 
     return (
-        <div>
+        <div className='group-view-container'>
             {itemGroups}
         </div>
     )

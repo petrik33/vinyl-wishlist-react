@@ -13,6 +13,8 @@ export default function AlbumItem (props: IAlbumItemProps) {
     const handleClick = (event: React.MouseEvent) => {
     }
 
+    const [sad, setSad] = useState(0);
+
     const imageProps : IWebImageProps = {
         src: props.src,
         alt: `${props.name} album cover`,
