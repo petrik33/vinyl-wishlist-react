@@ -10,15 +10,11 @@ export interface IItemGroupProps {
 
 export default function ItemGroup (props: IItemGroupProps) {
   const albumsAll = useAlbums();
-
-  let groupAlbums: AlbumsState = null;
-  if(albumsAll) {
-      groupAlbums = albumsAll.filter(props.groupFilter);
+  if(!albumsAll) {
+    return null;
   }
 
-  if(!groupAlbums) {
-      return null;
-  }
+  const groupAlbums: AlbumsState = albumsAll.filter(props.groupFilter);
 
   const groupItems = groupAlbums.map((album, idx) => {
       return (

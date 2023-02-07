@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
-import GroupView from './Components/GroupView';
 import { AlbumsProvider } from './Context/AlbumsContext';
+import TierList from './Components/TierList';
 
 function App() {
   return (
     <AlbumsProvider>
-      <GroupView />
+      <TierList />
     </AlbumsProvider>
   );
 }

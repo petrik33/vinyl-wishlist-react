@@ -11,11 +11,11 @@ export type AlbumsDispatch = React.Dispatch<AlbumsAction> | null;
 const AlbumsContext = createContext<AlbumsState>(initialAlbums);
 const AlbumsDispatchContext = createContext<AlbumsDispatch>(null);
 
-export interface IAlbumsProviderProps {
+export interface IProviderProps {
     children?: React.ReactNode;
 }
 
-export function AlbumsProvider(props: IAlbumsProviderProps) {
+export function AlbumsProvider(props: IProviderProps) {
   const [albums, dispatch] = useReducer(
     AlbumsReducer,
     initialAlbums
@@ -30,8 +30,8 @@ export function AlbumsProvider(props: IAlbumsProviderProps) {
   );
 }
 
-export const AlbumTiers = ['S', 'A', 'B', 'C', 'D', null] as const;
-export type AlbumTier = typeof AlbumTiers[number];
+export const AlbumTiers = ['S', 'A', 'B', 'C', 'D'] as const;
+export type AlbumTier = typeof AlbumTiers[number] | null;
 
 export class Album implements AlbumData {
     tier: AlbumTier;

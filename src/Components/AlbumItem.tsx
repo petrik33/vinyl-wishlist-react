@@ -2,18 +2,21 @@ import * as React from 'react';
 import WebImage, { IWebImageProps } from './Utilities/WebImage';
 import { useState } from 'react';
 import { AlbumTier } from '../Context/AlbumsContext';
+import { useSetAlbumModalViewId } from '../Context/AlbumModalViewContext';
 
 export interface IAlbumItemProps {
-    name: string,
-    src: string,
-    tier: AlbumTier
+    name: string;
+    src: string;
+    tier: AlbumTier;
+    id: number
 }
 
 export default function AlbumItem (props: IAlbumItemProps) {
+    const setModal = useSetAlbumModalViewId();
     const handleClick = (event: React.MouseEvent) => {
+        //Debug
+        setModal(props.id);
     }
-
-    const [sad, setSad] = useState(0);
 
     const imageProps : IWebImageProps = {
         src: props.src,
