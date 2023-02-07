@@ -26,7 +26,7 @@ export default function AlbumItem (props: IAlbumItemProps) {
     }
 
     return (
-        <div onClick={handleClick}>
+        <div className='album-item' onClick={handleClick}>
             <WebImage
                 {...imageProps}
             />

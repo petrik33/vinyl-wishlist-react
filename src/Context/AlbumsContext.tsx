@@ -2,6 +2,22 @@ import * as React from 'react';
 import { createContext, useReducer, useContext } from 'react';
 import { AlbumData, DATA_ALBUMS } from '../Data';
 
+export const AlbumTiers = ['S', 'A', 'B', 'C', 'D'] as const;
+export type AlbumTier = typeof AlbumTiers[number] | null;
+
+export class Album implements AlbumData {
+    tier: AlbumTier;
+    name: string;
+    src: string;
+    id: number;
+    constructor (data: AlbumData, tier = null as AlbumTier) {
+        this.tier = tier;
+        this.id = data.id;
+        this.name = data.name;
+        this.src = data.src;
+    }
+}
+
 //Debug
 const initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 5);
 
@@ -28,22 +44,6 @@ export function AlbumsProvider(props: IProviderProps) {
       </AlbumsDispatchContext.Provider>
     </AlbumsContext.Provider>
   );
-}
-
-export const AlbumTiers = ['S', 'A', 'B', 'C', 'D'] as const;
-export type AlbumTier = typeof AlbumTiers[number] | null;
-
-export class Album implements AlbumData {
-    tier: AlbumTier;
-    name: string;
-    src: string;
-    id: number;
-    constructor (data: AlbumData, tier = null as AlbumTier) {
-        this.tier = tier;
-        this.id = data.id;
-        this.name = data.name;
-        this.src = data.src;
-    }
 }
 
 export function useAlbums() {

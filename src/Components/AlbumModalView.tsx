@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useAlbumModalViewId } from '../Context/AlbumModalViewContext';
+import { useAlbumModalViewId, useSetAlbumModalViewId } from '../Context/AlbumModalViewContext';
 import WebImage from './Utilities/WebImage';
 import { useAlbums } from '../Context/AlbumsContext';
 
@@ -8,6 +8,8 @@ export interface IAlbumModalViewProps {
 }
 
 export default function AlbumModalView (props: IAlbumModalViewProps) {
+    const setModalId = useSetAlbumModalViewId();
+
     const albumsAll = useAlbums();
     if(!albumsAll) {
         return null;
@@ -18,11 +20,16 @@ export default function AlbumModalView (props: IAlbumModalViewProps) {
         return null;
     }
 
+    const handleModalExit = (event: React.MouseEvent) => {
+        setModalId(-1);
+    }
+
     return (
-        <div className='modal-div'>
+        <div className='modal-div' onClick={handleModalExit}>
             <WebImage 
                 src={album.src}
                 alt={`${album.name} album cover`}
+                className='screen-centered album-close'
             />
         </div>
     );
