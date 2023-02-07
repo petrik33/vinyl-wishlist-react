@@ -37,9 +37,12 @@ body {
   position: fixed;
   left: 0px;
   top: 0px;
-  width: 100vw;
-  height: 100vh;
+  right: 0px;
+  bottom: 0px;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-items: center;
 }
 
 .album {
@@ -48,15 +51,16 @@ body {
   height: 200px;
 
   color: white;
+}
 
-  /* box-shadow: 4px 4px 0px 0px var(--tier-s-color); */
+.screen-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .album-close {
   width: 600px;
   height: 600px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
