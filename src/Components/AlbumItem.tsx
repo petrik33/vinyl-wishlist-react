@@ -22,6 +22,7 @@ export default function AlbumItem (props: IAlbumItemProps) {
         src: props.src,
         alt: `${props.name} album cover`,
         className: 'album',
+        sizes: '200px',
         style: getTieredStyle(props.tier)
     }
 

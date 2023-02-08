@@ -21,7 +21,12 @@ export default function AlbumModalView (props: IAlbumModalViewProps) {
     }
 
     const handleModalExit = (event: React.MouseEvent) => {
-        setModalId(-1);
+        const target = event.target as HTMLElement;
+        const clickedPicture = target.closest('.album-close');
+
+        if(!clickedPicture) {
+            setModalId(-1);
+        }
     }
 
     return (
@@ -30,6 +35,7 @@ export default function AlbumModalView (props: IAlbumModalViewProps) {
                 src={album.src}
                 alt={`${album.name} album cover`}
                 className='screen-centered album-close'
+                sizes='600px'
             />
         </div>
     );
