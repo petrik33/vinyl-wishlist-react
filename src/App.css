@@ -58,6 +58,13 @@ body {
   margin-left: 0.5em;
 }
 
+.tier-list-footer {
+  text-align: center;
+  margin-block-start: 2em;
+  padding-block: 1em;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
 .group-view-container {
   width: 80%;
   height: 80%;

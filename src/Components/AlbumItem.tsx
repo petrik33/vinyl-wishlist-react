@@ -16,7 +16,6 @@ export default function AlbumItem (props: IAlbumItemProps) {
     const album = props.album;
 
     const handleClick = (event: React.MouseEvent) => {
-        //Debug
         setModal(album.id);
     }
 

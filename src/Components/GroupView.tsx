@@ -4,6 +4,7 @@ import ItemGroup from './ItemGroup';
 import { AlbumTiers } from '../Context/AlbumsContext'; 
 import AlbumModalView from './AlbumModalView';
 import AlbumModalViewIdProvider, { useAlbumModalViewId } from '../Context/AlbumModalViewContext';
+import { useEditMode, useSetEditMode } from '../Context/EditingModeContext';
 
 export interface IGroupViewProps {
 }
@@ -14,11 +15,11 @@ enum GroupKind {
 
 export default function GroupView (props: IGroupViewProps) {
     const [groupKind, setGroupKind] = React.useState(GroupKind.TIER);
-    const [editingTiers, setEditingTiers] = React.useState(false);
+    const editMode = useEditMode();
 
     let groupProps;
 
-    if(editingTiers) {
+    if(editMode) {
         groupProps = getGroupProps(GroupKind.TIER);
 
         const editedGroupProps: GroupProps = {
