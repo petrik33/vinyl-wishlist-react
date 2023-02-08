@@ -18,9 +18,8 @@
 }
 
 .item-group {
-  padding-inline: 5%;
-  padding-block: 2%;
   position: relative;
+  padding: 2%;
   border-top: 1px solid white;
   border-bottom: 1px solid white;
 }
@@ -29,6 +28,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
+  padding: 2%;
 }
 
 .item-group-name {
@@ -39,14 +39,47 @@
 }
 
 .album-item {
-  width: 200px;
-  height: 200px;
+  position: relative;
+  box-sizing: content-box;
+  width: 12.5em;
+  height: 12.5em;
+  color: white;
 }
 
-.album {
+.album-item-image {
   width: 100%;
   height: 100%;
-  color: white;
+}
+
+.album-item-image-hover {
+  opacity: 0.5;
+}
+
+.album-item-info {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 7%;
+}
+
+.album-item-info-fields {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.album-item-info-tier {
+  font-size: 2em;
+}
+
+.album-item-info-name {
+  font-size: 1em;
 }
 
 .modal-div {

@@ -1,38 +1,49 @@
 import * as React from 'react';
-import WebImage, { IWebImageProps } from './Utilities/WebImage';
+import WebImage from './Utilities/WebImage';
 import { useState } from 'react';
 import { AlbumTier } from '../Context/AlbumsContext';
 import { useSetAlbumModalViewId } from '../Context/AlbumModalViewContext';
+import { Album } from '../Context/AlbumsContext';
+import AlbumItemInfo from './AlbumItemInfo';
 
 export interface IAlbumItemProps {
-    name: string;
-    src: string;
-    tier: AlbumTier;
-    id: number
+    album: Album;
 }
 
 export default function AlbumItem (props: IAlbumItemProps) {
+    const [showInfo, setShowInfo] = useState(false);
     const setModal = useSetAlbumModalViewId();
+    const album = props.album;
+
     const handleClick = (event: React.MouseEvent) => {
         //Debug
-        setModal(props.id);
-    }
-
-    const imageProps : IWebImageProps = {
-        src: props.src,
-        alt: `${props.name} album cover`,
-        className: 'album',
-        sizes: '200px',
-        style: getTieredStyle(props.tier)
+        setModal(album.id);
     }
 
     return (
-        <div className='album-item' onClick={handleClick}>
+        <div className='album-item'
+            onClick={handleClick}
+            onMouseEnter={() => {setShowInfo(true)}}
+            onMouseLeave={() => {setShowInfo(false)}}
+        >
             <WebImage
-                {...imageProps}
+                src={album.src}
+                alt={`${album.name} album cover`}
+                className={getAlbumItemClassName(showInfo)}
+                sizes={'200px'}
+                style={getTieredStyle(album.tier)}
             />
+            {showInfo && <AlbumItemInfo album={album}/>}
         </div>
     )
+}
+
+function getAlbumItemClassName(hovered: boolean) {
+    let className = 'album-item-image';
+    if(hovered) {
+        className += ' album-item-image-hover';
+    }
+    return className;
 }
 
 const getTieredStyle = (tier: AlbumTier) : React.CSSProperties => {

@@ -20,7 +20,7 @@ export default function ItemGroup (props: IItemGroupProps) {
       return (
           <AlbumItem
             key={idx}
-            {...album}
+            album={album}
           ></AlbumItem>  
       );
   })
