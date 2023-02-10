@@ -42,6 +42,8 @@ body {
   height: 1.5em;
   padding-block-start: 1em;
   color: gray;
+  border-top: none;
+  transition: border-top 0.25s;
 }
 
 .tier-list-mode-button-active {
@@ -88,9 +90,9 @@ body {
 }
 
 .item-group-name {
-  position: absolute;
+  position: relative;
   left: 96%;
-  top: 90%;
+  margin-top: 1em;
   color: white;
 }
 
@@ -100,6 +102,17 @@ body {
   width: 12.5em;
   height: 12.5em;
   color: white;
+  opacity: 1;
+  transition: opacity 0.25s;
+}
+
+.album-item-edited {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: border 0.25s;
+}
+
+.alub-item-hover {
+  border: 1px solid rgba(255, 255, 255, 1);
 }
 
 .album-item-image {
