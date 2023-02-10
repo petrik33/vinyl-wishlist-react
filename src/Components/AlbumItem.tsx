@@ -5,43 +5,62 @@ import { AlbumTier } from '../Context/AlbumsContext';
 import { useSetAlbumModalViewId } from '../Context/AlbumModalViewContext';
 import { Album } from '../Context/AlbumsContext';
 import AlbumItemInfo from './AlbumItemInfo';
+import { useEditMode } from '../Context/EditingModeContext';
 
 export interface IAlbumItemProps {
     album: Album;
 }
 
 export default function AlbumItem (props: IAlbumItemProps) {
-    const [showInfo, setShowInfo] = useState(false);
+    const [hovered, setHovered] = useState(false);
     const setModal = useSetAlbumModalViewId();
+    const editMode = useEditMode();
+
     const album = props.album;
 
     const handleClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+        if(editMode) {
+            
+            return;
+        }
+
         setModal(album.id);
+    }
+
+    const onMouseEnter = (event: React.MouseEvent) => {
+        setHovered(true);
+    }
+
+    const onMouseLeave = (event: React.MouseEvent) => {
+        setHovered(false);
     }
 
     return (
         <div className='album-item'
             onClick={handleClick}
-            onMouseEnter={() => {setShowInfo(true)}}
-            onMouseLeave={() => {setShowInfo(false)}}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
         >
             <WebImage
                 src={album.src}
                 alt={`${album.name} album cover`}
-                className={getAlbumItemClassName(showInfo)}
+                className={getAlbumItemClassName(hovered)}
                 sizes={'200px'}
                 style={getTieredStyle(album.tier)}
             />
-            {showInfo && <AlbumItemInfo album={album}/>}
+            {hovered && !editMode && <AlbumItemInfo album={album}/>}
         </div>
     )
 }
 
 function getAlbumItemClassName(hovered: boolean) {
     let className = 'album-item-image';
+
     if(hovered) {
         className += ' album-item-image-hover';
     }
+
     return className;
 }
 
