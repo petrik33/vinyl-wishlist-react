@@ -1,6 +1,4 @@
 import * as React from 'react';
-import AlbumItem from './AlbumItem';
-import { useAlbums, AlbumsState } from '../Context/AlbumsContext';
 import { AlbumFilter } from './GroupView';
 
 export interface IItemGroupProps {

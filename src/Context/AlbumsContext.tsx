@@ -5,7 +5,6 @@ import { filterId } from '../Components/Utilities/CodeUtilities';
 import { ImmerReducer, useImmerReducer } from 'use-immer';
 import { Immutable } from 'immer';
 import { Draft } from 'immer';
-import { act } from 'react-dom/test-utils';
 
 export const TierNames = ['S', 'A', 'B', 'C', 'D'] as const;
 

@@ -1,5 +1,3 @@
-import { AlbumTier } from "../../Context/AlbumsContext";
-
 import * as React from 'react';
 import { IAlbum } from "../../Data/Data";
 import WebImage from "../Utilities/WebImage";
