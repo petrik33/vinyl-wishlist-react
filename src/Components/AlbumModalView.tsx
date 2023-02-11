@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useAlbumModalViewId, useSetAlbumModalViewId } from '../Context/AlbumModalViewContext';
 import WebImage from './Utilities/WebImage';
 import { useAlbums } from '../Context/AlbumsContext';
 
@@ -8,8 +7,6 @@ export interface IAlbumModalViewProps {
 }
 
 export default function AlbumModalView (props: IAlbumModalViewProps) {
-    const setModalId = useSetAlbumModalViewId();
-
     const albumsAll = useAlbums();
     if(!albumsAll) {
         return null;
@@ -23,10 +20,6 @@ export default function AlbumModalView (props: IAlbumModalViewProps) {
     const handleModalExit = (event: React.MouseEvent) => {
         const target = event.target as HTMLElement;
         const clickedPicture = target.closest('.album-close');
-
-        if(!clickedPicture) {
-            setModalId(-1);
-        }
     }
 
     return (

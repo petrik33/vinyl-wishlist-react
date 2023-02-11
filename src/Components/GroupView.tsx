@@ -1,10 +1,4 @@
 import * as React from 'react';
-import { Album } from '../Context/AlbumsContext';
-import ItemGroup from './ItemGroup';
-import { AlbumTiers } from '../Context/AlbumsContext'; 
-import AlbumModalView from './AlbumModalView';
-import AlbumModalViewIdProvider, { useAlbumModalViewId } from '../Context/AlbumModalViewContext';
-import { useEditMode, useSetEditMode } from '../Context/EditingModeContext';
 
 export interface IGroupViewProps {
 }
@@ -14,49 +8,14 @@ enum GroupKind {
 }
 
 export default function GroupView (props: IGroupViewProps) {
-    const [groupKind, setGroupKind] = React.useState(GroupKind.TIER);
-    const editMode = useEditMode();
 
-    let groupProps;
-
-    if(editMode) {
-        groupProps = getGroupProps(GroupKind.TIER);
-
-        const editedGroupProps: GroupProps = {
-            groupFilter: editedFilter,
-            name: editedGroupName
-        }
-
-        groupProps.push(editedGroupProps);
-    } else {
-        groupProps = getGroupProps(groupKind);
-    }
-
-    const itemGroups = groupProps.map((group, idx) => {
-        return (
-            <ItemGroup
-                key={idx}
-                {...group}
-            />
-        );
-    });
-
-    const modalAlbumId = useAlbumModalViewId();
-    const showModal = modalAlbumId !== -1;
-
-    return (
-        <div className='group-view-container'>
-            {itemGroups}
-            {showModal && <AlbumModalView albumId={modalAlbumId} />}
-        </div>
-    )
 }
+
+const editedGroupName = 'Edited';
 
 const editedFilter = (album: Album) => {
     return !album.tier;
 }
-
-const editedGroupName = 'Edited';
 
 export type AlbumFilter = (a: Album) => boolean;
 
