@@ -18,29 +18,26 @@ export default function AlbumItem (props: IAlbumItemProps) {
 
     const album = props.album;
 
-    const handleClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-        if(editMode) {
-            
-            return;
-        }
+    // const handleClick = (event: React.MouseEvent) => {
+    //     if(!editMode) {
+    //         setModal(album.id);
+    //         event.preventDefault();
+    //     }
+    // }
 
-        setModal(album.id);
-    }
+    // const onMouseEnter = (event: React.MouseEvent) => {
+    //     setHovered(true);
+    // }
 
-    const onMouseEnter = (event: React.MouseEvent) => {
-        setHovered(true);
-    }
-
-    const onMouseLeave = (event: React.MouseEvent) => {
-        setHovered(false);
-    }
+    // const onMouseLeave = (event: React.MouseEvent) => {
+    //     setHovered(false);
+    // }
 
     return (
         <div className='album-item'
-            onClick={handleClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
+            // onClick={handleClick}
+            // onMouseEnter={onMouseEnter}
+            // onMouseLeave={onMouseLeave}
         >
             <WebImage
                 src={album.src}

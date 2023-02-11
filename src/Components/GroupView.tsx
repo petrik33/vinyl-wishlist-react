@@ -3,8 +3,9 @@ import { Album } from '../Context/AlbumsContext';
 import ItemGroup from './ItemGroup';
 import { AlbumTiers } from '../Context/AlbumsContext'; 
 import AlbumModalView from './AlbumModalView';
-import AlbumModalViewIdProvider, { useAlbumModalViewId } from '../Context/AlbumModalViewContext';
-import { useEditMode, useSetEditMode } from '../Context/EditingModeContext';
+import { useAlbumModalViewId } from '../Context/AlbumModalViewContext';
+import { useEditMode } from '../Context/EditingModeContext';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 export interface IGroupViewProps {
 }
@@ -34,10 +35,21 @@ export default function GroupView (props: IGroupViewProps) {
 
     const itemGroups = groupProps.map((group, idx) => {
         return (
-            <ItemGroup
-                key={idx}
-                {...group}
-            />
+            <Droppable key={group.name} droppableId={group.name}>
+                {(provided) => (
+                    <div 
+                    key={idx}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    >
+                        <ItemGroup
+                            key={idx}
+                            {...group}
+                        />
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
         );
     });
 
@@ -46,7 +58,9 @@ export default function GroupView (props: IGroupViewProps) {
 
     return (
         <div className='group-view-container'>
-            {itemGroups}
+            <DragDropContext onDragEnd={() => {}}>
+                {itemGroups}
+            </DragDropContext>
             {showModal && <AlbumModalView albumId={modalAlbumId} />}
         </div>
     )

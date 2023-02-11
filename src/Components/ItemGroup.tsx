@@ -2,6 +2,7 @@ import * as React from 'react';
 import AlbumItem from './AlbumItem';
 import { useAlbums, AlbumsState } from '../Context/AlbumsContext';
 import { AlbumFilter } from './GroupView';
+import { Draggable } from 'react-beautiful-dnd';
 
 export interface IItemGroupProps {
   groupFilter: AlbumFilter; 
@@ -18,10 +19,23 @@ export default function ItemGroup (props: IItemGroupProps) {
 
   const groupItems = groupAlbums.map((album, idx) => {
       return (
-          <AlbumItem
+        <Draggable key={album.name} draggableId={album.name} index={idx}>
+        {
+          (provided) => (
+            <div
             key={idx}
-            album={album}
-          ></AlbumItem>  
+              ref={provided.innerRef}
+              {...provided.dragHandleProps}
+              {...provided.draggableProps}
+            >
+              <AlbumItem
+                key={idx}
+                album={album}
+              />
+            </div>
+          )
+        }
+        </Draggable>
       );
   })
 
