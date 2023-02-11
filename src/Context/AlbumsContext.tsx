@@ -1,87 +1,94 @@
 import * as React from 'react';
-import { createContext, useReducer, useContext } from 'react';
-import { IAlbum } from '../Data';
+import { createContext, useContext } from 'react';
+import { AlbumsData, IAlbum, IAlbumsData } from '../Data/Data';
+import { filterId } from '../Components/Utilities/CodeUtilities';
+import { ImmerReducer, useImmerReducer } from 'use-immer';
+import { Immutable } from 'immer';
+import { Draft } from 'immer';
+import { act } from 'react-dom/test-utils';
 
-export const AlbumTiers = ['S', 'A', 'B', 'C', 'D'] as const;
-export type AlbumTier = typeof AlbumTiers[number] | null;
+export const TierNames = ['S', 'A', 'B', 'C', 'D'] as const;
 
-//Debug
-const initialAlbums: Album[] = splitAlbumData(DATA_ALBUMS, 5);
+export type TierName = typeof TierNames[number];
+export type TierGroup = {
+    name: string,
+    id: TierName,
+    albums: string[]
+}
+export type TierGroups = {
+    [key in TierName]: TierGroup;
+}
+export type TierGroupsState = Immutable<TierGroups>;
+export type TierGroupsDispatch = React.Dispatch<TierGroupsAction>;
 
-export type AlbumsState = Album[] | null;
-export type AlbumsDispatch = React.Dispatch<AlbumsAction> | null;
-
-const AlbumsContext = createContext<AlbumsState>(initialAlbums);
-const AlbumsDispatchContext = createContext<AlbumsDispatch>(null);
+const TierGroupsContext = createContext<TierGroupsState>({} as TierGroupsState);
+const TierGroupsDispatchContext = createContext<TierGroupsDispatch>(
+    {} as TierGroupsDispatch);
 
 export interface IProviderProps {
     children?: React.ReactNode;
 }
 
-export function AlbumsProvider(props: IProviderProps) {
-  const [albums, dispatch] = useReducer(
-    AlbumsReducer,
-    initialAlbums
+export function TierGroupsProvider(props: IProviderProps) {
+  const [tierGroups, dispatch] = useImmerReducer(
+    TierGroupsReducer,
+    InitialTierGroups
   );
 
   return (
-    <AlbumsContext.Provider value={albums}>
-      <AlbumsDispatchContext.Provider value={dispatch}>
+    <TierGroupsContext.Provider value={tierGroups}>
+      <TierGroupsDispatchContext.Provider value={dispatch}>
         {props.children}
-      </AlbumsDispatchContext.Provider>
-    </AlbumsContext.Provider>
+      </TierGroupsDispatchContext.Provider>
+    </TierGroupsContext.Provider>
   );
 }
 
 export function useAlbums() {
-    return useContext(AlbumsContext);
+    return useContext(TierGroupsContext);
 }
 
 export function useTasksDispatch() {
-    return useContext(AlbumsDispatchContext);
+    return useContext(TierGroupsDispatchContext);
 }
 
-export enum AlbumsActionKind {
-    EDIT = 'edit',
-    DELETE = 'delete'
+export enum TierGroupsActionKind {
+    MOVE_ALBUM = 'move-album',
+    DELETE_ALBUM = 'delete-album',
+    RESET_TO_DEBUG = 'reset-to-debug'
 };
-
-export type AlbumsActionEdit = {
-    type: AlbumsActionKind.EDIT;
-    changes: Partial<Album>;
-    id: number;
+export type TierGroupsActionMove = {
+    type: TierGroupsActionKind.MOVE_ALBUM;
+    id: string;
+    from: TierName;
+    to: TierName;
 }
-
-export type AlbumsActionDelete = {
-    type: AlbumsActionKind.DELETE;
-    id: number;
+export type TierGroupsActionDelete = {
+    type: TierGroupsActionKind.DELETE_ALBUM;
+    id: string;
+    from: TierName;
 }
+export type TierGroupsActionResetToDebug = {
+    type: TierGroupsActionKind.RESET_TO_DEBUG;
+    parts: number;
+}
+export type TierGroupsAction = 
+    | TierGroupsActionMove
+    | TierGroupsActionDelete
+    | TierGroupsActionResetToDebug
 
-export type AlbumsAction = 
-    | AlbumsActionEdit
-    | AlbumsActionDelete
-
-function AlbumsReducer(Albums: AlbumsState, action : AlbumsAction)
-: AlbumsState {
-    if(!Albums) {
-        return null;
-    }
+const TierGroupsReducer : ImmerReducer<TierGroupsState, TierGroupsAction> = (tierGroupsDraft, action) => {
     switch (action.type) {
-        case AlbumsActionKind.EDIT: {
-            return Albums.map((album, idx) => {
-                if(album.id !== action.id) {
-                    return album;
-                }
-                let editedAlbum = {
-                    ...album,
-                    ...action.changes
-                }
-                return editedAlbum;
-            })
+        case TierGroupsActionKind.MOVE_ALBUM: {
+            return TierGroupsMoveAlbum(tierGroupsDraft, action);
         }
 
-        case AlbumsActionKind.DELETE: {
-            return Albums.filter((album) => album.id !== action.id);
+        case TierGroupsActionKind.DELETE_ALBUM: {
+            return TierGroupsDeleteAlbum(tierGroupsDraft, action);
+        }
+
+        case TierGroupsActionKind.RESET_TO_DEBUG: {
+            return getDebugTierGroups(AlbumsData, action.parts);
         }
 
         default: {
@@ -90,27 +97,71 @@ function AlbumsReducer(Albums: AlbumsState, action : AlbumsAction)
     }
 }
 
+function TierGroupsDeleteAlbum(tierGroupsDraft: Draft<TierGroupsState>,
+action : TierGroupsActionDelete) : TierGroupsState {
+    const fromAlbums = tierGroupsDraft[action.from].albums;
+    const id = action.id;
+    
+    tierGroupsDraft[action.from].albums = filterId(fromAlbums, id);
+
+    return tierGroupsDraft;
+}
+
+function TierGroupsMoveAlbum (tierGroupsDraft: Draft<TierGroupsState>,
+action: TierGroupsActionMove) : TierGroupsState {
+    const fromAlbums = tierGroupsDraft[action.from].albums;
+    const toAlbums = tierGroupsDraft[action.to].albums;
+    const id = action.id;
+
+    tierGroupsDraft[action.from].albums = filterId(fromAlbums, id);
+    toAlbums.push(id);
+
+    return tierGroupsDraft;
+}
+
 //Debug
-function splitAlbumData(data: AlbumData[], parts: number) {
-    let albumsNum = data.length;
-    let albumSplit = Math.floor(albumsNum / parts);
+function getDebugTierGroups(data: IAlbumsData, parts: number) : TierGroups {
+    const albumsNum = Object.keys(data).length;
+    const minPerGroup = Math.floor(albumsNum / parts);
 
-    let albums: Album[] = Array(albumsNum);
+    let tierGroups: TierGroups = InitialTierGroups;
 
-    for(let i = 0; i < albumsNum; i++) {
-        let tier: AlbumTier = null;
-        let dataPart = Math.floor(i / albumSplit);
-        if(dataPart < AlbumTiers.length || dataPart > 0) {
-            tier = AlbumTiers[dataPart];
-        }
-
-        let albumData = data[i];
-        let album = new Album(albumData, tier);
-        
-        albums[i] = album;
+    let counter = 0;
+    for(const albumId in data) {
+        const tierIdx = Math.floor(counter / minPerGroup);
+        const tier = TierNames[tierIdx];
+        tierGroups[tier].albums.push(albumId);
     }
 
-    return albums;
+    return tierGroups;
+}
+
+export const InitialTierGroups : TierGroups = {
+    'S' : {
+        name: 'S',
+        id: 'S',
+        albums: []
+    },
+    'A' : {
+        name: 'A',
+        id: 'A',
+        albums: []
+    },
+    'B' : {
+        name: 'B',
+        id: 'B',
+        albums: []
+    },
+    'C' : {
+        name: 'C',
+        id: 'C',
+        albums: []
+    },
+    'D' : {
+        name: 'D',
+        id: 'D',
+        albums: []
+    }
 }
 
 
