@@ -43,11 +43,11 @@ export function TierGroupsProvider(props: IProviderProps) {
   );
 }
 
-export function useAlbums() {
+export function useTierGroups() {
     return useContext(TierGroupsContext);
 }
 
-export function useTasksDispatch() {
+export function useTierGroupsDispatch() {
     return useContext(TierGroupsDispatchContext);
 }
 

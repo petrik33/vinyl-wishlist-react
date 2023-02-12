@@ -1,0 +1,13 @@
+@import url('../../Styles/root.css');
+
+.button-group-line {
+  margin: auto;
+  width: min-content;
+  padding-left: 3em;
+  padding-right: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+  border-top: 1px solid var(--inactive-color);
+}

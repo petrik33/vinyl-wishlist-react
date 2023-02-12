@@ -10,4 +10,7 @@
     --inactive-color: gray;
     --active-color: white;
     --nav-size: 40px;
+    --transition-fast: 300ms;
+    --transition-normal: 500ms;
+    --transition-slow: 1s;
 }

@@ -1,0 +1,32 @@
+@import url('../../Styles/root.css');
+
+.linebutton {
+  box-sizing: border-box;
+  position: relative;
+  top: -0.5px;
+  padding: 0.25em;
+  border-top: 1px solid var(--inactive-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-size: larger;
+  color: var(--inactive-color);
+  cursor: pointer;
+}
+
+.linebutton-active {
+  color: var(--active-color);
+  border-top: 1px solid var(--active-color);
+}
+
+.linebutton-icon svg {
+  width: 1em;
+  height: 1em;
+  transform: translateY(2px);
+  fill: var(--inactive-color);
+}
+
+.linebutton-icon-active svg {
+  fill: var(--active-color);
+}
