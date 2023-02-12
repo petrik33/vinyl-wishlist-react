@@ -1,0 +1,47 @@
+@import url('../../Styles/root.css');
+
+.album {
+  position: relative;
+  box-sizing: content-box;
+  width: 12.5em;
+  height: 12.5em;
+  color: white;
+  opacity: 1;
+  transition: opacity var(--transition-fast);
+}
+
+.album:hover {
+  opacity: 0.5;
+}
+
+.album-image {
+  width: 100%;
+  height: 100%;
+}
+
+.album-info {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 7%;
+}
+
+.album-info-fields {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.album-info-tier {
+  font-size: 2em;
+}
+
+.album-info-name {
+  font-size: 1em;
+}

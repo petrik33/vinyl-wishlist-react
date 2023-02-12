@@ -28,7 +28,7 @@ export interface IProviderProps {
   children?: React.ReactNode;
 }
 
-export function TierGroupsProvider(props: IProviderProps) {
+export const TierGroupsProvider : React.FC<IProviderProps> = (props) => {
   const [tierGroups, dispatch] = useImmerReducer(
     TierGroupsReducer,
     InitialTierGroups
@@ -43,11 +43,11 @@ export function TierGroupsProvider(props: IProviderProps) {
   );
 }
 
-export function useTierGroups() {
+export const useTierGroups = () => {
     return useContext(TierGroupsContext);
 }
 
-export function useTierGroupsDispatch() {
+export const useTierGroupsDispatch = () => {
   return useContext(TierGroupsDispatchContext);
 }
 
@@ -96,8 +96,8 @@ const TierGroupsReducer : ImmerReducer<TierGroupsState, TierGroupsAction> = (tie
 	}
 }
 
-function TierGroupsDeleteAlbum(tierGroupsDraft: Draft<TierGroupsState>,
-	action : TierGroupsActionDelete) : TierGroupsState {
+const TierGroupsDeleteAlbum = (tierGroupsDraft: Draft<TierGroupsState>,
+	action : TierGroupsActionDelete) : TierGroupsState => {
     const fromAlbums = tierGroupsDraft[action.from].albums;
     const id = action.id;
     
@@ -106,8 +106,8 @@ function TierGroupsDeleteAlbum(tierGroupsDraft: Draft<TierGroupsState>,
     return tierGroupsDraft;
 }
 
-function TierGroupsMoveAlbum (tierGroupsDraft: Draft<TierGroupsState>,
-	action: TierGroupsActionMove) : TierGroupsState {
+const TierGroupsMoveAlbum = (tierGroupsDraft: Draft<TierGroupsState>,
+	action: TierGroupsActionMove) : TierGroupsState => {
 		const fromAlbums = tierGroupsDraft[action.from].albums;
 		const toAlbums = tierGroupsDraft[action.to].albums;
 		const id = action.id;
@@ -147,17 +147,44 @@ export const InitialTierGroups : TierGroups = {
 }
 
 //Debug
-function getDebugTierGroups(data: IAlbumsData, parts: number) : TierGroups {
+const getDebugTierGroups = (data: IAlbumsData, parts: number) : TierGroups => {
   const albumsNum = Object.keys(data).length;
   const minPerGroup = Math.floor(albumsNum / parts);
 
-  let tierGroups: TierGroups = InitialTierGroups;
+  let tierGroups: TierGroups = {
+		'S' : {
+			name: 'S',
+			id: 'S',
+			albums: []
+		},
+		'A' : {
+			name: 'A',
+			id: 'A',
+			albums: []
+		},
+		'B' : {
+			name: 'B',
+			id: 'B',
+			albums: []
+		},
+		'C' : {
+			name: 'C',
+			id: 'C',
+			albums: []
+		},
+		'D' : {
+			name: 'D',
+			id: 'D',
+			albums: []
+		}
+	};
 
   let counter = 0;
   for(const albumId in data) {
       const tierIdx = Math.floor(counter / minPerGroup);
       const tier = TierNames[tierIdx];
       tierGroups[tier].albums.push(albumId);
+			counter++;
   }
 
   return tierGroups;

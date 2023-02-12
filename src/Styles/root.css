@@ -4,7 +4,10 @@
     --tier-B-color: #ffdf80;
     --tier-C-color: #feff7f;
     --tier-D-color: #beff7f;
-    --no-tier-color: white;
+    --shadow-x-offset: 5px;
+    --shadow-y-offset: 5px;
+    --shadow-blur: 0px;
+    --shadow-spread: 0px;
     --bg-color: #1a1a17;
     --text-color: white;
     --inactive-color: gray;
