@@ -10,7 +10,7 @@ export interface IWebImageProps {
   style?: React.CSSProperties;
 }
 
-export default function WebImage (props: IWebImageProps) {
+const WebImage : React.FC<IWebImageProps> = (props) => {
   return (
     <picture>
         {props?.sources}
@@ -25,3 +25,5 @@ export default function WebImage (props: IWebImageProps) {
     </picture>
   );
 }
+
+export default WebImage;
