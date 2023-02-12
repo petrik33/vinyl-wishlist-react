@@ -1,0 +1,13 @@
+:root {
+    --tier-S-color: #ff7f7e;
+    --tier-A-color: #ffbf7f;
+    --tier-B-color: #ffdf80;
+    --tier-C-color: #feff7f;
+    --tier-D-color: #beff7f;
+    --no-tier-color: white;
+    --bg-color: #1a1a17;
+    --text-color: white;
+    --inactive-color: gray;
+    --active-color: white;
+    --nav-size: 40px;
+}
