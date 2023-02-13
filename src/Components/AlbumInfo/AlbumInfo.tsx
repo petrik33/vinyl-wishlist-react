@@ -3,7 +3,6 @@ import './AlbumInfo.css'
 import { AlbumsData, AuthorsData } from '../../Data/Data';
 import WebImage from '../Utilities/WebImage';
 import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
-import { info } from 'console';
 
 export interface IAlbumInfoProps {
   albumId: string;

@@ -4,10 +4,13 @@ import { IAlbum } from '../../Data/Data';
 import { TierName } from '../../Context/TierGroupsContext';
 import './Album.css';
 import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
+import { DraggableProvided } from 'react-beautiful-dnd';
 
 export interface IAlbumProps extends IAlbum {
   tier: TierName | null;
+  draggable: boolean;
   onClick: (id: string) => void;
+  innerRef?: DraggableProvided['innerRef'];
 }
 
 const Album : React.FC<IAlbumProps> = (props) => {
@@ -21,13 +24,15 @@ const Album : React.FC<IAlbumProps> = (props) => {
       onClick={onClick}
       onMouseDown={() => false}
       className='album'
+      id={props.id}
+      ref={props.innerRef}
     >
         <WebImage
           src={props.src}
           alt={getAlbumCoverAlt(props.name)}
           style={getTierStyle(props.tier)}
           className='album-image'
-          draggable={false}
+          draggable={props.draggable}
         />
     </div>
   );

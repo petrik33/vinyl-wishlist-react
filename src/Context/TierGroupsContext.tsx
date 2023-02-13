@@ -12,7 +12,7 @@ export type TierName = typeof TierNames[number];
 export type TierGroup = {
   name: string,
   id: TierName,
-  albums: string[]
+  albums: readonly string[]
 }
 export type TierGroups = {
   [key in TierName]: TierGroup;
@@ -151,7 +151,7 @@ const getDebugTierGroups = (data: IAlbumsData, parts: number) : TierGroups => {
   const albumsNum = Object.keys(data).length;
   const minPerGroup = Math.floor(albumsNum / parts);
 
-  let tierGroups: TierGroups = {
+  let tierGroups: Draft<TierGroupsState> = {
 		'S' : {
 			name: 'S',
 			id: 'S',
