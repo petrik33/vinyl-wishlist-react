@@ -8,6 +8,7 @@ export interface IAlbumGroupProps {
   name: string;
   id: string;
   rankedAlbums: readonly RankedAlbum[];
+  onAlbumClick: (id: string) => void;
 }
 
 const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
@@ -18,6 +19,7 @@ const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
         {...albumData}
         key={album.id}
         tier={album.tier}
+        onClick={props.onAlbumClick}
       />
     );
   });

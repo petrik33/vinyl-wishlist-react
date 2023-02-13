@@ -1,0 +1,46 @@
+@import url('../../Styles/root.css');
+
+.modal-div {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-modal-info {
+  --size: calc(var(--album-modal-image-size) * 1.25);
+  width: var(--size);
+  height: var(--size);
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+.album-modal-image {
+  width: var(--album-modal-image-size);
+  height: var(--album-modal-image-size);
+}
+
+.album-modal-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  text-align: center;
+}
+
+.album-modal-name {
+  font-size: larger;
+}
+
+.album-modal-author {
+  font-weight: bold;
+}

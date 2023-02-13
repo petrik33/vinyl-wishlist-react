@@ -18,7 +18,6 @@ export interface IAlbumsTierListProps {
 
 const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
 	const [editing, setEditing] = React.useState(false);
-	const [albumInfoId, setAlbumInfoId] = React.useState("");
   const tierGroupsDispatch = useTierGroupsDispatch();
 
   return (
@@ -48,7 +47,6 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
         }}>Reset</button>
 				{!editing && <AlbumsView></AlbumsView>}
 				{editing && <AlbumsEdit></AlbumsEdit>}
-				{albumInfoId.length > 0 && <AlbumInfo></AlbumInfo>}
 				<TierListFooter>Made by?</TierListFooter>
     </div>
   );

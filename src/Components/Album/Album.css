@@ -3,8 +3,8 @@
 .album {
   position: relative;
   box-sizing: content-box;
-  width: 12.5em;
-  height: 12.5em;
+  width: var(--album-item-size);
+  height: var(--album-item-size);
   color: white;
   opacity: 1;
   transition: opacity var(--transition-fast);

@@ -3,6 +3,8 @@ import { TierName, TierGroupsState, TierNames, useTierGroups } from '../../Conte
 import { AlbumsData, AuthorsData, IAlbum } from '../../Data/Data';
 import AlbumGroup, { IAlbumGroupProps } from '../AlbumGroup/AlbumGroup';
 import { Immutable } from 'immer';
+import './AlbumsView.css'
+import AlbumInfo from '../AlbumInfo/AlbumInfo';
 
 export interface IAlbumsViewProps {
 
@@ -14,9 +16,14 @@ export enum AlbumGroupsKind {
 
 const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
   const [groupsKind, setGroupsKind] = React.useState(AlbumGroupsKind.AUTHORS);
+  const [modalAlbumId, setModalAlbumId] = React.useState("");
   const tierGroups = useTierGroups();
   const albumGroupsMap = getGroupsMap(groupsKind, tierGroups);
   const groupKeys = Object.keys(albumGroupsMap);
+
+  const onAlbumClick = React.useCallback((id: string) => {
+    setModalAlbumId(id);
+  }, []);
 
   const albumGroups = groupKeys.map((key) => {
     if(albumGroupsMap[key].rankedAlbums.length === 0) {
@@ -26,6 +33,7 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
       <AlbumGroup
         {...albumGroupsMap[key]}
         key={key}
+        onAlbumClick={onAlbumClick}
       />
     )
   })
@@ -33,6 +41,12 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
   return (
     <div >
       {albumGroups}
+      {modalAlbumId.length > 0 && 
+        <AlbumInfo 
+          onClose={() => {setModalAlbumId("")}} 
+          albumId={modalAlbumId}
+        />
+      }
     </div>
   );
 }

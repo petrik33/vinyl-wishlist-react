@@ -1,0 +1,1 @@
+export const getAlbumCoverAlt = (name: string) => `${name} album cover`;
