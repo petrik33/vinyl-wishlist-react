@@ -11,14 +11,24 @@ export interface IAlbumProps extends IAlbum {
 }
 
 const Album : React.FC<IAlbumProps> = (props) => {
+  const onClick = React.useCallback((event: React.MouseEvent) => {
+    props.onClick(props.id);
+    event.preventDefault();
+  }, [props.onClick]);
+
   return (
-    <div onClick={() => {props.onClick(props.id)}} className='album'>
-      <WebImage
-        src={props.src}
-        alt={getAlbumCoverAlt(props.name)}
-        style={getTierStyle(props.tier)}
-        className='album-image'
-      />
+    <div 
+      onClick={onClick}
+      onMouseDown={() => false}
+      className='album'
+    >
+        <WebImage
+          src={props.src}
+          alt={getAlbumCoverAlt(props.name)}
+          style={getTierStyle(props.tier)}
+          className='album-image'
+          draggable={false}
+        />
     </div>
   );
 }

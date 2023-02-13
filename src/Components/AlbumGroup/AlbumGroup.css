@@ -1,7 +1,6 @@
 @import url('../../Styles/root.css');
 
 .album-group {
-  position: relative;
   padding: 2%;
   border-top: 1px solid var(--active-color);
   border-bottom: 1px solid var(--active-color);
@@ -11,13 +10,14 @@
 .album-group-items-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 2em;
-  padding: 2%;
+  --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
+  gap: var(--group-gap);
+  row-gap: 2em;
 }
 
 .album-group-name {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1em;
+  margin-top: 2em;
   color: var(--text-color);
 }

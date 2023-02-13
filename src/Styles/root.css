@@ -20,4 +20,5 @@
     --album-modal-image-size: 16em;
     --primary-color: white;
     --secondary-color: gray;
+    --max-albums-in-row: 5;
 }
