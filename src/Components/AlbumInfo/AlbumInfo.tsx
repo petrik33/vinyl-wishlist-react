@@ -20,7 +20,7 @@ const AlbumInfo : React.FC<IAlbumInfoProps> = (props) => {
     if(!infoClicked) {
       props.onClose();
     }
-  }, [props.onClose]);
+  }, [props]);
   //Check!!!
 
   return (

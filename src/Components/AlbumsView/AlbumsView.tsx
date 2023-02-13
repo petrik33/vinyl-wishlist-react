@@ -21,9 +21,9 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
   const albumGroupsMap = getGroupsMap(groupsKind, tierGroups);
   const groupKeys = Object.keys(albumGroupsMap);
 
-  const onAlbumClick = React.useCallback((id: string) => {
+  const onAlbumClick = (id: string) => {
     setModalAlbumId(id);
-  }, []);
+  }
 
   const albumGroups = groupKeys.map((key) => {
     if(albumGroupsMap[key].rankedAlbums.length === 0) {

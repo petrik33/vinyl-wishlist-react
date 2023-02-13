@@ -14,7 +14,7 @@ const Album : React.FC<IAlbumProps> = (props) => {
   const onClick = React.useCallback((event: React.MouseEvent) => {
     props.onClick(props.id);
     event.preventDefault();
-  }, [props.onClick]);
+  }, [props]);
 
   return (
     <div 
