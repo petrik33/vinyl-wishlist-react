@@ -18,25 +18,13 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
   const [groupsKind, setGroupsKind] = React.useState(AlbumGroupsKind.AUTHORS);
   const [modalAlbumId, setModalAlbumId] = React.useState("");
   const tierGroups = useTierGroups();
-  const albumGroupsMap = getGroupsMap(groupsKind, tierGroups);
-  const groupKeys = Object.keys(albumGroupsMap);
 
   const onAlbumClick = (id: string) => {
     setModalAlbumId(id);
   }
 
-  const albumGroups = groupKeys.map((key) => {
-    if(albumGroupsMap[key].rankedAlbums.length === 0) {
-      return null;
-    }
-    return (
-      <AlbumGroup
-        {...albumGroupsMap[key]}
-        key={key}
-        onAlbumClick={onAlbumClick}
-      />
-    )
-  })
+  const albumGroupsMap = getGroupsMap(groupsKind, tierGroups);
+  const albumGroups = mapGroupKeys(albumGroupsMap, onAlbumClick);
 
   return (
     <div >
@@ -49,6 +37,24 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
       }
     </div>
   );
+}
+
+const mapGroupKeys = (albumGroupsMap: GroupsMap,
+  onAlbumClick: (id: string) => void) => {
+    const groupKeys = Object.keys(albumGroupsMap);
+    return groupKeys.map((key) => {
+      if(albumGroupsMap[key].rankedAlbums.length === 0) {
+        return null;
+      }
+      
+      return (
+        <AlbumGroup
+          {...albumGroupsMap[key]}
+          onAlbumClick={onAlbumClick}
+          key={key}
+        />
+      )
+    })
 }
 
 export type GroupsMap = Immutable<{

@@ -32,20 +32,20 @@ const mapAlbumItems = (albums: readonly string[], tier: TierName) => {
   return albums.map((album, idx) => {
     const albumData = AlbumsData[album];
     return (
-      <Draggable key={album} draggableId={album} index={idx}>
+      <Draggable draggableId={album} index={idx} key={album}>
         {(provided: DraggableProvided) => (
           <div
-            key={album}
             {...provided.dragHandleProps}
             {...provided.draggableProps}
+            key={album}
           >
             <Album
               innerRef={provided.innerRef}
               {...albumData}
               draggable={true}
-              key={album}
               tier={tier}
               onClick={() => false}
+              key={album}
             />
           </div>
         )}
