@@ -3,3 +3,15 @@
 .tierlist-header {
     text-align: center;
 }
+
+.tierlist-header-S {
+  color: var(--tier-S-color);
+}
+
+.tierlist-header-a {
+  /* color: var(--tier-A-color); */
+}
+
+.tierlist-header-zz {
+  font-size: 1.25em;
+}

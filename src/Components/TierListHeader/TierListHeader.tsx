@@ -8,7 +8,7 @@ export interface ITierListHeaderProps {
 const TierListHeader : React.FC<ITierListHeaderProps> = (props) => {
   return (
     <h1 className='tierlist-header'>
-        {props.children}
+      TIER<span className='tierlist-header-S'>S</span>
     </h1>
   );
 }
