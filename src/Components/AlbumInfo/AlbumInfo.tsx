@@ -13,14 +13,13 @@ const AlbumInfo : React.FC<IAlbumInfoProps> = (props) => {
   const albumData = AlbumsData[props.albumId];
   const authorData = AuthorsData[albumData.authorId];
 
-  const onClick = React.useCallback((event: React.MouseEvent) => {
+  const onClick = (event: React.MouseEvent) => {
     const nodeClicked = event.target as HTMLElement;
     const infoClicked = nodeClicked.closest('.album-modal-info');
     if(!infoClicked) {
       props.onClose();
     }
-  }, [props]);
-  //Check!!!
+  }
 
   return (
     <div className='modal-div' onClick={onClick}>

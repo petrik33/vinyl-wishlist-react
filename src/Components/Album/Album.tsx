@@ -24,13 +24,13 @@ const Album : React.FC<IAlbumProps> = (props) => {
       onClick={onClick}
       onMouseDown={() => false}
       className='album'
+      style={getTierStyle(props.tier)}
       id={props.id}
       ref={props.innerRef}
     >
         <WebImage
           src={props.src}
           alt={getAlbumCoverAlt(props.name)}
-          style={getTierStyle(props.tier)}
           className='album-image'
           draggable={props.draggable}
         />
@@ -46,11 +46,17 @@ const getTierStyle = (tier: TierName | null) : React.CSSProperties => {
     shadowColor = `tier-${tier}`;
   }
 
-  const boxShadowProp = `var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--${shadowColor}-color)`;
+  const borderProp = `8px solid var(--${shadowColor}-color)`;
 
   return {
-    boxShadow: boxShadowProp
+    border: borderProp
   }
+
+  // const boxShadowProp = `var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--${shadowColor}-color)`;
+
+  // return {
+  //   boxShadow: boxShadowProp
+  // }
 }
 
 export default Album;

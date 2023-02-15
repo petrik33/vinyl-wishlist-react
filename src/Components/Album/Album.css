@@ -2,7 +2,7 @@
 
 .album {
   position: relative;
-  box-sizing: content-box;
+  box-sizing: border-box;
   width: var(--album-item-size);
   height: var(--album-item-size);
   color: white;

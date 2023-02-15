@@ -19,9 +19,35 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
         {albumItems}
         {props.droppablePlaceHolder}
       </div>
-      <div className='album-group-name'>{props.name}</div>
+      <div 
+        style={getTierStyle(props.id)}
+        className='album-group-name'
+      >
+        {props.name}
+      </div>
     </div>
   );
+}
+
+const getTierStyle = (tier: TierName | null) : React.CSSProperties => {
+  let shadowColor : string;
+  if(!tier) {
+    shadowColor = 'inactive';
+  } else {
+    shadowColor = `tier-${tier}`;
+  }
+
+  const colorProp = `var(--${shadowColor}-color)`;
+
+  return {
+    color: colorProp
+  }
+
+  // const boxShadowProp = `var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--${shadowColor}-color)`;
+
+  // return {
+  //   boxShadow: boxShadowProp
+  // }
 }
 
 const mapAlbumItems = (albums: readonly string[], tier: TierName) => {

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { TierGroupsState, TierNames, useTierGroups } from '../../Context/TierGroupsContext';
-import { DragDropContext, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { TierGroupsActionKind, TierGroupsState, TierName, TierNames, useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
+import { DragDropContext, DragUpdate, DraggableLocation, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import AlbumEditGroup from '../AlbumEditGroup/AlbumEditGroup';
+import './AlbumsEdit.css'
 
 export interface IAlbumsEditProps {
   
@@ -9,12 +10,34 @@ export interface IAlbumsEditProps {
 
 const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   const tierGroups = useTierGroups();
+  const tierGroupsDispatch = useTierGroupsDispatch();
   const albumGroups = mapTierGroups(tierGroups);
+
+  const onDragEnd = (result: DragUpdate) => {
+    const { source, destination, draggableId } = {...result};
+
+    if(!destination) {
+      return;
+    }
+
+    if(droppedBack(source, destination)) {
+      return;
+    }
+
+    tierGroupsDispatch({
+      type: TierGroupsActionKind.MOVE_ALBUM_IDX,
+      sourceTier: source.droppableId as TierName,
+      sourceIndex: source.index,
+      destinationTier: destination.droppableId as TierName,
+      destinationIndex: destination.index
+    })
+
+  }
 
   return (
     <div >
       {/* debug */}
-      <DragDropContext  onDragEnd={() => false}> 
+      <DragDropContext  onDragEnd={onDragEnd}> 
         {albumGroups}
       </DragDropContext>
     </div>
@@ -38,6 +61,12 @@ const mapTierGroups = (tierGroups: TierGroupsState) => {
       </Droppable>
     )
   });
+}
+
+const droppedBack = (source : DraggableLocation,
+  destination: DraggableLocation) => {
+    return (destination.droppableId === source.droppableId &&
+      destination.index === source.index);
 }
 
 export default AlbumsEdit;
