@@ -1,8 +1,7 @@
 @import url('../../Styles/root.css');
 
 .album-group {
-  min-height: calc((var(--album-item-size) + 2em) * 1.04);
-  padding: 2%;
+  /* min-height: calc((var(--album-item-size) + 2em) * 1.04); */
   border-top: 1px solid var(--active-color);
   border-bottom: 1px solid var(--active-color);
   border-collapse: collapse;
@@ -13,6 +12,7 @@
 }
 
 .album-group-items-container {
+  padding: 2%;
   display: flex;
   flex-wrap: wrap;
   --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
@@ -21,6 +21,8 @@
 }
 
 .album-group-name {
+  margin-bottom: 2%;
+  margin-right: 2%;
   display: flex;
   justify-content: flex-end;
   align-items: center;

@@ -35,8 +35,7 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   }
 
   return (
-    <div >
-      {/* debug */}
+    <div className='edit-groups-container'>
       <DragDropContext  onDragEnd={onDragEnd}> 
         {albumGroups}
       </DragDropContext>
