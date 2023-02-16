@@ -17,9 +17,8 @@
     --transition-fast: 300ms;
     --transition-normal: 500ms;
     --transition-slow: 1s;
-    --album-item-size: 12.5em;
+    --album-item-size: 9em;
     --album-modal-image-size: 16em;
     --primary-color: white;
     --secondary-color: gray;
-    --max-albums-in-row: 5;
 }

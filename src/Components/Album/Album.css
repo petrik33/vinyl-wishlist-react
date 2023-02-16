@@ -9,10 +9,12 @@
   opacity: 1;
   transition: opacity var(--transition-fast);
   transition: border var(--transition-fast);
+  transition: box-shadow var(--transition-fast);
 }
 
 .dragging {
   border: 0px;
+  box-shadow: 0px 0px 5px 5px white;
 }
 
 .album:hover {

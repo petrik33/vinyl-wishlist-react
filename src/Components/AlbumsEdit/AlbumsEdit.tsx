@@ -14,7 +14,7 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   const albumGroups = mapTierGroups(tierGroups);
 
   const onDragEnd = (result: DragUpdate) => {
-    const { source, destination, draggableId } = {...result};
+    const { source, destination } = result;
 
     if(!destination) {
       return;
