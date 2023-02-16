@@ -3,7 +3,7 @@ import { TierGroup, TierName } from '../../Context/TierGroupsContext';
 import { AlbumsData } from '../../Data/Data';
 import Album from '../Album/Album';
 import './AlbumEditGroup.css';
-import { Draggable, DraggableProvided, DroppableProvided } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, DraggableStateSnapshot, DroppableProvided } from 'react-beautiful-dnd';
 
 export interface IAlbumEditGroupProps extends TierGroup {
   isDraggingOver: boolean;
@@ -70,17 +70,18 @@ const mapAlbumItems = (albums: readonly string[], tier: TierName) => {
     const albumData = AlbumsData[album];
     return (
       <Draggable draggableId={album} index={idx} key={album}>
-        {(provided: DraggableProvided) => (
+        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
           <div
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             key={album}
           >
             <Album
-              innerRef={provided.innerRef}
               {...albumData}
-              draggable={true}
               tier={tier}
+              innerRef={provided.innerRef}
+              draggable={true}
+              isDraging={snapshot.isDragging}
               onClick={() => false}
               key={album}
             />

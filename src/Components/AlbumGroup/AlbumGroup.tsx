@@ -18,6 +18,7 @@ const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
       <Album
         {...albumData}
         draggable={false}
+        isDraging={false}
         tier={album.tier}
         onClick={props.onAlbumClick}
         key={album.id}

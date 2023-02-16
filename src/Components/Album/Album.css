@@ -8,6 +8,11 @@
   color: white;
   opacity: 1;
   transition: opacity var(--transition-fast);
+  transition: border var(--transition-fast);
+}
+
+.dragging {
+  border: 0px;
 }
 
 .album:hover {
@@ -45,3 +50,4 @@
 .album-info-name {
   font-size: 1em;
 }
+

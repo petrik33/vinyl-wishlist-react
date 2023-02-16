@@ -9,6 +9,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 export interface IAlbumProps extends IAlbum {
   tier: TierName | null;
   draggable: boolean;
+  isDraging: boolean;
   onClick: (id: string) => void;
   innerRef?: DraggableProvided['innerRef'];
 }
@@ -23,8 +24,8 @@ const Album : React.FC<IAlbumProps> = (props) => {
     <div 
       onClick={onClick}
       onMouseDown={() => false}
-      className='album'
-      style={getTierStyle(props.tier)}
+      className={getAlbumClass(props.isDraging)}
+      style={getTierStyle(props.tier, props.isDraging)}
       id={props.id}
       ref={props.innerRef}
     >
@@ -38,19 +39,35 @@ const Album : React.FC<IAlbumProps> = (props) => {
   );
 }
 
-const getTierStyle = (tier: TierName | null) : React.CSSProperties => {
-  let shadowColor : string;
-  if(!tier) {
-    shadowColor = 'inactive';
-  } else {
-    shadowColor = `tier-${tier}`;
+const getAlbumClass = (isDragging: boolean) => {
+  let className = 'album';
+
+  if(isDragging) {
+    className += ' dragging';
   }
 
-  const borderProp = `8px solid var(--${shadowColor}-color)`;
+  return className;
+}
 
-  return {
-    border: borderProp
-  }
+const getTierStyle = (tier: TierName | null, isDragging: boolean)
+  : React.CSSProperties => {
+    if(isDragging) {
+      return {};
+    }
+
+    let shadowColor : string;
+
+    if(!tier) {
+      shadowColor = 'inactive';
+    } else {
+      shadowColor = `tier-${tier}`;
+    }
+
+    const borderProp = `8px solid var(--${shadowColor}-color)`;
+
+    return {
+      border: borderProp
+    }
 
   // const boxShadowProp = `var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--${shadowColor}-color)`;
 
