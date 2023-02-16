@@ -28,3 +28,7 @@
   align-items: center;
   color: var(--text-color);
 }
+
+.album-group-name.tiered {
+  color: var(--tier-color, var(--text-color));
+}

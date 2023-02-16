@@ -24,8 +24,7 @@ const Album : React.FC<IAlbumProps> = (props) => {
     <div 
       onClick={onClick}
       onMouseDown={() => false}
-      className={getAlbumClass(props.isDraging)}
-      style={getTierStyle(props.tier, props.isDraging)}
+      className={getAlbumClass(props.isDraging, props.tier)}
       id={props.id}
       ref={props.innerRef}
     >
@@ -39,41 +38,19 @@ const Album : React.FC<IAlbumProps> = (props) => {
   );
 }
 
-const getAlbumClass = (isDragging: boolean) => {
+const getAlbumClass = (isDragging: boolean, tier?: TierName | null) => {
   let className = 'album';
 
   if(isDragging) {
     className += ' dragging';
   }
 
+  if(tier) {
+    className += ' tiered';
+    className += ` ${tier}-tier`;
+  }
+
   return className;
-}
-
-const getTierStyle = (tier: TierName | null, isDragging: boolean)
-  : React.CSSProperties => {
-    if(isDragging) {
-      return {};
-    }
-
-    let shadowColor : string;
-
-    if(!tier) {
-      shadowColor = 'inactive';
-    } else {
-      shadowColor = `tier-${tier}`;
-    }
-
-    const borderProp = `8px solid var(--${shadowColor}-color)`;
-
-    return {
-      border: borderProp
-    }
-
-  // const boxShadowProp = `var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--${shadowColor}-color)`;
-
-  // return {
-  //   boxShadow: boxShadowProp
-  // }
 }
 
 export default Album;

@@ -17,8 +17,29 @@
     --transition-fast: 300ms;
     --transition-normal: 500ms;
     --transition-slow: 1s;
-    --album-item-size: 9em;
+    --album-item-size: 10em;
+    --max-albums-in-row: 6;
     --album-modal-image-size: 16em;
     --primary-color: white;
     --secondary-color: gray;
+}
+
+.S-tier {
+  --tier-color: var(--tier-S-color);
+}
+
+.A-tier {
+  --tier-color: var(--tier-A-color);
+}
+
+.B-tier {
+  --tier-color: var(--tier-B-color);
+}
+
+.C-tier {
+  --tier-color: var(--tier-C-color);
+}
+
+.D-tier {
+  --tier-color: var(--tier-D-color);
 }
