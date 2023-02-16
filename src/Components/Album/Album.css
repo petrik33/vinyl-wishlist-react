@@ -5,20 +5,26 @@
   box-sizing: border-box;
   width: var(--album-item-size);
   height: var(--album-item-size);
+  flex: 0 var(--album-item-size);
   color: white;
   opacity: 1;
-  transition: opacity var(--transition-fast);
-  transition: border var(--transition-fast);
-  transition: box-shadow var(--transition-fast);
+  transition-property: opacity, border, box-shadow;
+  transition-duration: var(--transition-fast);
+  transition-timing-function: ease;
+}
+
+.album.view {
+  cursor: pointer;
 }
 
 .album.tiered {
-  border: 8px solid var(--tier-color, var(--tier-S-color));
+  border: 8px solid var(--tier-color);
+  /* box-shadow: var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--tier-color); */
 }
 
 .album.dragging {
   border: 0px;
-  /* box-shadow: 0px 0px 5px 5px white; */
+  box-shadow: 0px 0px 5px 5px white;
 }
 
 .album:hover {

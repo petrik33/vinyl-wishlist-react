@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AlbumsData } from '../../Data/Data';
-import Album from '../Album/Album';
+import Album, { AlbumMode } from '../Album/Album';
 import { RankedAlbum } from '../AlbumsView/AlbumsView';
 import './AlbumGroup.css'
 
@@ -17,9 +17,10 @@ const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
     return (
       <Album
         {...albumData}
+        tier={album.tier}
+        mode={AlbumMode.VIEW}
         draggable={false}
         isDraging={false}
-        tier={album.tier}
         onClick={props.onAlbumClick}
         key={album.id}
       />

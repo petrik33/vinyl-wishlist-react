@@ -54,8 +54,8 @@ const mapTierGroups = (tierGroups: TierGroupsState) => {
             innerRef={provided.innerRef}
             {...provided.droppableProps}
             droppablePlaceHolder={provided.placeholder}
-            key={group.id}
             isDraggingOver={snapshot.isDraggingOver}
+            key={group.id}
           />
         )}
       </Droppable>

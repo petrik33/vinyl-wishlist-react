@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TierGroup, TierName } from '../../Context/TierGroupsContext';
 import { AlbumsData } from '../../Data/Data';
-import Album from '../Album/Album';
+import Album, { AlbumMode } from '../Album/Album';
 import './AlbumEditGroup.css';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, DroppableProvided } from 'react-beautiful-dnd';
 
@@ -47,12 +47,6 @@ const getGroupNameClass = (tier: TierName | null) => {
   }
 
   return className;
-
-  // const boxShadowProp = `var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--${shadowColor}-color)`;
-
-  // return {
-  //   boxShadow: boxShadowProp
-  // }
 }
 
 const mapAlbumItems = (albums: readonly string[], tier: TierName) => {
@@ -73,10 +67,10 @@ const mapAlbumItems = (albums: readonly string[], tier: TierName) => {
             <Album
               {...albumData}
               tier={tier}
+              mode={AlbumMode.EDIT}
               innerRef={provided.innerRef}
               draggable={true}
               isDraging={snapshot.isDragging}
-              onClick={() => false}
               key={album}
             />
           </div>

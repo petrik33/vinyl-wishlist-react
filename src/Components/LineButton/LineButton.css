@@ -13,6 +13,9 @@
   font-size: larger;
   color: var(--inactive-color);
   cursor: pointer;
+  transition-duration: var(--transition-normal);
+  transition-timing-function: ease;
+  transition-property: border-top, color;
 }
 
 .linebutton-active {
@@ -25,6 +28,9 @@
   height: 1em;
   transform: translateY(2px);
   fill: var(--inactive-color);
+  transition-duration: var(--transition-normal);
+  transition-timing-function: ease;
+  transition-property: fill;
 }
 
 .linebutton-icon-active svg {
