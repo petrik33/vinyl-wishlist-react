@@ -6,6 +6,7 @@ import './AlbumEditGroup.css';
 import { Draggable, DraggableProvided, DroppableProvided } from 'react-beautiful-dnd';
 
 export interface IAlbumEditGroupProps extends TierGroup {
+  isDraggingOver: boolean;
   innerRef?: DroppableProvided['innerRef'];
   droppablePlaceHolder?: React.ReactNode;
 }
@@ -15,7 +16,7 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
 
   return (
     <div className='album-group'>
-      <div ref={props.innerRef} className='album-group-items-container'>
+      <div ref={props.innerRef} className={getGroupClass(props.isDraggingOver)}>
         {albumItems}
         {props.droppablePlaceHolder}
       </div>
@@ -27,6 +28,16 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
       </div>
     </div>
   );
+}
+
+const getGroupClass = (isDraggingOver: boolean) => {
+  let className = 'album-group-items-container';
+  
+  if(isDraggingOver) {
+    className += ' dragged-over';
+  }
+
+  return className;
 }
 
 const getTierStyle = (tier: TierName | null) : React.CSSProperties => {

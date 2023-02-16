@@ -9,6 +9,7 @@
     --shadow-blur: 0px;
     --shadow-spread: 0px;
     --bg-color: #1a1a17;
+    --dragged-over-color: rgb(67, 67, 67);
     --text-color: white;
     --inactive-color: gray;
     --active-color: white;
