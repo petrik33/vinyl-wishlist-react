@@ -8,9 +8,10 @@ export interface IWebImageProps {
   sizes?: string;
   className?: string;
   style?: React.CSSProperties;
+  draggable?: boolean;
 }
 
-export default function WebImage (props: IWebImageProps) {
+const WebImage : React.FC<IWebImageProps> = (props) => {
   return (
     <picture>
         {props?.sources}
@@ -21,7 +22,10 @@ export default function WebImage (props: IWebImageProps) {
             alt={props.alt}
             className={props.className}
             style={props.style}
+            draggable={props.draggable}
         />
     </picture>
   );
 }
+
+export default WebImage;

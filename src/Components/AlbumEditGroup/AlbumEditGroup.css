@@ -1,0 +1,6 @@
+@import url('../AlbumGroup/AlbumGroup.css');
+
+.dragged-over {
+  background-color: var(--dragged-over-color);
+  transition: background-color var(--transition-fast);
+}

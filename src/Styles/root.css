@@ -1,0 +1,45 @@
+:root {
+    --tier-S-color: #ff7f7e;
+    --tier-A-color: #ffbf7f;
+    --tier-B-color: #ffdf80;
+    --tier-C-color: #feff7f;
+    --tier-D-color: #beff7f;
+    --shadow-x-offset: 5px;
+    --shadow-y-offset: 5px;
+    --shadow-blur: 0px;
+    --shadow-spread: 0px;
+    --bg-color: #1a1a17;
+    --dragged-over-color: rgb(67, 67, 67);
+    --text-color: white;
+    --inactive-color: gray;
+    --active-color: white;
+    --nav-size: 40px;
+    --transition-fast: 300ms;
+    --transition-normal: 500ms;
+    --transition-slow: 1s;
+    --album-item-size: 12.5em;
+    --max-albums-in-row: 6;
+    --album-modal-image-size: 16em;
+    --primary-color: white;
+    --secondary-color: gray;
+}
+
+.S-tier {
+  --tier-color: var(--tier-S-color);
+}
+
+.A-tier {
+  --tier-color: var(--tier-A-color);
+}
+
+.B-tier {
+  --tier-color: var(--tier-B-color);
+}
+
+.C-tier {
+  --tier-color: var(--tier-C-color);
+}
+
+.D-tier {
+  --tier-color: var(--tier-D-color);
+}
