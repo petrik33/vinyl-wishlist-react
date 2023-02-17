@@ -32,12 +32,14 @@ const Album : React.FC<IAlbumProps> = (props) => {
       onClick={onClick}
       onMouseDown={() => false}
       className={getAlbumClass(props.mode, props.isDraging, props.tier)}
+      key={props.id}
       id={props.id}
       ref={props.innerRef}
     >
         <WebImage
           src={props.src}
           alt={getAlbumCoverAlt(props.name)}
+          key={props.id}
           className='album-image'
           draggable={props.draggable}
         />

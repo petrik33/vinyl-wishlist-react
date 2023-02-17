@@ -2,7 +2,7 @@
 
 .album-group {
   position: relative;
-  min-height: calc((var(--album-item-size) + 3em));
+  min-height: calc((var(--album-item-size) + 3.5em));
   border-top: 1px solid var(--active-color);
   border-bottom: 1px solid var(--active-color);
   border-collapse: collapse;
@@ -13,7 +13,7 @@
 }
 
 .album-group-items-container {
-  padding: 1em 1em 2em;
+  padding: 1em 1em 2.5em;
   display: flex;
   flex-wrap: wrap;
   /* --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
