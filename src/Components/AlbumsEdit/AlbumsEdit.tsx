@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TierGroupsActionKind, TierGroupsState, TierName, TierNames, useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
+import { NoTierId, TierGroup, TierGroupsActionKind, TierGroupsState, TierName, TierNames, useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import { DragDropContext, DragUpdate, DraggableLocation, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import AlbumEditGroup from '../AlbumEditGroup/AlbumEditGroup';
 import './AlbumsEdit.css'
@@ -11,7 +11,7 @@ export interface IAlbumsEditProps {
 const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   const tierGroups = useTierGroups();
   const tierGroupsDispatch = useTierGroupsDispatch();
-  const albumGroups = mapTierGroups(tierGroups);
+  const albumGroups = mapTiers(tierGroups);
 
   const onDragEnd = (result: DragUpdate) => {
     const { source, destination } = result;
@@ -43,24 +43,33 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   );
 }
 
-const mapTierGroups = (tierGroups: TierGroupsState) => {
+const mapTiers = (tierGroupsState: TierGroupsState) => {
+  const namedGroups = mapTierNames(tierGroupsState);
+  const noTierGroup = mapTierGroup(tierGroupsState[NoTierId]);
+  return [...namedGroups, noTierGroup];
+}
+
+const mapTierNames = (tierGroupsState: TierGroupsState) => {
   return TierNames.map((tier) => {
-    const group = tierGroups[tier];
-    return (
-      <Droppable direction='horizontal' droppableId={group.id} key={group.id}>
-        {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-          <AlbumEditGroup
-            {...group}
-            innerRef={provided.innerRef}
-            {...provided.droppableProps}
-            droppablePlaceHolder={provided.placeholder}
-            isDraggingOver={snapshot.isDraggingOver}
-            key={group.id}
-          />
-        )}
-      </Droppable>
-    )
+    return mapTierGroup(tierGroupsState[tier]);
   });
+}
+
+const mapTierGroup = (group: TierGroup) => {
+  return (
+    <Droppable direction='horizontal' droppableId={group.id} key={group.id}>
+      {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+        <AlbumEditGroup
+          {...group}
+          innerRef={provided.innerRef}
+          {...provided.droppableProps}
+          droppablePlaceHolder={provided.placeholder}
+          isDraggingOver={snapshot.isDraggingOver}
+          key={group.id}
+        />
+      )}
+    </Droppable>
+  )
 }
 
 const droppedBack = (source : DraggableLocation,

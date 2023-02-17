@@ -5,6 +5,7 @@ import { TierName } from '../../Context/TierGroupsContext';
 import './Album.css';
 import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
 import { DraggableProvided } from 'react-beautiful-dnd';
+import { Tier } from '../../Context/TierGroupsContext';
 
 export enum AlbumMode {
   VIEW = 'view',
@@ -12,7 +13,7 @@ export enum AlbumMode {
 }
 
 export interface IAlbumProps extends IAlbum {
-  tier: TierName | null;
+  tier: Tier;
   mode: AlbumMode;
   draggable: boolean;
   isDraging: boolean;

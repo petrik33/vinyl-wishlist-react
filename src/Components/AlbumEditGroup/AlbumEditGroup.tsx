@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TierGroup, TierName } from '../../Context/TierGroupsContext';
+import { Tier, TierGroup, TierName } from '../../Context/TierGroupsContext';
 import { AlbumsData } from '../../Data/Data';
 import Album, { AlbumMode } from '../Album/Album';
 import './AlbumEditGroup.css';
@@ -12,7 +12,7 @@ export interface IAlbumEditGroupProps extends TierGroup {
 }
 
 const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
-  const albumItems = mapAlbumItems(props.albums, props.id);
+  const albumItems = mapAlbumItems(props.albums, props.tier);
 
   return (
     <div className='album-group'>
@@ -21,7 +21,7 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
         {props.droppablePlaceHolder}
       </div>
       <div 
-        className={getGroupNameClass(props.id)}
+        className={getGroupNameClass(props.tier)}
       >
         {props.name}
       </div>
@@ -49,7 +49,7 @@ const getGroupNameClass = (tier: TierName | null) => {
   return className;
 }
 
-const mapAlbumItems = (albums: readonly string[], tier: TierName) => {
+const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
   if(albums.length === 0) {
     return null;
   }

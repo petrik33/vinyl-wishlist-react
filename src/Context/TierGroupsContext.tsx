@@ -8,14 +8,21 @@ import { Draft } from 'immer';
 export const TierNames = ['S', 'A', 'B', 'C', 'D'] as const;
 export type TierName = typeof TierNames[number];
 
+export const NoTierId = 'No-Tier' as const;
+export const NoTierName = 'Unranked' as const;
+
+export type TierGroupId = TierName | typeof NoTierId;
+export type Tier = TierName | null;
+
 export type TierGroup = {
   name: string,
-  id: TierName,
+  id: TierGroupId,
+  tier: Tier,
   albums: readonly string[]
 }
 
 export type TierGroups = {
-  [key in TierName]: TierGroup;
+  [key in TierGroupId]: TierGroup;
 }
 
 export type TierGroupsState = Immutable<TierGroups>;
@@ -123,28 +130,39 @@ export const InitialTierGroups : TierGroups = {
 	'S' : {
 		name: 'S',
 		id: 'S',
+    tier: 'S',
 		albums: []
 	},
 	'A' : {
 		name: 'A',
 		id: 'A',
+		tier: 'A',
 		albums: []
 	},
 	'B' : {
 		name: 'B',
 		id: 'B',
+		tier: 'B',
 		albums: []
 	},
 	'C' : {
 		name: 'C',
 		id: 'C',
+		tier: 'C',
 		albums: []
 	},
 	'D' : {
 		name: 'D',
 		id: 'D',
+		tier: 'D',
 		albums: []
-	}
+	},
+  'No-Tier' : {
+    name: NoTierName,
+    id: NoTierId,
+    tier: null,
+    albums: Object.keys(AlbumsData)
+  }
 }
 
 //Debug
@@ -154,30 +172,41 @@ const getDebugTierGroups = (data: IAlbumsData, parts: number) : TierGroups => {
 
   let tierGroups: Draft<TierGroupsState> = {
 		'S' : {
-			name: 'S',
-			id: 'S',
-			albums: []
-		},
-		'A' : {
-			name: 'A',
-			id: 'A',
-			albums: []
-		},
-		'B' : {
-			name: 'B',
-			id: 'B',
-			albums: []
-		},
-		'C' : {
-			name: 'C',
-			id: 'C',
-			albums: []
-		},
-		'D' : {
-			name: 'D',
-			id: 'D',
-			albums: []
-		}
+      name: 'S',
+      id: 'S',
+      tier: 'S',
+      albums: []
+    },
+    'A' : {
+      name: 'A',
+      id: 'A',
+      tier: 'A',
+      albums: []
+    },
+    'B' : {
+      name: 'B',
+      id: 'B',
+      tier: 'B',
+      albums: []
+    },
+    'C' : {
+      name: 'C',
+      id: 'C',
+      tier: 'C',
+      albums: []
+    },
+    'D' : {
+      name: 'D',
+      id: 'D',
+      tier: 'D',
+      albums: []
+    },
+    'No-Tier' : {
+      name: NoTierName,
+      id: NoTierId,
+      tier: null,
+      albums: []
+    }
 	};
 
   let counter = 0;

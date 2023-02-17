@@ -2,10 +2,9 @@ import * as React from 'react';
 import './AlbumsTierList.css';
 import TierListHeader from '../TierListHeader/TierListHeader';
 import TierListFooter from '../TierListFooter/TierListFooter';
-import AlbumInfo from '../AlbumInfo/AlbumInfo';
 import AlbumsEdit from '../AlbumsEdit/AlbumsEdit';
 import AlbumsView from '../AlbumsView/AlbumsView';
-import { TierGroupsAction, TierGroupsActionKind, TierGroupsProvider } from '../../Context/TierGroupsContext';
+import { TierGroupsActionKind } from '../../Context/TierGroupsContext';
 import ButtonGroupLine from '../ButtonGroupLine/ButtonGroupLine';
 import LineButton from '../LineButton/LineButton';
 import {ReactComponent as ViewIcon} from '../../Icons/free-icon-font-eye-3917052.svg';
@@ -44,7 +43,7 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
             type: TierGroupsActionKind.RESET_TO_DEBUG,
             parts: 4
           });
-        }}>Reset</button>
+        }}>Debug Rank</button>
 				{!editing && <AlbumsView></AlbumsView>}
 				{editing && <AlbumsEdit></AlbumsEdit>}
 				<TierListFooter>Made by?</TierListFooter>
