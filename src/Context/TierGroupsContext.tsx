@@ -1,22 +1,23 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { AlbumsData, IAlbumsData } from '../Data/Data';
-import { filterId } from '../Utilities/FilterUtilities';
 import { ImmerReducer, useImmerReducer } from 'use-immer';
 import { Immutable } from 'immer';
 import { Draft } from 'immer';
 
 export const TierNames = ['S', 'A', 'B', 'C', 'D'] as const;
-
 export type TierName = typeof TierNames[number];
+
 export type TierGroup = {
   name: string,
   id: TierName,
   albums: readonly string[]
 }
+
 export type TierGroups = {
   [key in TierName]: TierGroup;
 }
+
 export type TierGroupsState = Immutable<TierGroups>;
 export type TierGroupsDispatch = React.Dispatch<TierGroupsAction>;
 
@@ -56,6 +57,7 @@ export enum TierGroupsActionKind {
   DELETE_ALBUM_IDX = 'delete-album-idx',
   RESET_TO_DEBUG = 'reset-to-debug'
 };
+
 export type TierGroupsActionMoveIndex = {
   type: TierGroupsActionKind.MOVE_ALBUM_IDX;
   sourceTier: TierName;
@@ -63,15 +65,18 @@ export type TierGroupsActionMoveIndex = {
   destinationTier: TierName;
   destinationIndex: number;
 }
+
 export type TierGroupsActionDeleteIndex = {
   type: TierGroupsActionKind.DELETE_ALBUM_IDX;
   sourceTier: TierName;
   sourceIndex: number;
 }
+
 export type TierGroupsActionResetToDebug = {
   type: TierGroupsActionKind.RESET_TO_DEBUG;
   parts: number;
 }
+
 export type TierGroupsAction = 
   | TierGroupsActionMoveIndex
   | TierGroupsActionDeleteIndex
