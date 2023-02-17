@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/vinyl-wishlist-react/static/css/main.35f18c61.css",
+    "main.js": "/vinyl-wishlist-react/static/js/main.b928d153.js",
+    "static/js/787.5b283f89.chunk.js": "/vinyl-wishlist-react/static/js/787.5b283f89.chunk.js",
+    "static/media/free-icon-font-followcollection-9291831.svg": "/vinyl-wishlist-react/static/media/free-icon-font-followcollection-9291831.4049bec68a359331886a366439b9330d.svg",
+    "index.html": "/vinyl-wishlist-react/index.html",
+    "static/media/free-icon-font-eye-3917052.svg": "/vinyl-wishlist-react/static/media/free-icon-font-eye-3917052.5ba783ad3870313d4823a9526f678018.svg",
+    "main.35f18c61.css.map": "/vinyl-wishlist-react/static/css/main.35f18c61.css.map",
+    "main.b928d153.js.map": "/vinyl-wishlist-react/static/js/main.b928d153.js.map",
+    "787.5b283f89.chunk.js.map": "/vinyl-wishlist-react/static/js/787.5b283f89.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35f18c61.css",
+    "static/js/main.b928d153.js"
+  ]
+}
