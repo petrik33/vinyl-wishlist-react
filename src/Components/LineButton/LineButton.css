@@ -13,7 +13,7 @@
   font-size: larger;
   color: var(--inactive-color);
   cursor: pointer;
-  transition-duration: var(--transition-normal);
+  transition-duration: var(--transition-fast);
   transition-timing-function: ease;
   transition-property: border-top, color;
 }
