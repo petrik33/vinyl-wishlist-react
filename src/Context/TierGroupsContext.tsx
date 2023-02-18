@@ -92,12 +92,23 @@ export type TierGroupsAction =
 const TierGroupsReducer : ImmerReducer<TierGroupsState, TierGroupsAction> = (tierGroupsDraft, action) => {
 	switch (action.type) {
 		case TierGroupsActionKind.MOVE_ALBUM_IDX: {
-			return TierGroupsMoveAlbum(tierGroupsDraft, action);
+			const sourceAlbums = tierGroupsDraft[action.sourceTier].albums;
+      const destAlbums = tierGroupsDraft[action.destinationTier].albums;
+
+      const movedAlbum = sourceAlbums[action.sourceIndex];
+
+      sourceAlbums.splice(action.sourceIndex, 1);
+      destAlbums.splice(action.destinationIndex, 0, movedAlbum);
 		}
 
+    break;
+
 		case TierGroupsActionKind.DELETE_ALBUM_IDX: {
-			return TierGroupsDeleteAlbum(tierGroupsDraft, action);
+			const sourceAlbums = tierGroupsDraft[action.sourceTier].albums;
+      sourceAlbums.splice(action.sourceIndex, 1);
 		}
+
+    break;
 
 		case TierGroupsActionKind.RESET_TO_DEBUG: {
 			return getDebugTierGroups(AlbumsData, action.parts);
@@ -107,23 +118,6 @@ const TierGroupsReducer : ImmerReducer<TierGroupsState, TierGroupsAction> = (tie
 			throw Error('Unknown action');
 		}
 	}
-}
-
-const TierGroupsDeleteAlbum = (tierGroupsDraft: Draft<TierGroupsState>,
-  action: TierGroupsActionDeleteIndex) => {
-    const sourceAlbums = tierGroupsDraft[action.sourceTier].albums;
-    sourceAlbums.splice(action.sourceIndex, 1);
-}
-
-const TierGroupsMoveAlbum = (tierGroupsDraft: Draft<TierGroupsState>,
-	action: TierGroupsActionMoveIndex) => {
-		const sourceAlbums = tierGroupsDraft[action.sourceTier].albums;
-		const destAlbums = tierGroupsDraft[action.destinationTier].albums;
-
-    const movedAlbum = sourceAlbums[action.sourceIndex];
-
-    sourceAlbums.splice(action.sourceIndex, 1);
-    destAlbums.splice(action.destinationIndex, 0, movedAlbum);
 }
 
 export const InitialTierGroups : TierGroups = {
