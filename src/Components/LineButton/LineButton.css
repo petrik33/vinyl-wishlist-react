@@ -25,6 +25,7 @@
 
 .linebutton-active {
   --state-color: var(--active-color);
+  pointer-events: none;
 }
 
 .linebutton svg {
