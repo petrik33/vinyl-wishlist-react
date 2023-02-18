@@ -15,8 +15,8 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
   const albumItems = mapAlbumItems(props.albums, props.tier);
 
   return (
-    <div className='album-group'>
-      <div ref={props.innerRef} className={getGroupClass(props.isDraggingOver)}>
+    <div className={getGroupClass(props.isDraggingOver)}>
+      <div ref={props.innerRef} className={getGroupContainerClass()}>
         {albumItems}
         {props.droppablePlaceHolder}
       </div>
@@ -30,12 +30,17 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
 }
 
 const getGroupClass = (isDraggingOver: boolean) => {
-  let className = 'album-group-items-container';
+  let className = 'album-group';
   
   if(isDraggingOver) {
     className += ' dragged-over';
   }
 
+  return className;
+}
+
+const getGroupContainerClass = () => {
+  let className = 'album-group-items-container';
   return className;
 }
 
