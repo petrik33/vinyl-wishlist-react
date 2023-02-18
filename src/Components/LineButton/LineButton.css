@@ -1,38 +1,41 @@
 @import url('../../Styles/root.css');
 
 .linebutton {
+  --state-color: var(--inactive-color);
   box-sizing: border-box;
   position: relative;
   top: -0.5px;
   padding: 0.25em;
-  border-top: 1px solid var(--inactive-color);
+  border-top: 1px solid var(--state-color);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
   font-size: larger;
-  color: var(--inactive-color);
+  color: var(--state-color);
   cursor: pointer;
   transition-duration: var(--transition-fast);
   transition-timing-function: ease;
   transition-property: border-top, color;
 }
 
-.linebutton-active {
-  color: var(--active-color);
-  border-top: 1px solid var(--active-color);
+.linebutton:hover {
+  --state-color: var(--hover-color);
 }
 
-.linebutton-icon svg {
+.linebutton-active {
+  --state-color: var(--active-color);
+}
+
+.linebutton svg {
+  width: 100%;
+  height: 100%;
+  transform: translateY(2px);
+  fill: var(--state-color);
+  transition:  fill var(--transition-fast) ease;
+}
+
+.linebutton-icon {
   width: 1em;
   height: 1em;
-  transform: translateY(2px);
-  fill: var(--inactive-color);
-  transition-duration: var(--transition-normal);
-  transition-timing-function: ease;
-  transition-property: fill;
-}
-
-.linebutton-icon-active svg {
-  fill: var(--active-color);
 }
