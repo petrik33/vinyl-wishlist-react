@@ -1,7 +1,8 @@
 @import url('../../Styles/root.css');
 
 .tierlist-header {
-  /* text-align: center; */
+  height: 100%;
+  margin: 0;
 }
 
 .tierlist-header-S {

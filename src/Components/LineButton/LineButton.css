@@ -3,8 +3,6 @@
 .linebutton {
   --state-color: var(--inactive-color);
   box-sizing: border-box;
-  position: relative;
-  top: -0.5px;
   padding: 0.25em;
   border-top: 1px solid var(--state-color);
   display: flex;
@@ -31,7 +29,6 @@
 .linebutton svg {
   width: 100%;
   height: 100%;
-  transform: translateY(2px);
   fill: var(--state-color);
   transition:  fill var(--transition-fast) ease;
 }

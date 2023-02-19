@@ -1,6 +1,20 @@
-.toolbar-horizontal {
+.toolbar-sized {
   width: 100%;
   height: 5vh;
+  padding: 0.5% 0;
+  margin-bottom: 1em;
+}
+
+.toolbar {
+  padding-left: 0.5%;
+  background-color: var(--bg-color);
   display: flex;
   flex-flow: row nowrap;
+  border-bottom: 1px solid var(--active-color);
+}
+
+.pinned-top {
+  position: fixed;
+  top: 0%;
+  left: 0%;
 }

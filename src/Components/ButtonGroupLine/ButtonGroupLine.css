@@ -1,8 +1,8 @@
 @import url('../../Styles/root.css');
 
 .button-group-line {
-  margin: auto;
-  width: min-content;
+  box-sizing: border-box;
+  width: 99%;
   padding-left: 3em;
   padding-right: 3em;
   display: flex;
