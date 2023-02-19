@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tier, TierGroup, TierName } from '../../Context/TierGroupsContext';
 import { AlbumsData } from '../../Data/Data';
-import Album, { AlbumMode } from '../Album/Album';
+import Album from '../Album/Album';
 import './AlbumEditGroup.css';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, DroppableProvided } from 'react-beautiful-dnd';
 

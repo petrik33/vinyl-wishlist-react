@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AlbumsData } from '../../Data/Data';
-import Album, { AlbumMode } from '../Album/Album';
+import Album from '../Album/Album';
 import { RankedAlbum } from '../AlbumsView/AlbumsView';
 import './AlbumGroup.css'
 

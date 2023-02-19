@@ -4,7 +4,6 @@ import { IAlbum } from '../../Data/Data';
 import { TierName } from '../../Context/TierGroupsContext';
 import './Album.css';
 import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
-import { DraggableProvided } from 'react-beautiful-dnd';
 import { Tier } from '../../Context/TierGroupsContext';
 
 export enum AlbumMode {
