@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import AlbumsTierList from '../AlbumsTierList/AlbumsTierList';
+import AlbumsTierList from '../TierList/TierList';
 import { TierGroupsProvider } from '../../Context/TierGroupsContext';
 
 function App() {
