@@ -1,12 +1,10 @@
-
-
 .tierlist-header {
   height: 100%;
   margin: 0;
 }
 
 .tierlist-header-S {
-  color: var(--tier-S-color);
+  color: rgb(var(--tier-S-color));
 }
 
 /* .tierlist-header-a {

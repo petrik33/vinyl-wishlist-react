@@ -1,11 +1,11 @@
 import * as React from 'react';
-import './TierListTopPin.css'
+import './TopPin.css'
 
-export interface IToolbarHorizontalProps {
+export interface ITopPinProps {
   children?: React.ReactNode;
 }
 
-const ToolbarHorizontal : React.FC<IToolbarHorizontalProps> = (props) => {
+const TopPin : React.FC<ITopPinProps> = (props) => {
   return (
     <>
       <div className='toolbar-sized'></div>
@@ -16,4 +16,4 @@ const ToolbarHorizontal : React.FC<IToolbarHorizontalProps> = (props) => {
   );
 }
 
-export default ToolbarHorizontal;
+export default TopPin;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TierName, TierGroupsState, TierNames, useTierGroups, TierGroups } from '../../Context/TierGroupsContext';
+import { TierName, TierNames, useTierGroups, TierGroups } from '../../Context/TierGroupsContext';
 import { AlbumsData, AuthorsData, IAlbum } from '../../Data/Data';
 import AlbumGroup, { IAlbumGroupProps } from '../AlbumGroup/AlbumGroup';
 import { Immutable } from 'immer';
@@ -7,15 +7,15 @@ import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
 
 export interface IAlbumsViewProps {
-
+  groupsKind: AlbumGroupsKind;
 }
+
 export enum AlbumGroupsKind {
   TIERS = 'tiers',
   AUTHORS = 'authors'
 }
 
 const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
-  const [groupsKind, setGroupsKind] = React.useState(AlbumGroupsKind.AUTHORS);
   const [modalAlbumId, setModalAlbumId] = React.useState("");
   const tierGroups = useTierGroups();
 
@@ -23,7 +23,7 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
     setModalAlbumId(id);
   }
 
-  const albumGroupsMap = getGroupsMap(groupsKind, tierGroups);
+  const albumGroupsMap = getGroupsMap(props.groupsKind, tierGroups);
   const albumGroups = mapGroupKeys(albumGroupsMap, onAlbumClick);
 
   return (
