@@ -1,0 +1,6 @@
+.buttons-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: center;
+}

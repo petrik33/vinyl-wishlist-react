@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './ToolbarHorizontal.css'
+import './TierListTopPin.css'
 
 export interface IToolbarHorizontalProps {
   children?: React.ReactNode;

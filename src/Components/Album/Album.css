@@ -14,8 +14,8 @@
 }
 
 .album.tiered {
-  border: 8px solid var(--tier-color);
-  /* box-shadow: var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--tier-color); */
+  /* border: 8px solid var(--tier-color); */
+  box-shadow: var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--tier-color);
 }
 
 .album-view {
@@ -23,7 +23,7 @@
 }
 
 .album-draggable.dragged {
-  border: 0px;
+  /* border: 0px; */
   box-shadow: 0px 0px 5px 5px white;
 }
 

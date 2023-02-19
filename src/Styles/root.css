@@ -6,8 +6,8 @@
     --tier-D-color: #beff7f;
     --shadow-x-offset: 5px;
     --shadow-y-offset: 5px;
-    --shadow-blur: 0px;
-    --shadow-spread: 0px;
+    --shadow-blur: 5px;
+    --shadow-spread: 1px;
     --bg-color: #1a1a17;
     --dragged-over-color: rgb(67, 67, 67);
     --text-color: white;

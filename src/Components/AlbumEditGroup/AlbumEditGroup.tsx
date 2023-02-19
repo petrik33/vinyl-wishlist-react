@@ -89,16 +89,6 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
   });
 }
 
-// const getDropAnimationStyle = (snapshot: DraggableStateSnapshot) => {
-//   if (!snapshot.isDropAnimating) {
-//     return {};
-//   }
-
-//   return {
-    
-//   }
-// }
-
 const getDraggableClass = (isDragging: boolean) => {
   let className = 'album-draggable';
 

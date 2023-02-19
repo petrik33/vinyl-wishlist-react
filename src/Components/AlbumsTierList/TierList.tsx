@@ -8,7 +8,7 @@ import { TierGroupsActionKind } from '../../Context/TierGroupsContext';
 import ButtonGroupLine from '../ButtonGroupLine/ButtonGroupLine';
 import LineButton from '../LineButton/LineButton';
 import {ReactComponent as ViewIcon} from '../../Icons/free-icon-font-eye-3917052.svg';
-import {ReactComponent as EditIcon} from '../../Icons/free-icon-font-pencil-3917563.svg';
+import {ReactComponent as EditIcon} from '../../Icons/free-icon-font-followcollection-9291831.svg';
 import { useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import ToolbarHorizontal from '../TierListTopPin/TierListTopPin';
 
@@ -24,23 +24,23 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
     <div className='tierlist'>
 				<ToolbarHorizontal>
           <TierListHeader>TierList</TierListHeader>
-        </ToolbarHorizontal>
-        <ButtonGroupLine>
-          <LineButton 
-            onClick={() => {setEditing(false)}} 
-            icon={<ViewIcon />}
-            active={!editing}
+          <ButtonGroupLine>
+            <LineButton 
+              onClick={() => {setEditing(false)}} 
+              icon={<ViewIcon />}
+              active={!editing}
+              >
+                View
+            </LineButton>
+            <LineButton
+              onClick={() => {setEditing(true)}}
+              icon={<EditIcon />}
+              active={editing}
             >
-              View
-          </LineButton>
-          <LineButton
-            onClick={() => {setEditing(true)}}
-            icon={<EditIcon />}
-            active={editing}
-          >
-            Edit
-          </LineButton>
-        </ButtonGroupLine>
+              Edit
+            </LineButton>
+          </ButtonGroupLine>
+        </ToolbarHorizontal>
         <button onClick={() => {
           tierGroupsDispatch({
             type: TierGroupsActionKind.RESET_TO_DEBUG,
