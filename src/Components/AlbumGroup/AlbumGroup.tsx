@@ -7,7 +7,7 @@ import './AlbumGroup.css'
 export interface IAlbumGroupProps {
   name: string;
   id: string;
-  rankedAlbums: readonly RankedAlbum[];
+  rankedAlbums: RankedAlbum[];
   onAlbumClick: (id: string) => void;
 }
 

@@ -1,6 +1,7 @@
 @import url('./root.css');
 
 body {
+  margin: 0;
   background-color: var(--bg-color);
   color: rgb(var(--text-color));
 }

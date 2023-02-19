@@ -23,8 +23,20 @@ export interface IAlbumsTierListProps {
 const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
 	const [editing, setEditing] = React.useState(false);
   const [viewGroupsKind, setViewGroupsKind] = 
-    React.useState(AlbumGroupsKind.AUTHORS);
+    React.useState(AlbumGroupsKind.TIERS);
   const tierGroupsDispatch = useTierGroupsDispatch();
+
+  const handleScroll = React.useCallback(() => {
+    document.documentElement.dataset.scroll = window.scrollY.toString();
+  }, [])
+
+  React.useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <div className='tierlist'>

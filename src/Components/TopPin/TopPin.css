@@ -1,21 +1,26 @@
-.toolbar-sized {
-  width: calc(100% - 4em);
-  height: 2.5em;
-  padding: 0.5em 3em 0.5em 1em;
-  margin-bottom: 1em;
-}
-
 .toolbar {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--toolbar-height);
+  padding: 0.5em 3em 0.5em 1em;
+  margin-bottom: 0em;
   background-color: var(--bg-color);
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--active-color);
+  transition-property: border-bottom;
+  transition-duration: var(--transition-slow);
+  transition-timing-function: ease;
 }
 
-.pinned-top {
+html:not([data-scroll='0']) {
+  padding-top: calc(var(--toolbar-height));
+}
+
+html:not([data-scroll='0']) *.toolbar {
   position: fixed;
   top: 0%;
   left: 0%;
+  border-bottom: 1px solid var(--active-color);
 }

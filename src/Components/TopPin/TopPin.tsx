@@ -8,8 +8,7 @@ export interface ITopPinProps {
 const TopPin : React.FC<ITopPinProps> = (props) => {
   return (
     <>
-      <div className='toolbar-sized'></div>
-      <div className='toolbar-sized toolbar pinned-top'>
+      <div className='toolbar'>
         {props.children}
       </div>
     </>

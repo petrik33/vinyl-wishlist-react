@@ -16,6 +16,7 @@
     --active-color: rgba(255, 255, 255, 0.9);
     --nav-size: 40px;
     --tool-size: 2em;
+    --toolbar-height: 3.5em;
     --transition-fast: 300ms;
     --transition-normal: 500ms;
     --transition-slow: 1s;

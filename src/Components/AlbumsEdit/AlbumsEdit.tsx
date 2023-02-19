@@ -33,10 +33,7 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   }, [tierGroupsDispatch]);
 
   React.useEffect(() => {
-    // attach the event listener
     document.addEventListener('keydown', onShortCutPressed);
-
-    // remove the event listener
     return () => {
       document.removeEventListener('keydown', onShortCutPressed);
     };

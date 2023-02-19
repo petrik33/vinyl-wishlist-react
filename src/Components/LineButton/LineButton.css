@@ -4,6 +4,7 @@
   --state-color: var(--inactive-color);
   box-sizing: border-box;
   padding: 0.25em;
+  margin-top: -1px;
   border-top: 1px solid var(--state-color);
   display: flex;
   align-items: center;
