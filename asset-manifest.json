@@ -1,17 +1,19 @@
 {
   "files": {
-    "main.css": "/vinyl-wishlist-react/static/css/main.35f18c61.css",
-    "main.js": "/vinyl-wishlist-react/static/js/main.b928d153.js",
+    "main.css": "/vinyl-wishlist-react/static/css/main.a38c6462.css",
+    "main.js": "/vinyl-wishlist-react/static/js/main.5263b4bc.js",
     "static/js/787.5b283f89.chunk.js": "/vinyl-wishlist-react/static/js/787.5b283f89.chunk.js",
-    "static/media/free-icon-font-followcollection-9291831.svg": "/vinyl-wishlist-react/static/media/free-icon-font-followcollection-9291831.4049bec68a359331886a366439b9330d.svg",
     "index.html": "/vinyl-wishlist-react/index.html",
     "static/media/free-icon-font-eye-3917052.svg": "/vinyl-wishlist-react/static/media/free-icon-font-eye-3917052.5ba783ad3870313d4823a9526f678018.svg",
-    "main.35f18c61.css.map": "/vinyl-wishlist-react/static/css/main.35f18c61.css.map",
-    "main.b928d153.js.map": "/vinyl-wishlist-react/static/js/main.b928d153.js.map",
+    "static/media/free-icon-font-heart-3916585.svg": "/vinyl-wishlist-react/static/media/free-icon-font-heart-3916585.d1340fc3d21e4c329cf98cada8cf7eec.svg",
+    "static/media/free-icon-font-pencil-3917563.svg": "/vinyl-wishlist-react/static/media/free-icon-font-pencil-3917563.6c58e04e592c970dd9e8affe82402179.svg",
+    "static/media/free-icon-font-user-3917688.svg": "/vinyl-wishlist-react/static/media/free-icon-font-user-3917688.38cfdb1bd4866f7ba811aff361223f76.svg",
+    "main.a38c6462.css.map": "/vinyl-wishlist-react/static/css/main.a38c6462.css.map",
+    "main.5263b4bc.js.map": "/vinyl-wishlist-react/static/js/main.5263b4bc.js.map",
     "787.5b283f89.chunk.js.map": "/vinyl-wishlist-react/static/js/787.5b283f89.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.35f18c61.css",
-    "static/js/main.b928d153.js"
+    "static/css/main.a38c6462.css",
+    "static/js/main.5263b4bc.js"
   ]
 }
