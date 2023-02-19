@@ -14,8 +14,8 @@
 }
 
 .album.tiered {
-  /* border: 8px solid var(--tier-color); */
-  box-shadow: var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) var(--tier-color);
+  /* border: 8px solid rgb(var(--tier-color)); */
+  box-shadow: var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) rgb(var(--tier-color));
 }
 
 .album-view {

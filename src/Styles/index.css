@@ -2,7 +2,7 @@
 
 body {
   background-color: var(--bg-color);
-  color: var(--text-color);
+  color: rgb(var(--text-color));
 }
 
 ul {
@@ -12,7 +12,7 @@ ul {
 }
 
 a {
-  color: var(--text-color);
+  color: rgb(var(--text-color));
   text-decoration: none;
 }
 

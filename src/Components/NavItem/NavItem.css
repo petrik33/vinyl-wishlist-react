@@ -26,7 +26,7 @@
 }
 
 .icon-button svg {
-    fill: var(--text-color);
+    fill: rgb(var(--text-color));
     width: 1em;
     height: 1em;
 }

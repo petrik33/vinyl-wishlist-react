@@ -10,6 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 1em;
+  transition: background-color var(--transition-fast);
 }
 
 .album-group-items-container {
@@ -25,7 +26,6 @@
   gap: var(--group-gap); */
   /* gap: calc(var(--album-item-size) * 0.1); */
   row-gap: 2em;
-  transition: background-color var(--transition-fast);
 }
 
 .album-group-items-container > div {
@@ -63,9 +63,9 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  color: var(--text-color);
+  color: rgb(var(--text-color));
 }
 
 .album-group-name.tiered {
-  color: var(--tier-color, var(--text-color));
+  color: rgb(var(--tier-color, var(--text-color)));
 }

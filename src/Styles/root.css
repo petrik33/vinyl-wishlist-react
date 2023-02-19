@@ -1,16 +1,16 @@
 :root {
-    --tier-S-color: #ff7f7e;
-    --tier-A-color: #ffbf7f;
-    --tier-B-color: #ffdf80;
-    --tier-C-color: #feff7f;
-    --tier-D-color: #beff7f;
+    --tier-S-color: 255, 127, 126;
+    --tier-A-color: 255, 191, 127;
+    --tier-B-color: 255, 223, 128;
+    --tier-C-color: 254, 255, 127;
+    --tier-D-color: 190, 255, 127;
     --shadow-x-offset: 5px;
     --shadow-y-offset: 5px;
     --shadow-blur: 5px;
     --shadow-spread: 1px;
     --bg-color: #1a1a17;
-    --dragged-over-color: rgb(67, 67, 67);
-    --text-color: white;
+    --dragged-over-color: 67, 67, 67;
+    --text-color: 255, 255, 255;
     --inactive-color: rgba(255, 255, 255, 0.2);
     --hover-color: rgba(255, 255, 255, 0.6);
     --active-color: rgba(255, 255, 255, 0.9);
