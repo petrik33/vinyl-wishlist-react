@@ -58,6 +58,7 @@
 }
 
 .album-group-name {
+  padding-right: 0.5em;
   height: 1em;
   display: flex;
   justify-content: flex-end;
