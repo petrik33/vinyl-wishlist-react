@@ -19,7 +19,6 @@
   padding-right: 1em;
   padding-bottom: 1em;
   overflow-x: auto;
-  scrollbar-gutter: stable;
   display: flex;
   flex-wrap: nowrap;
   /* --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
