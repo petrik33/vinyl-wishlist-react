@@ -76,8 +76,7 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
                 {...albumData}
                 tier={getAlbumTier(
                   tier,
-                  snapshot.isDragging,
-                  snapshot.isDropAnimating
+                  snapshot.isDragging
                 )}
                 draggable={true}
                 key={album}
@@ -110,11 +109,10 @@ const getDraggableClass = (isDragging: boolean) => {
   return className;
 }
 
-const getAlbumTier = (groupTier: Tier, isDragging: boolean,
-  isDropAnimating: boolean) => {
+const getAlbumTier = (groupTier: Tier, isDragging: boolean) => {
     let tier = groupTier;
 
-    if(isDragging || isDropAnimating) {
+    if(isDragging) {
       tier = null;
     }
 

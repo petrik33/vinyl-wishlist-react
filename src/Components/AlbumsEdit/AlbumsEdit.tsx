@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NoTierId, TierGroup, TierGroupsActionKind, TierGroupsState, TierName, TierNames, useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
+import { NoTierId, TierGroup, TierGroups, TierGroupsActionKind, TierGroupsState, TierName, TierNames, useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import { DragDropContext, DragUpdate, DraggableLocation, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import AlbumEditGroup from '../AlbumEditGroup/AlbumEditGroup';
 import './AlbumsEdit.css'
@@ -24,14 +24,24 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
       return;
     }
 
+    if(source.droppableId === destination.droppableId) {
+      tierGroupsDispatch({
+        type: TierGroupsActionKind.REORDER,
+        tier: source.droppableId as TierName,
+        sourceIndex: source.index,
+        destinationIndex: destination.index
+      });
+
+      return;
+    }
+
     tierGroupsDispatch({
       type: TierGroupsActionKind.MOVE_ALBUM_IDX,
       sourceTier: source.droppableId as TierName,
       sourceIndex: source.index,
       destinationTier: destination.droppableId as TierName,
       destinationIndex: destination.index
-    })
-
+    });
   }
 
   return (
@@ -43,15 +53,15 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   );
 }
 
-const mapTiers = (tierGroupsState: TierGroupsState) => {
-  const namedGroups = mapTierNames(tierGroupsState);
-  const noTierGroup = mapTierGroup(tierGroupsState[NoTierId]);
+const mapTiers = (tierGroups: TierGroups) => {
+  const namedGroups = mapTierNames(tierGroups);
+  const noTierGroup = mapTierGroup(tierGroups[NoTierId]);
   return [...namedGroups, noTierGroup];
 }
 
-const mapTierNames = (tierGroupsState: TierGroupsState) => {
+const mapTierNames = (tierGroups: TierGroups) => {
   return TierNames.map((tier) => {
-    return mapTierGroup(tierGroupsState[tier]);
+    return mapTierGroup(tierGroups[tier]);
   });
 }
 

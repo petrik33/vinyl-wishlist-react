@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TierName, TierGroupsState, TierNames, useTierGroups } from '../../Context/TierGroupsContext';
+import { TierName, TierGroupsState, TierNames, useTierGroups, TierGroups } from '../../Context/TierGroupsContext';
 import { AlbumsData, AuthorsData, IAlbum } from '../../Data/Data';
 import AlbumGroup, { IAlbumGroupProps } from '../AlbumGroup/AlbumGroup';
 import { Immutable } from 'immer';
@@ -66,7 +66,7 @@ export type RankedAlbum = {
   tier: TierName;
 }
 
-const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroupsState)
+const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroups)
   : GroupsMap => {
   switch(type) {
     case AlbumGroupsKind.TIERS: {
