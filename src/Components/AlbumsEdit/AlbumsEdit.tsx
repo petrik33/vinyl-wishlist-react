@@ -18,23 +18,16 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   }
 
   const onShortCutPressed = React.useCallback((event: KeyboardEvent) => {
-    // if(document.hasFocus()) {
-    //   return;
-    // }
-    console.log('Happen!');
-
     if(!event.ctrlKey) {
       return;
     }
 
     if(event.key.toUpperCase() === 'Z') {
-      console.log('Dispatch!');
       dispatchUndo(tierGroupsDispatch);
       return;
     }
 
     if(event.key.toUpperCase() === 'Y') {
-      console.log('Dispatch!');
       dispatchDoAgain(tierGroupsDispatch);
     }
   }, [tierGroupsDispatch]);
