@@ -57,6 +57,17 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
                 }
               ]}
           />}
+          {editing && 
+            <RadioButtonGroup 
+              state={viewGroupsKind}
+              setState={setViewGroupsKind}
+              buttons={[
+                {
+                  icon: (<TiersIcon />),
+                  value: AlbumGroupsKind.TIERS
+                }
+              ]}
+          />}
         </TopPin>
         <ButtonGroupLine>
           <LineButton 
