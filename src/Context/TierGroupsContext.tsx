@@ -178,7 +178,9 @@ const TierGroupsMoveAlbumIdx = (
     nextGroups[action.destinationTier].albums = nextDestAlbums;
 
     const nextCurrent = current + 1;
-    const nextHistory = [...state.history, nextGroups];
+    const nextHistory = [
+      ...state.history.slice(0, nextCurrent),
+      nextGroups];
 
     return {
       history: nextHistory,
