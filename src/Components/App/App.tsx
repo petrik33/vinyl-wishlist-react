@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import AlbumsTierList from '../AlbumsTierList/AlbumsTierList';
+import TierList from '../TierList/TierList';
 import { TierGroupsProvider } from '../../Context/TierGroupsContext';
 
 function App() {
   return (
     <div>
       <TierGroupsProvider>
-        <AlbumsTierList />
+        <TierList />
       </TierGroupsProvider>
     </div>
   );

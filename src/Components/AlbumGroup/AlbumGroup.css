@@ -1,4 +1,4 @@
-@import url('../../Styles/root.css');
+
 
 .album-group {
   padding-top: 2em;
@@ -10,6 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 1em;
+  transition: background-color var(--transition-fast);
 }
 
 .album-group-items-container {
@@ -18,14 +19,12 @@
   padding-right: 1em;
   padding-bottom: 1em;
   overflow-x: auto;
-  scrollbar-gutter: stable;
   display: flex;
   flex-wrap: nowrap;
   /* --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
   gap: var(--group-gap); */
   /* gap: calc(var(--album-item-size) * 0.1); */
   row-gap: 2em;
-  transition: background-color var(--transition-fast);
 }
 
 .album-group-items-container > div {
@@ -58,13 +57,14 @@
 }
 
 .album-group-name {
+  padding-right: 0.5em;
   height: 1em;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  color: var(--text-color);
+  color: rgb(var(--text-color));
 }
 
 .album-group-name.tiered {
-  color: var(--tier-color, var(--text-color));
+  color: rgb(var(--tier-color, var(--text-color)));
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TierName, TierGroupsState, TierNames, useTierGroups } from '../../Context/TierGroupsContext';
+import { TierName, TierNames, useTierGroups, TierGroups, NoTierName, NoTierId } from '../../Context/TierGroupsContext';
 import { AlbumsData, AuthorsData, IAlbum } from '../../Data/Data';
 import AlbumGroup, { IAlbumGroupProps } from '../AlbumGroup/AlbumGroup';
 import { Immutable } from 'immer';
@@ -7,15 +7,15 @@ import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
 
 export interface IAlbumsViewProps {
-
+  groupsKind: AlbumGroupsKind;
 }
+
 export enum AlbumGroupsKind {
   TIERS = 'tiers',
   AUTHORS = 'authors'
 }
 
 const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
-  const [groupsKind, setGroupsKind] = React.useState(AlbumGroupsKind.AUTHORS);
   const [modalAlbumId, setModalAlbumId] = React.useState("");
   const tierGroups = useTierGroups();
 
@@ -23,7 +23,7 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
     setModalAlbumId(id);
   }
 
-  const albumGroupsMap = getGroupsMap(groupsKind, tierGroups);
+  const albumGroupsMap = getGroupsMap(props.groupsKind, tierGroups);
   const albumGroups = mapGroupKeys(albumGroupsMap, onAlbumClick);
 
   return (
@@ -57,16 +57,16 @@ const mapGroupKeys = (albumGroupsMap: GroupsMap,
     })
 }
 
-export type GroupsMap = Immutable<{
+export type GroupsMap = {
   [id: string]: IAlbumGroupProps;
-}>;
+};
 export type GroupDistributor = (album: IAlbum) => string;//id
 export type RankedAlbum = {
   id: string,
   tier: TierName;
 }
 
-const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroupsState)
+const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroups)
   : GroupsMap => {
   switch(type) {
     case AlbumGroupsKind.TIERS: {
@@ -86,9 +86,22 @@ const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroupsState)
           }
       });
 
-      Object.keys(tierGroups).forEach((tier, idx) => {
+      const unrankedGroup = {
+        name: NoTierName,
+        id: NoTierId,
+        rankedAlbums: tierGroups['No-Tier'].albums.map((id) => {
+          return {
+            id: id,
+            tier: null
+          }
+        })
+      }
+
+      TierNames.forEach((tier, idx) => {
         groupsMap[tier] = rankedGroups[idx];
       });
+
+      groupsMap[NoTierId] = unrankedGroup;
 
       return groupsMap;
     }
@@ -114,6 +127,17 @@ const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroupsState)
           });
         })
       })
+
+      const unrankedGroup = {
+        name: NoTierName,
+        id: NoTierId,
+        rankedAlbums: tierGroups['No-Tier'].albums.map((id) => {
+          return {
+            id: id,
+            tier: null
+          }
+        })
+      }
 
       const groupsMap = Object.create({});
 

@@ -1,40 +1,39 @@
-
-
-.linebutton {
+.radio-button {
   --state-color: var(--inactive-color);
-  box-sizing: border-box;
-  padding: 0.25em;
-  margin-top: -1px;
-  border-top: 1px solid var(--state-color);
+  box-sizing: content-box;
+  width: var(--tool-size);
+  height: var(--tool-size);
+  padding: 0.5em;
+  margin-right: 1em;
+  border: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
-  font-size: larger;
   color: var(--state-color);
   cursor: pointer;
   transition-duration: var(--transition-fast);
   transition-timing-function: ease;
-  transition-property: border-top, color;
+  transition-property: color, border;
 }
 
-.linebutton:hover {
+.radio-button:last-child {
+  margin-right: 0;
+}
+
+.radio-button:hover {
   --state-color: var(--hover-color);
+  border: 1px solid var(--state-color);
+  border-radius: 50%;
 }
 
-.linebutton-active {
+.radio-button.active {
   --state-color: var(--active-color);
   pointer-events: none;
 }
 
-.linebutton svg {
+.radio-button svg {
   width: 100%;
   height: 100%;
   fill: var(--state-color);
   transition:  fill var(--transition-fast) ease;
-}
-
-.linebutton-icon {
-  width: 1em;
-  height: 1em;
 }

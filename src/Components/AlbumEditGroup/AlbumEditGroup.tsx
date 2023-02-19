@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tier, TierGroup, TierName } from '../../Context/TierGroupsContext';
 import { AlbumsData } from '../../Data/Data';
-import Album, { AlbumMode } from '../Album/Album';
+import Album from '../Album/Album';
 import './AlbumEditGroup.css';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, DroppableProvided } from 'react-beautiful-dnd';
 
@@ -15,7 +15,7 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
   const albumItems = mapAlbumItems(props.albums, props.tier);
 
   return (
-    <div className={getGroupClass(props.isDraggingOver)}>
+    <div className={getGroupClass(props.tier, props.isDraggingOver)}>
       <div ref={props.innerRef} className={getGroupContainerClass()}>
         {albumItems}
         {props.droppablePlaceHolder}
@@ -29,8 +29,12 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
   );
 }
 
-const getGroupClass = (isDraggingOver: boolean) => {
+const getGroupClass = (tier: Tier, isDraggingOver: boolean) => {
   let className = 'album-group';
+
+  if(tier) {
+    className += ` ${tier}-tier`;
+  }
   
   if(isDraggingOver) {
     className += ' dragged-over';
@@ -76,8 +80,7 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
                 {...albumData}
                 tier={getAlbumTier(
                   tier,
-                  snapshot.isDragging,
-                  snapshot.isDropAnimating
+                  snapshot.isDragging
                 )}
                 draggable={true}
                 key={album}
@@ -90,16 +93,6 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
   });
 }
 
-// const getDropAnimationStyle = (snapshot: DraggableStateSnapshot) => {
-//   if (!snapshot.isDropAnimating) {
-//     return {};
-//   }
-
-//   return {
-    
-//   }
-// }
-
 const getDraggableClass = (isDragging: boolean) => {
   let className = 'album-draggable';
 
@@ -110,11 +103,10 @@ const getDraggableClass = (isDragging: boolean) => {
   return className;
 }
 
-const getAlbumTier = (groupTier: Tier, isDragging: boolean,
-  isDropAnimating: boolean) => {
+const getAlbumTier = (groupTier: Tier, isDragging: boolean) => {
     let tier = groupTier;
 
-    if(isDragging || isDropAnimating) {
+    if(isDragging) {
       tier = null;
     }
 
