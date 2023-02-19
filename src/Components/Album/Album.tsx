@@ -14,28 +14,16 @@ export enum AlbumMode {
 
 export interface IAlbumProps extends IAlbum {
   tier: Tier;
-  mode: AlbumMode;
   draggable: boolean;
-  isDraging: boolean;
-  onClick?: (id: string) => void;
-  innerRef?: DraggableProvided['innerRef'];
 }
 
 const Album : React.FC<IAlbumProps> = (props) => {
-  const onClick = (event: React.MouseEvent) => {
-    if(props.onClick) {
-      props.onClick(props.id);
-      event.preventDefault();
-    }
-  }
+  
   return (
     <div 
-      onClick={onClick}
-      onMouseDown={() => false}
-      className={getAlbumClass(props.mode, props.isDraging, props.tier)}
+      className={getAlbumClass(props.tier)}
       key={props.id}
       id={props.id}
-      ref={props.innerRef}
     >
         <WebImage
           src={props.src}
@@ -48,17 +36,8 @@ const Album : React.FC<IAlbumProps> = (props) => {
   );
 }
 
-const getAlbumClass = (mode: AlbumMode, isDragging: boolean, tier?: TierName | null) => {
+const getAlbumClass = (tier?: TierName | null) => {
   let className = 'album';
-
-  if(mode === AlbumMode.VIEW) {
-    className += ' view';
-  }
-
-  if(isDragging) {
-    className += ' dragging';
-    return className;
-  }
 
   if(tier) {
     className += ' tiered';

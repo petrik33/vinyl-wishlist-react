@@ -63,26 +63,62 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
     const albumData = AlbumsData[album];
     return (
       <Draggable draggableId={album} index={idx} key={album}>
-        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-          <div
-            {...provided.dragHandleProps}
-            {...provided.draggableProps}
-            key={album}
-          >
-            <Album
-              {...albumData}
-              tier={tier}
-              mode={AlbumMode.EDIT}
-              innerRef={provided.innerRef}
-              draggable={true}
-              isDraging={snapshot.isDragging}
+        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
+          return (
+            <div
+              className={getDraggableClass(snapshot.isDragging)}
+              ref={provided.innerRef}
+              {...provided.dragHandleProps}
+              {...provided.draggableProps}
               key={album}
-            />
-          </div>
-        )}
+            >
+              <Album
+                {...albumData}
+                tier={getAlbumTier(
+                  tier,
+                  snapshot.isDragging,
+                  snapshot.isDropAnimating
+                )}
+                draggable={true}
+                key={album}
+              />
+            </div>
+          )}
+        }
       </Draggable>
     );
   });
+}
+
+// const getDropAnimationStyle = (snapshot: DraggableStateSnapshot) => {
+//   if (!snapshot.isDropAnimating) {
+//     return {};
+//   }
+
+//   return {
+    
+//   }
+// }
+
+const getDraggableClass = (isDragging: boolean) => {
+  let className = 'album-draggable';
+
+  if(isDragging) {
+    className += ' dragged';
+  }
+
+  return className;
+}
+
+const getAlbumTier = (groupTier: Tier, isDragging: boolean,
+  isDropAnimating: boolean) => {
+    let tier = groupTier;
+
+    if(isDragging || isDropAnimating) {
+      tier = null;
+    }
+
+    return tier;
 }
 
 export default AlbumEditGroup;

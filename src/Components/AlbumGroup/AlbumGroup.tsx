@@ -12,20 +12,7 @@ export interface IAlbumGroupProps {
 }
 
 const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
-  const albumItems = props.rankedAlbums.map((album) => {
-    const albumData = AlbumsData[album.id];
-    return (
-      <Album
-        {...albumData}
-        tier={album.tier}
-        mode={AlbumMode.VIEW}
-        draggable={false}
-        isDraging={false}
-        onClick={props.onAlbumClick}
-        key={album.id}
-      />
-    );
-  });
+  const albumItems = mapAlbums(props.rankedAlbums, props.onAlbumClick);
 
   return (
     <div className='album-group'>
@@ -35,6 +22,29 @@ const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
       <div className='album-group-name'>{props.name}</div>
     </div>
   );
+}
+
+const mapAlbums = (
+  rankedAlbums: readonly RankedAlbum[],
+  onAlbumClick: (id: string) => void) => {
+  return rankedAlbums.map((album) => {
+    const albumData = AlbumsData[album.id];
+    return (
+      <div
+        className='album-view'
+        onClick={() => {onAlbumClick(album.id)}}
+        onMouseDown={() => false}
+        key={album.id}
+      >
+        <Album
+          {...albumData}
+          tier={album.tier}
+          draggable={false}
+          key={album.id}
+        />
+      </div>
+    );
+  });
 }
 
 export default AlbumGroup;

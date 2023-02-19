@@ -23,9 +23,17 @@
   flex-wrap: nowrap;
   /* --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
   gap: var(--group-gap); */
-  gap: calc(var(--album-item-size) * 0.2);
+  /* gap: calc(var(--album-item-size) * 0.1); */
   row-gap: 2em;
   transition: background-color var(--transition-fast);
+}
+
+.album-group-items-container > div {
+  margin-right: 2%;
+}
+
+.album-group-items-container > div:last-child {
+  margin-right: 0;
 }
 
 .album-group-items-container::-webkit-scrollbar {
