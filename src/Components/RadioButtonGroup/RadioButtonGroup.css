@@ -1,13 +1,10 @@
 .radio-button-group {
-  flex-grow: 1;
-  box-sizing: border-box;
-  width: 5em;
+  box-sizing: content-box;
+  flex: 0 20%;
   height: 100%;
-  border: 1px solid var(--active-color);
-  border-radius: 5%;
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-end;
   justify-content: flex-end;
-  gap: 2%;
+  gap: 5%;
 }
