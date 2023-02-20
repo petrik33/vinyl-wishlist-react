@@ -1,5 +1,5 @@
 @import url('../AlbumGroup/AlbumGroup.css');
 
 .dragged-over {
-  background-color: rgba(var(--tier-color, var(--dragged-over-color)), 0.25);
+  background-color: rgba(var(--dragged-over-color), 0.5);
 }

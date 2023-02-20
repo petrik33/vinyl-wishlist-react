@@ -1,29 +1,26 @@
 .radio-button {
   --state-color: var(--inactive-color);
-  box-sizing: content-box;
-  width: var(--tool-size);
-  height: var(--tool-size);
+  --border-size: 1px;
+  box-sizing: border-box;
+  width: calc(var(--tool-size) + var(--border-size));
+  height: calc(var(--tool-size) + var(--border-size));
   padding: 0.5em;
-  margin-right: 1em;
   border: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--state-color);
+  color: rgba(var(--state-color));
   cursor: pointer;
   transition-duration: var(--transition-fast);
   transition-timing-function: ease;
   transition-property: color, border;
 }
 
-.radio-button:last-child {
-  margin-right: 0;
-}
-
 .radio-button:hover {
   --state-color: var(--hover-color);
-  border: 1px solid var(--state-color);
+  border: 1px solid rgba(var(--state-color));
   border-radius: 50%;
+  width: calc();
 }
 
 .radio-button.active {
@@ -32,8 +29,8 @@
 }
 
 .radio-button svg {
-  width: 100%;
-  height: 100%;
-  fill: var(--state-color);
+  width: var(--tool-size);
+  height: var(--tool-size);
+  fill: rgba(var(--state-color));
   transition:  fill var(--transition-fast) ease;
 }

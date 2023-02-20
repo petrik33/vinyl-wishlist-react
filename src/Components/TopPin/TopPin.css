@@ -2,7 +2,7 @@
   box-sizing: border-box;
   width: 100%;
   height: var(--toolbar-height);
-  padding: 0.5em 3em 0.5em 1em;
+  padding: 0 3em 0 1em;
   margin-bottom: 0em;
   background-color: var(--bg-color);
   display: flex;
@@ -22,5 +22,5 @@ html:not([data-scroll='0']) *.toolbar {
   position: fixed;
   top: 0%;
   left: 0%;
-  border-bottom: 1px solid var(--active-color);
+  border-bottom: 1px solid rgba(var(--active-color));
 }

@@ -9,5 +9,5 @@
   align-items: center;
   justify-content: center;
   gap: 3em;
-  border-top: 1px solid var(--inactive-color);
+  border-top: 1px solid rgba(var(--inactive-color));
 }
