@@ -1,5 +1,7 @@
 .toolbar {
+  height: 100%;
   display: flex;
   flex-flow: row nowrap;
-  height: var(--toolbar-height);
+  align-items: center;
+  gap: 1em;
 }
