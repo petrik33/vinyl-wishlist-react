@@ -7,6 +7,7 @@ import { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
 import PushButton from '../PushButton/PushButton';
 import { dispatchDoAgain, dispatchUndo } from '../AlbumsEdit/AlbumsEdit';
 import { TierGroupsActionKind, TierGroupsDispatch, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
+import TierListViewEditButtonLine from '../TierListViewEditButtonLine/TierListViewEditButtonLine';
 import {ReactComponent as AuthorsIcon} from '../../Icons/free-icon-font-user-3917688.svg';
 import {ReactComponent as TiersIcon} from '../../Icons/free-icon-font-heart-3916585.svg';
 import {ReactComponent as UndoIcon} from '../../Icons/free-icon-font-rotate-left-7434925.svg';
@@ -15,6 +16,7 @@ import {ReactComponent as ResetIcon} from '../../Icons/free-icon-font-refresh-39
 
 export interface ITierListTopPinProps {
   editing: boolean;
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   viewGroupsKind: AlbumGroupsKind;
   setViewGroupsKind: React.Dispatch<React.SetStateAction<AlbumGroupsKind>>;
 }
@@ -25,6 +27,10 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
   return (
     <TopPin>
       <TierListHeader>TierList</TierListHeader>
+      <TierListViewEditButtonLine 
+          editing={props.editing}
+          setEditing={props.setEditing}
+      />
       <Toolbar>
         {!props.editing &&
           <RadioButtonGroup

@@ -4,7 +4,6 @@ import TierListFooter from '../TierListFooter/TierListFooter';
 import AlbumsEdit from '../AlbumsEdit/AlbumsEdit';
 import AlbumsView, { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
 import TierListTopPin from '../TierListTopPin/TierListTopPin';
-import TierListViewEditButtonLine from '../TierListViewEditButtonLine/TierListViewEditButtonLine';
 
 
 export interface IAlbumsTierListProps {
@@ -32,12 +31,9 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
     <div className='tierlist'>
 				<TierListTopPin 
           editing={editing}
+          setEditing={setEditing}
           viewGroupsKind={viewGroupsKind}
           setViewGroupsKind={setViewGroupsKind}
-        />
-        <TierListViewEditButtonLine 
-          editing={editing}
-          setEditing={setEditing}
         />
 				{!editing && <AlbumsView groupsKind={viewGroupsKind} />}
 				{editing && <AlbumsEdit />}

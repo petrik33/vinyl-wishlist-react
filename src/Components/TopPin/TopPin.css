@@ -15,6 +15,10 @@
   transition-timing-function: ease;
 }
 
+.top-pin > * {
+  flex: 1;
+}
+
 html:not([data-scroll='0']) {
   padding-top: calc(var(--toolbar-height));
 }

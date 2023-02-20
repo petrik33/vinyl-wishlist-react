@@ -1,15 +1,6 @@
-
-
 .button-group-line {
-  box-sizing: border-box;
-  width: 100%;
-  padding-left: 3em;
-  padding-right: 3em;
-  margin: 0;
-  margin-bottom: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3em;
-  border-top: 1px solid rgba(var(--inactive-color));
+  gap: 5%;
 }
