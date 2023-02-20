@@ -8,7 +8,7 @@ export interface IPushButtonProps {
 
 const PushButton : React.FC<IPushButtonProps> = (props) => {
   return (
-    <div onClick={props.onClick} >
+    <div className='push-button' onClick={props.onClick} >
       {props.icon}
     </div>
   );

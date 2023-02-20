@@ -1,0 +1,29 @@
+.push-button {
+  --transition-time: var(--transition-fast);
+  --state-color: var(--inactive-color);
+  box-sizing: border-box;
+  width: var(--push-button-size);
+  height: var(--push-button-size);
+  padding: 0.5em;
+  border: 1px solid rgba(var(--state-color));
+  border-radius: 50%;
+  filter: brightness(1);
+  transition: border var(--transition-time) ease;
+}
+
+.push-button:hover {
+  --state-color: var(--hover-color);
+  filter: brightness(1.2);
+}
+
+.push-button:active {
+  --transition-time: 10ms;
+  --state-color: var(--active-color);
+}
+
+.push-button svg {
+  width: 100%;
+  height: 100%;
+  fill: rgba(var(--state-color));
+  transition: fill var(--transition-time) ease;
+}
