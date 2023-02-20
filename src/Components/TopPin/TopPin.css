@@ -1,4 +1,4 @@
-.toolbar {
+.top-pin {
   box-sizing: border-box;
   width: 100%;
   height: var(--toolbar-height);
@@ -18,7 +18,7 @@ html:not([data-scroll='0']) {
   padding-top: calc(var(--toolbar-height));
 }
 
-html:not([data-scroll='0']) *.toolbar {
+html:not([data-scroll='0']) *.top-pin {
   position: fixed;
   top: 0%;
   left: 0%;

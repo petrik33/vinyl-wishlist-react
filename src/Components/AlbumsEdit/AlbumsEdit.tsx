@@ -77,7 +77,7 @@ const mapTierGroup = (group: TierGroup) => {
   )
 }
 
-const dispatchUndo = (
+export const dispatchUndo = (
   dispatch: TierGroupsDispatch
 ) => {
   dispatch({
@@ -85,7 +85,7 @@ const dispatchUndo = (
   });
 }
 
-const dispatchDoAgain = (
+export const dispatchDoAgain = (
   dispatch: TierGroupsDispatch
 ) => {
   dispatch({
