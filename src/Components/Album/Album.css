@@ -1,25 +1,41 @@
 
 
 .album {
+  --size: var(--album-view-image-size);
   box-sizing: border-box;
-  width: var(--album-item-size);
-  height: var(--album-item-size);
-  flex: 0 var(--album-item-size);
-  border: 0px;
+  width: var(--size);
+  height: var(--size);
   color: white;
   opacity: 1;
-  transition-property: opacity, border, box-shadow;
+  transition-property: opacity, box-shadow, width, height;
   transition-duration: var(--transition-fast);
   transition-timing-function: ease;
 }
 
+.album picture {
+  display: contents;
+  width: 0;
+  height: 0;
+}
+
+.album picture img {
+  width: 100%;
+  height: 100%;
+  transition-property: width, height;
+  transition-duration: var(--transition-fast);
+  transition-timing-function: ease;
+}
+
+.album.view {
+  cursor: pointer;
+}
+
 .album.tiered {
-  /* border: 8px solid rgb(var(--tier-color)); */
   box-shadow: var(--shadow-x-offset) var(--shadow-y-offset) var(--shadow-blur) var(--shadow-spread) rgb(var(--tier-color));
 }
 
-.album-view {
-  cursor: pointer;
+.album.edit {
+  --size: var(--album-edit-image-size);
 }
 
 .album-draggable.dragged {
@@ -35,14 +51,6 @@
 
 .album:hover {
   opacity: 0.5;
-}
-
-.album-image {
-  width: 100%;
-  height: 100%;
-  transition-property: width, height;
-  transition-duration: var(--transition-fast);
-  transition-timing-function: ease;
 }
 
 .album-info {

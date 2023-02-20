@@ -1,6 +1,4 @@
 .radio-button-group {
-  box-sizing: content-box;
-  flex: 0 20%;
   height: 100%;
   display: flex;
   flex-flow: row nowrap;

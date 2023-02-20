@@ -14,13 +14,14 @@ export enum AlbumMode {
 export interface IAlbumProps extends IAlbum {
   tier: Tier;
   draggable: boolean;
+  edit: boolean;
 }
 
 const Album : React.FC<IAlbumProps> = (props) => {
   
   return (
     <div 
-      className={getAlbumClass(props.tier)}
+      className={getAlbumClass(props.tier, props.edit)}
       key={props.id}
       id={props.id}
     >
@@ -28,19 +29,24 @@ const Album : React.FC<IAlbumProps> = (props) => {
           src={props.src}
           alt={getAlbumCoverAlt(props.name)}
           key={props.id}
-          className='album-image'
           draggable={props.draggable}
         />
     </div>
   );
 }
 
-const getAlbumClass = (tier?: TierName | null) => {
+const getAlbumClass = (tier: TierName | null, edit: boolean) => {
   let className = 'album';
 
   if(tier) {
     className += ' tiered';
     className += ` ${tier}-tier`;
+  }
+
+  if(edit) {
+    className += ' edit';
+  } else {
+    className += ' view';
   }
 
   return className;

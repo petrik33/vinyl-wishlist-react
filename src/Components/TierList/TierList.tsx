@@ -3,7 +3,6 @@ import './TierList.css';
 import TierListFooter from '../TierListFooter/TierListFooter';
 import AlbumsEdit from '../AlbumsEdit/AlbumsEdit';
 import AlbumsView, { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
-import { useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import TierListTopPin from '../TierListTopPin/TierListTopPin';
 import TierListViewEditButtonLine from '../TierListViewEditButtonLine/TierListViewEditButtonLine';
 

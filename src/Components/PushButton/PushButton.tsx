@@ -8,12 +8,12 @@ export interface IPushButtonProps {
 
 const PushButton : React.FC<IPushButtonProps> = (props) => {
   return (
-    <div
+    <button
       className='push-button'
       onClick={props.onClick}
     >
       {props.icon}
-    </div>
+    </button>
   );
 }
 

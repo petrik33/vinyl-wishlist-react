@@ -1,4 +1,5 @@
 .push-button {
+  background: transparent;
   --transition-time: var(--transition-fast);
   --state-color: var(--inactive-color);
   box-sizing: border-box;

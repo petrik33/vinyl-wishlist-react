@@ -15,11 +15,11 @@ const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
   const albumItems = mapAlbums(props.rankedAlbums, props.onAlbumClick);
 
   return (
-    <div className='album-group'>
-      <div className='album-group-items-container'>
+    <div className='album-group view named'>
+      <div className='albums-container view'>
         {albumItems}
       </div>
-      <div className='album-group-name'>{props.name}</div>
+      <div className='album-group-name view'>{props.name}</div>
     </div>
   );
 }
@@ -31,13 +31,14 @@ const mapAlbums = (
     const albumData = AlbumsData[album.id];
     return (
       <div
-        className='album-view'
+        className='album view'
         onClick={() => {onAlbumClick(album.id)}}
         onMouseDown={() => false}
         key={album.id}
       >
         <Album
           {...albumData}
+          edit={false}
           tier={album.tier}
           draggable={false}
           key={album.id}

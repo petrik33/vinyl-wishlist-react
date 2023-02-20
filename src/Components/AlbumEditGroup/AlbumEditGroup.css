@@ -1,3 +1,55 @@
-.dragged-over {
+.album-group.edit {
+  padding-right: 1%;
+  transition: background-color var(--transition-fast);
+}
+
+.album-group.edit.dragged-over {
   background-color: rgba(var(--dragged-over-color), 0.5);
+}
+
+.album-group.tiered {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.album-group.no-tier {
+  padding-left: 10%;
+}
+
+.albums-container.edit {
+  box-sizing: content-box;
+  flex-grow: 1;
+  height: var(--album-edit-image-size);
+  padding: 6px 0;
+  overflow-x: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.albums-container.edit::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  position: relative;
+  top: 5px;
+}
+.albums-container.edit::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(var(--inactive-color));
+}
+.albums-container.edit::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background: rgba(var(--inactive-color));
+}
+.albums-container.edit::-webkit-scrollbar-thumb:hover{
+  background: rgba(var(--hover-color));
+}
+.albums-container.edit::-webkit-scrollbar:active{
+  background: rgba(var(--active-color));
+}
+
+.album-group-name.tiered {
+  width: 4%;
+  background-color: rgb(var(--tier-color, var(--secondary-color)));
+  color: black;
 }

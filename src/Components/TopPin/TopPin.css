@@ -2,15 +2,16 @@
   box-sizing: border-box;
   width: 100%;
   height: var(--toolbar-height);
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.5% 1%;
   margin-bottom: 0em;
   background-color: var(--bg-color);
+  border-bottom: 1px solid rgba(var(--inactive-color));
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   transition-property: border-bottom;
-  transition-duration: var(--transition-slow);
+  transition-duration: var(--transition-fast);
   transition-timing-function: ease;
 }
 
