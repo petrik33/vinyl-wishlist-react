@@ -2,9 +2,11 @@
 
 .button-group-line {
   box-sizing: border-box;
-  width: 99%;
+  width: 100%;
   padding-left: 3em;
   padding-right: 3em;
+  margin: 0;
+  margin-bottom: 3em;
   display: flex;
   align-items: center;
   justify-content: center;

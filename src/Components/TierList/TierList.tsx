@@ -3,7 +3,6 @@ import './TierList.css';
 import TierListFooter from '../TierListFooter/TierListFooter';
 import AlbumsEdit from '../AlbumsEdit/AlbumsEdit';
 import AlbumsView, { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
-import { TierGroupsActionKind } from '../../Context/TierGroupsContext';
 import { useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import TierListTopPin from '../TierListTopPin/TierListTopPin';
 import TierListViewEditButtonLine from '../TierListViewEditButtonLine/TierListViewEditButtonLine';
@@ -17,7 +16,6 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
 	const [editing, setEditing] = React.useState(false);
   const [viewGroupsKind, setViewGroupsKind] = 
     React.useState(AlbumGroupsKind.TIERS);
-  const tierGroupsDispatch = useTierGroupsDispatch();
 
   const handleScroll = React.useCallback(() => {
     document.documentElement.dataset.scroll = window.scrollY.toString();
@@ -42,12 +40,6 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
           editing={editing}
           setEditing={setEditing}
         />
-        <button onClick={() => {
-          tierGroupsDispatch({
-            type: TierGroupsActionKind.RESET_TO_DEBUG,
-            parts: 4
-          });
-        }}>Debug Rank</button>
 				{!editing && <AlbumsView groupsKind={viewGroupsKind} />}
 				{editing && <AlbumsEdit />}
 				<TierListFooter>Made by?</TierListFooter>
