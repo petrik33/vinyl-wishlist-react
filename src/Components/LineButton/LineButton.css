@@ -1,14 +1,10 @@
-
-
 .linebutton {
   --state-color: var(--inactive-color);
-  box-sizing: border-box;
   padding: 0.25em;
-  margin-top: -1px;
-  border-top: 1px solid rgba(var(--state-color));
+  border-bottom: 1px solid rgba(var(--state-color));
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.5em;
   font-size: larger;
   color: rgba(var(--state-color));
@@ -16,6 +12,14 @@
   transition-duration: var(--transition-fast);
   transition-timing-function: ease;
   transition-property: border-top, color;
+}
+
+.linebutton:first-child {
+  margin-left: 0;
+}
+
+.linebutton:last-child {
+  margin-right: 0;
 }
 
 .linebutton:hover {

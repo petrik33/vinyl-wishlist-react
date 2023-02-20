@@ -16,46 +16,17 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
 
   return (
     <div className={getGroupClass(props.tier, props.isDraggingOver)}>
+      {props.tier !== null && (
+        <div className={getGroupNameClass(props.tier)}>
+          {props.name}
+        </div>
+      )}
       <div ref={props.innerRef} className={getGroupContainerClass()}>
         {albumItems}
         {props.droppablePlaceHolder}
       </div>
-      <div 
-        className={getGroupNameClass(props.tier)}
-      >
-        {props.name}
-      </div>
     </div>
   );
-}
-
-const getGroupClass = (tier: Tier, isDraggingOver: boolean) => {
-  let className = 'album-group';
-
-  if(tier) {
-    className += ` ${tier}-tier`;
-  }
-  
-  if(isDraggingOver) {
-    className += ' dragged-over';
-  }
-
-  return className;
-}
-
-const getGroupContainerClass = () => {
-  let className = 'album-group-items-container';
-  return className;
-}
-
-const getGroupNameClass = (tier: TierName | null) => {
-  let className = 'album-group-name tiered';
-
-  if(tier) {
-    className += ` ${tier}-tier`;
-  }
-
-  return className;
 }
 
 const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
@@ -77,11 +48,9 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
               key={album}
             >
               <Album
+                edit={true}
                 {...albumData}
-                tier={getAlbumTier(
-                  tier,
-                  snapshot.isDragging
-                )}
+                tier={null}
                 draggable={true}
                 key={album}
               />
@@ -91,6 +60,38 @@ const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
       </Draggable>
     );
   });
+}
+
+const getGroupClass = (tier: Tier, isDraggingOver: boolean) => {
+  let className = 'album-group edit';
+
+  if(tier) {
+    className += ` tiered ${tier}-tier`;
+  } else {
+    className += ' no-tier';
+  }
+  
+  if(isDraggingOver) {
+    className += ' dragged-over';
+  }
+
+  return className;
+}
+
+const getGroupContainerClass = () => {
+  let className = 'albums-container edit';
+  return className;
+}
+
+const getGroupNameClass = (tier: TierName | null) => {
+  let className = 'album-group-name';
+
+  if(tier) {
+    className += ' tiered';
+    className += ` ${tier}-tier`;
+  }
+
+  return className;
 }
 
 const getDraggableClass = (isDragging: boolean) => {
@@ -103,14 +104,14 @@ const getDraggableClass = (isDragging: boolean) => {
   return className;
 }
 
-const getAlbumTier = (groupTier: Tier, isDragging: boolean) => {
-    let tier = groupTier;
+// const getAlbumTier = (groupTier: Tier, isDragging: boolean) => {
+//   let tier = groupTier;
 
-    if(isDragging) {
-      tier = null;
-    }
+//   if(isDragging) {
+//     tier = null;
+//   }
 
-    return tier;
-}
+//   return tier;
+// }
 
 export default AlbumEditGroup;

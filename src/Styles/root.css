@@ -4,28 +4,36 @@
     --tier-B-color: 255, 223, 128;
     --tier-C-color: 254, 255, 127;
     --tier-D-color: 190, 255, 127;
+
     --shadow-x-offset: 5px;
     --shadow-y-offset: 5px;
     --shadow-blur: 5px;
     --shadow-spread: 1px;
+
     --bg-color: #1a1a17;
     --dragged-over-color: 67, 67, 67;
     --text-color: 255, 255, 255;
     --inactive-color: 255, 255, 255, 0.2;
     --hover-color: 255, 255, 255, 0.4;
     --active-color: 255, 255, 255, 0.9;
+
     --inactive-alpha: 0.2;
     --hover-alpha: 0.6;
     --active-alpha: 0.9;
-    --nav-size: 40px;
+
     --tool-size: 3em;
+    --push-button-size: 3em;
     --toolbar-height: 4.5em;
+    --album-view-image-size: 12.5em;
+    --album-edit-image-size: 5.5em;
+    --album-modal-image-size: 16em;
+
     --transition-fast: 300ms;
     --transition-normal: 500ms;
     --transition-slow: 1s;
-    --album-item-size: 12.5em;
+    
     --max-albums-in-row: 6;
-    --album-modal-image-size: 16em;
+   
     --primary-color: white;
     --secondary-color: gray;
 }

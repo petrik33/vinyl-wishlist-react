@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { TierName, TierNames, useTierGroups, TierGroups, NoTierName, NoTierId } from '../../Context/TierGroupsContext';
+import { Tier, TierNames, useTierGroups, TierGroups, NoTierName, NoTierId } from '../../Context/TierGroupsContext';
 import { AlbumsData, AuthorsData, IAlbum } from '../../Data/Data';
 import AlbumGroup, { IAlbumGroupProps } from '../AlbumGroup/AlbumGroup';
-import { Immutable } from 'immer';
 import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
 
@@ -27,7 +26,7 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
   const albumGroups = mapGroupKeys(albumGroupsMap, onAlbumClick);
 
   return (
-    <div >
+    <div className='album-groups-container'>
       {albumGroups}
       {modalAlbumId.length > 0 && 
         <AlbumInfo 
@@ -60,10 +59,12 @@ const mapGroupKeys = (albumGroupsMap: GroupsMap,
 export type GroupsMap = {
   [id: string]: IAlbumGroupProps;
 };
+
 export type GroupDistributor = (album: IAlbum) => string;//id
+
 export type RankedAlbum = {
   id: string,
-  tier: TierName;
+  tier: Tier;
 }
 
 const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroups)
@@ -127,17 +128,16 @@ const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroups)
           });
         })
       })
+      
+      const unrankedGroup = tierGroups['No-Tier'];
 
-      const unrankedGroup = {
-        name: NoTierName,
-        id: NoTierId,
-        rankedAlbums: tierGroups['No-Tier'].albums.map((id) => {
-          return {
-            id: id,
-            tier: null
-          }
+      unrankedGroup.albums.forEach((id) => {
+        const distributedGroupId = groupDistributor(AlbumsData[id]);
+        rankedAlbumsMap[distributedGroupId].push({
+          id: id,
+          tier: null
         })
-      }
+      })
 
       const groupsMap = Object.create({});
 

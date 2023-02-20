@@ -1,71 +1,46 @@
 
 
 .album-group {
-  --border-alpha: 0.5;
-  padding-top: 2em;
+  border-top: 1px solid rgba(var(--hover-color));
+  border-bottom: 1px solid rgba(var(--hover-color));
+}
+
+.album-group.named {
   padding-bottom: 0.5em;
-  border-top: 1px solid rgba(var(--active-color));
-  border-bottom: 1px solid rgba(var(--active-color));
-  border-collapse: collapse;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1em;
-  transition: background-color var(--transition-fast);
 }
 
-.album-group-items-container {
-  min-height: var(--album-item-size);
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-bottom: 1em;
-  overflow-x: auto;
+.album-group.view {
+  padding-top: 2em;
+}
+
+.albums-container.view {
+  padding: 0 1%;
   display: flex;
-  flex-wrap: nowrap;
-  /* --group-gap: calc((100% - var(--max-albums-in-row) * var(--album-item-size)) / (var(--max-albums-in-row) - 1));
-  gap: var(--group-gap); */
-  /* gap: calc(var(--album-item-size) * 0.1); */
-  row-gap: 2em;
+  flex-flow: row wrap;
+  row-gap: 1em;
 }
 
-.album-group-items-container > div {
+.albums-container.view > div {
   margin-right: 2%;
 }
 
-.album-group-items-container > div:last-child {
+.albums-container.view > div:last-child {
   margin-right: 0;
 }
 
-.album-group-items-container::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  position: relative;
-  top: 5px;
-}
-.album-group-items-container::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background: rgba(var(--inactive-color));
-}
-.album-group-items-container::-webkit-scrollbar-thumb{
-  border-radius: 10px;
-  background: rgba(var(--inactive-color));
-}
-.album-group-items-container::-webkit-scrollbar-thumb:hover{
-  background: rgba(var(--hover-color));
-}
-.album-group-items-container::-webkit-scrollbar-thumb:active{
-  background: rgba(var(--active-color));
-}
-
 .album-group-name {
-  padding-right: 0.5em;
-  height: 1em;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: center;
   color: rgb(var(--text-color));
 }
 
-.album-group-name.tiered {
-  color: rgb(var(--tier-color, var(--text-color)));
+.album-group-name.view {
+  justify-content: flex-end;
+  padding-right: 1%;
+  height: 1em;
 }
