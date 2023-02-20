@@ -1,0 +1,5 @@
+.toolbar {
+  display: flex;
+  flex-flow: row nowrap;
+  height: var(--toolbar-height);
+}

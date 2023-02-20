@@ -1,11 +1,11 @@
 import * as React from 'react';
-import './TopPin.css'
+import './Toolbar.css'
 
-export interface ITopPinProps {
+export interface IToolbarProps {
   children?: React.ReactNode;
 }
 
-const TopPin : React.FC<ITopPinProps> = (props) => {
+const Toolbar : React.FC<IToolbarProps> = (props) => {
   return (
     <div className='toolbar'>
       {props.children}
@@ -13,4 +13,4 @@ const TopPin : React.FC<ITopPinProps> = (props) => {
   );
 }
 
-export default TopPin;
+export default Toolbar;
