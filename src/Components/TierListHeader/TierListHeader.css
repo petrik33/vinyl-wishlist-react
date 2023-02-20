@@ -1,5 +1,5 @@
 .tierlist-header {
-  text-align: center;
+  flex-grow: 1;
   margin: 0;
 }
 

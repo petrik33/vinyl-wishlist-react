@@ -1,8 +1,13 @@
 .radio-button-group {
-  width: min-content;
+  flex-grow: 1;
+  box-sizing: border-box;
+  width: 5em;
   height: 100%;
+  border: 1px solid var(--active-color);
+  border-radius: 5%;
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
-  gap: 15%;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 2%;
 }
