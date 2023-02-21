@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import TierList from '../TierList/TierList';
 import { TierGroupsProvider } from '../../Context/TierGroupsContext';
