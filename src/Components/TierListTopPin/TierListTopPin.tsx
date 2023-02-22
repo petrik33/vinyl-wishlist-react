@@ -20,10 +20,11 @@ export interface ITierListTopPinProps {
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   viewGroupsKind: AlbumGroupsKind;
   setViewGroupsKind: React.Dispatch<React.SetStateAction<AlbumGroupsKind>>;
+  tierGroupsDispatch: TierGroupsDispatch;
 }
 
 const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
-  const tierGroupsDispatch = useTierGroupsDispatch();
+  const tierGroupsDispatch = props.tierGroupsDispatch;
 
   return (
     <TopPin>

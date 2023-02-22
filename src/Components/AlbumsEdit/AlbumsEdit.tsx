@@ -5,12 +5,13 @@ import AlbumEditGroup from '../AlbumEditGroup/AlbumEditGroup';
 import './AlbumsEdit.css'
 
 export interface IAlbumsEditProps {
-  
+  tierGroups: TierGroups;
+  tierGroupsDispatch: TierGroupsDispatch;
 }
 
 const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
-  const tierGroups = useTierGroups();
-  const tierGroupsDispatch = useTierGroupsDispatch();
+  const tierGroups = props.tierGroups;
+  const tierGroupsDispatch = props.tierGroupsDispatch;
   const albumGroups = mapTiers(tierGroups);
 
   const onDragEnd = (result: DragUpdate) => {

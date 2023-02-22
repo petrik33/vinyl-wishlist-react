@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import TierList from '../TierList/TierList';
 import { TierGroupsProvider } from '../../Context/TierGroupsContext';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { FirebaseApp, initializeApp } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPN5OyIr39yg95jCUtkfIr8qURd_eEUyM",
@@ -16,17 +15,35 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+const AppContext = React.createContext({} as FirebaseApp);
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 function App() {
+  const handleScroll = React.useCallback(() => {
+    document.documentElement.dataset.scroll = window.scrollY.toString();
+  }, [])
+
+  React.useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <div>
-      <TierGroupsProvider>
-        <TierList />
-      </TierGroupsProvider>
+      <AppContext.Provider value={app}>
+        <TierGroupsProvider>
+          <TierList />
+        </TierGroupsProvider>
+      </AppContext.Provider>
     </div>
   );
+}
+
+export const useFirebaseApp = () => {
+  useContext(AppContext);
 }
 
 export default App;
