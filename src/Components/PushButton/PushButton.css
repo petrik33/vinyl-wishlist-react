@@ -5,17 +5,15 @@
   box-sizing: border-box;
   width: var(--push-button-size);
   height: var(--push-button-size);
-  padding: 0.5em;
+  padding: 5%;
   border: 1px solid rgba(var(--state-color));
   border-radius: 50%;
   cursor: pointer;
-  filter: brightness(1);
   transition: border var(--transition-time) ease;
 }
 
 .push-button:hover {
   --state-color: var(--hover-color);
-  filter: brightness(1.2);
 }
 
 .push-button:active {
