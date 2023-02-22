@@ -8,6 +8,7 @@ import PushButton from '../PushButton/PushButton';
 import { dispatchDoAgain, dispatchUndo } from '../AlbumsEdit/AlbumsEdit';
 import { TierGroupsActionKind, TierGroupsDispatch, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import TierListViewEditButtonLine from '../TierListViewEditButtonLine/TierListViewEditButtonLine';
+import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import {ReactComponent as AuthorsIcon} from '../../Icons/free-icon-font-user-3917688.svg';
 import {ReactComponent as TiersIcon} from '../../Icons/free-icon-font-heart-3916585.svg';
 import {ReactComponent as UndoIcon} from '../../Icons/free-icon-font-rotate-left-7434925.svg';
@@ -19,10 +20,11 @@ export interface ITierListTopPinProps {
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   viewGroupsKind: AlbumGroupsKind;
   setViewGroupsKind: React.Dispatch<React.SetStateAction<AlbumGroupsKind>>;
+  tierGroupsDispatch: TierGroupsDispatch;
 }
 
 const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
-  const tierGroupsDispatch = useTierGroupsDispatch();
+  const tierGroupsDispatch = props.tierGroupsDispatch;
 
   return (
     <TopPin>
@@ -48,7 +50,7 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
             ]}
         />}
         {props.editing &&
-        <>
+        <ButtonGroup>
           <PushButton
             icon={<UndoIcon />}
             onClick={() => {dispatchUndo(tierGroupsDispatch)}}
@@ -61,7 +63,7 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
             icon={<ResetIcon />}
             onClick={() => {dispatchDebugGroups(tierGroupsDispatch)}}
           />
-        </>
+        </ButtonGroup>
         }
       </Toolbar>
     </TopPin>

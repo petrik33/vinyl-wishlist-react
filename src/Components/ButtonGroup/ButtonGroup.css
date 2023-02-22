@@ -1,0 +1,20 @@
+.button-group {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 1vw;
+}
+
+.button-group button {
+  flex: 1;
+  /* margin-right: 5%;
+  margin-left: 5%; */
+}
+
+/* .button-group button:first-child {
+  margin-left: 0;
+}
+
+.button-group button:last-child {
+  margin-right: 0;
+} */

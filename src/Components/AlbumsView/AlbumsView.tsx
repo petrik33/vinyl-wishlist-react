@@ -6,6 +6,7 @@ import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
 
 export interface IAlbumsViewProps {
+  tierGroups: TierGroups;
   groupsKind: AlbumGroupsKind;
 }
 
@@ -16,7 +17,7 @@ export enum AlbumGroupsKind {
 
 const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
   const [modalAlbumId, setModalAlbumId] = React.useState("");
-  const tierGroups = useTierGroups();
+  const tierGroups = props.tierGroups;
 
   const onAlbumClick = (id: string) => {
     setModalAlbumId(id);
