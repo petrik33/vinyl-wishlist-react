@@ -19,8 +19,7 @@
 .albums-container.edit {
   box-sizing: content-box;
   flex-grow: 1;
-  height: var(--album-edit-image-size);
-  padding: 6px 0;
+  min-height: var(--album-edit-image-size);
   overflow-x: auto;
   display: flex;
   flex-flow: row nowrap;
@@ -49,7 +48,7 @@
 }
 
 .album-group-name.tiered {
-  width: 4%;
+  width: 3em;
   background-color: rgb(var(--tier-color, var(--secondary-color)));
   color: black;
 }
