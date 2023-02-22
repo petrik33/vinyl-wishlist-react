@@ -24,9 +24,9 @@
     --tool-size: 3em;
     --push-button-size: 3em;
     --toolbar-height: 4.5em;
-    --album-view-image-size: 12.5em;
-    --album-edit-image-size: 5.5em;
-    --album-modal-image-size: 16em;
+    --album-view-image-size: 150px;
+    --album-edit-image-size: 100px;
+    --album-modal-image-size: 300px;
 
     --transition-fast: 300ms;
     --transition-normal: 500ms;
