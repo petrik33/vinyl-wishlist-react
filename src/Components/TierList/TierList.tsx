@@ -20,23 +20,27 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
 
   return (
     <div className='tierlist'>
-				<TierListTopPin 
-          editing={editing}
-          setEditing={setEditing}
-          viewGroupsKind={viewGroupsKind}
-          setViewGroupsKind={setViewGroupsKind}
+      <TierListTopPin 
+        editing={editing}
+        setEditing={setEditing}
+        viewGroupsKind={viewGroupsKind}
+        setViewGroupsKind={setViewGroupsKind}
+        tierGroupsDispatch={tierGroupsDispatch}
+      />
+
+      {!editing && 
+        <AlbumsView 
+          tierGroups={tierGroups} 
+          groupsKind={viewGroupsKind} 
+        />}
+
+      {editing && 
+        <AlbumsEdit 
+          tierGroups={tierGroups} 
           tierGroupsDispatch={tierGroupsDispatch}
-        />
+        />}
 
-				{!editing && 
-          <AlbumsView tierGroups={tierGroups} groupsKind={viewGroupsKind} />}
-				{editing && 
-          <AlbumsEdit 
-            tierGroups={tierGroups} 
-            tierGroupsDispatch={tierGroupsDispatch}
-          />}
-
-				<TierListFooter>Made by?</TierListFooter>
+      <TierListFooter>Made by?</TierListFooter>
     </div>
   );
 }
