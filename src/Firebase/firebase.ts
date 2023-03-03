@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { CollectionReference, DocumentData, Firestore, FirestoreDataConverter, Query, QueryDocumentSnapshot, collection, collectionGroup, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPN5OyIr39yg95jCUtkfIr8qURd_eEUyM",
@@ -13,5 +13,16 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(db, collectionName) as CollectionReference<T>
+}
+
+const createCollectionGroup = <T = DocumentData>(groupName: string) => {
+  return collectionGroup(db, groupName) as Query<T>;
+}
+
+export const albumsCollection 
+  = createCollectionGroup('albums');
 
 export default db;
