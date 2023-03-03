@@ -5,6 +5,7 @@ import AlbumsEdit from '../AlbumsEdit/AlbumsEdit';
 import AlbumsView, { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
 import TierListTopPin from '../TierListTopPin/TierListTopPin';
 import { useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
+import database from '../../Firebase/firebase';
 
 
 export interface IAlbumsTierListProps {
@@ -17,6 +18,10 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
 	const [editing, setEditing] = React.useState(false);
   const [viewGroupsKind, setViewGroupsKind] = 
     React.useState(AlbumGroupsKind.TIERS);
+  
+  React.useEffect(() => {
+    database
+  }, [])
 
   return (
     <div className='tierlist'>
