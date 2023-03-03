@@ -5,7 +5,8 @@ import AlbumsEdit from '../AlbumsEdit/AlbumsEdit';
 import AlbumsView, { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
 import TierListTopPin from '../TierListTopPin/TierListTopPin';
 import { useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
-import database from '../../Firebase/firebase';
+import db, { albumsCollection } from '../../Firebase/firebase';
+import { collection, collectionGroup, getDocs, query } from 'firebase/firestore';
 
 
 export interface IAlbumsTierListProps {
@@ -20,7 +21,12 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
     React.useState(AlbumGroupsKind.TIERS);
   
   React.useEffect(() => {
-    database
+    const fetchAlbums = async () => {
+      const albums = await getDocs(query(albumsCollection));
+      albums.forEach((doc) => {
+        
+      })
+    }
   }, [])
 
   return (

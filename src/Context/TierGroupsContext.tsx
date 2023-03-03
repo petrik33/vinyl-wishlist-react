@@ -2,6 +2,8 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { AlbumsData, IAlbumsData } from '../Data/Data';
 import * as _ from "lodash";
+import { Firestore } from 'firebase/firestore';
+import db from '../Firebase/firebase';
 // import { ImmerReducer, useImmerReducer } from 'use-immer';
 // import { Immutable, current } from 'immer';
 // import { Draft } from 'immer';
@@ -77,7 +79,8 @@ export enum TierGroupsActionKind {
   DELETE_ALBUM_IDX = 'delete-album-idx',
   UNDO = 'undo',
   DO_AGAIN = 'do-again',
-  RESET_TO_DEBUG = 'reset-to-debug'
+  RESET_TO_DEBUG = 'reset-to-debug',
+  LOAD = 'load'
 };
 
 export type TierGroupsActionMoveIndex = {
@@ -114,6 +117,11 @@ export type TierGroupsActionReorder = {
   destinationIndex: number;
 }
 
+export type TierGroupsActionLoad = {
+  type: TierGroupsActionKind.LOAD;
+  groups: TierGroups;
+}
+
 export type TierGroupsAction = 
   | TierGroupsActionMoveIndex
   | TierGroupsActionReorder
@@ -121,6 +129,7 @@ export type TierGroupsAction =
   | TierGroupsActionResetToDebug
   | TierGroupsActionUndo
   | TierGroupsActionDoAgain
+  | TierGroupsActionLoad
 
 const TierGroupsReducer : React.Reducer<TierGroupsState, TierGroupsAction> = (state, action) => {
 	switch (action.type) {
@@ -148,11 +157,32 @@ const TierGroupsReducer : React.Reducer<TierGroupsState, TierGroupsAction> = (st
 			return getDebugTierGroups(AlbumsData, action.parts);
 		}
 
+    case TierGroupsActionKind.LOAD: {
+      return TierGroupsLoad(state, action);
+    }
+
 		default: {
 			throw Error('Unknown action');
 		}
 	}
 }
+
+const TierGroupsLoad = (
+  state: TierGroupsState, action: TierGroupsActionLoad) => {
+    const current = state.current;
+
+    const nextGroups = action.groups;
+
+    const nextCurrent = current + 1;
+    const nextHistory = [
+      ...state.history.slice(0, nextCurrent),
+      nextGroups];
+
+    return {
+      history: nextHistory,
+      current: nextCurrent
+    }
+  }
 
 const TierGroupsMoveAlbumIdx = (
   state: TierGroupsState, action: TierGroupsActionMoveIndex) => {
