@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { CollectionReference, DocumentData, Firestore, FirestoreDataConverter, Query, QueryDocumentSnapshot, collection, collectionGroup, getFirestore } from 'firebase/firestore';
+import { CollectionReference, DocumentData, Query, collection, collectionGroup, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPN5OyIr39yg95jCUtkfIr8qURd_eEUyM",
