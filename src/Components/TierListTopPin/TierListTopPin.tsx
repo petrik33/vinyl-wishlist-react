@@ -12,7 +12,7 @@ import {ReactComponent as AuthorsIcon} from '../../Icons/free-icon-font-user-391
 import {ReactComponent as TiersIcon} from '../../Icons/free-icon-font-heart-3916585.svg';
 import {ReactComponent as UndoIcon} from '../../Icons/free-icon-font-rotate-left-7434925.svg';
 import {ReactComponent as DoAgainIcon} from '../../Icons/free-icon-font-rotate-right-3917289.svg';
-import {ReactComponent as ResetIcon} from '../../Icons/free-icon-font-refresh-3917293.svg';
+// import {ReactComponent as ResetIcon} from '../../Icons/free-icon-font-refresh-3917293.svg';
 
 export interface ITierListTopPinProps {
   editing: boolean;

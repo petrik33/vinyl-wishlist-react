@@ -14,16 +14,16 @@ export interface IAlbumProps extends IAlbum {
 }
 
 const Album : React.FC<IAlbumProps> = (props) => {
-  
+  const { tier, src, alt} = {...props.data};
   return (
     <div 
-      className={getAlbumClass(props.tier, props.edit)}
+      className={getAlbumClass(tier, props.edit)}
       key={props.id}
       id={props.id}
     >
         <WebImage
-          src={props.src}
-          alt={props.alt}
+          src={src}
+          alt={alt}
           key={props.id}
           draggable={props.draggable}
         />

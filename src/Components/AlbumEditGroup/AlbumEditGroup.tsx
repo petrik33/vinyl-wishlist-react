@@ -37,6 +37,10 @@ const mapAlbumItems = (
   }
 
   return albums.map((album, idx) => {
+    const albumData = {
+      ...album.data,
+      tier: null
+    }
     return (
       <Draggable 
         draggableId={album.id} 
@@ -56,8 +60,8 @@ const mapAlbumItems = (
             >
               <Album
                 edit={true}
-                {...album}
-                tier={null}
+                data={albumData}
+                id={album.id}
                 draggable={true}
                 key={album.id}
               />

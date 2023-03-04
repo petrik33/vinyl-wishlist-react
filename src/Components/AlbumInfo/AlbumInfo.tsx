@@ -1,15 +1,15 @@
 import * as React from 'react';
 import './AlbumInfo.css'
 import WebImage from '../Utilities/WebImage';
-import { IAlbum } from '../../Data/Data';
+import { IAlbumData } from '../../Data/Data';
 
 export interface IAlbumInfoProps {
-  album: IAlbum;
+  albumData: IAlbumData;
   onClose: () => void;
 }
 
 const AlbumInfo : React.FC<IAlbumInfoProps> = (props) => {
-  const { album, onClose } = {...props};
+  const { albumData, onClose } = {...props};
   const onClick = (event: React.MouseEvent) => {
     const nodeClicked = event.target as HTMLElement;
     const infoClicked = nodeClicked.closest('.album-modal-info');
@@ -22,16 +22,16 @@ const AlbumInfo : React.FC<IAlbumInfoProps> = (props) => {
     <div className='modal-div' onClick={onClick}>
       <div className='album-modal-info'>
         <WebImage
-          src={album.src}
-          alt={album.alt}
+          src={albumData.src}
+          alt={albumData.alt}
           className='album-modal-image'
         />
         <div className='album-modal-data'>
           <div className='album-modal-author'>
-            {album.author}
+            {albumData.author}
           </div>
           <div className='album-modal-name'>
-            {album.name}
+            {albumData.name}
           </div>
         </div>
       </div>

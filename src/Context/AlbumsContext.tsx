@@ -193,8 +193,8 @@ const AlbumsReducer : ImmerReducer<AlbumsState, AlbumsAction> = (draft, action) 
       const { tier, id, sourceIdx, destintionIdx } 
         = {...action.load};
 
-      const sourceTier = nextAlbums[id].tier;
-      nextAlbums[id].tier = tier;
+      const sourceTier = nextAlbums[id].data.tier;
+      nextAlbums[id].data.tier = tier;
 
       const sourceTierId = getTierId(sourceTier);
       order[sourceTierId].splice(sourceIdx, 1);
@@ -292,7 +292,7 @@ const initializeTierOrder = (
   tierOrder['No Tier'] = [];
   for(const id in albums) {
     const album = albums[id];
-    const tierId = getTierId(album.tier);
+    const tierId = getTierId(album.data.tier);
     tierOrder[tierId].push(id);
   }
   return tierOrder;
@@ -318,9 +318,13 @@ const getDebugAlbums = (parts: number)
     for(const albumId in AlbumsDebugData) {
         const tierIdx = Math.floor(counter / minPerGroup);
         const tier = TierNames[tierIdx];
-        Albums[albumId] = {
-          ...AlbumsDebugData[counter],
+        const albumData = {
+          ...AlbumsDebugData[counter].data,
           tier: tier
+        }
+        Albums[albumId] = {
+          id: AlbumsDebugData[counter].id,
+          data: albumData
         };
         counter++;
     }

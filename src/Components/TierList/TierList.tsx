@@ -24,6 +24,7 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
 
   const fetchCallback = React.useCallback(() => {
     fetchAlbums(albumsDispatch);
+    console.log('Fetch!');
   }, [albumsDispatch]);
   
   React.useEffect(() => {
@@ -75,7 +76,7 @@ const mapAlbumDocs = async (
     docs.forEach(async (doc) => {
       const data = doc.data();
       const album: IAlbum = {
-        ...data,
+        data,
         id: doc.id,
       }
       albumsCollectionData[album.id] = album;

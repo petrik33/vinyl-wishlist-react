@@ -38,7 +38,7 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
       {modalAlbumId.length > 0 && 
         <AlbumInfo 
           onClose={() => {setModalAlbumId("")}} 
-          album={albums[modalAlbumId]}
+          albumData={albums[modalAlbumId].data}
         />
       }
     </div>
@@ -105,12 +105,12 @@ const getGroupDistributor = (type: AlbumGroupsKind)
   : GroupDistributor => {
   switch(type) {
     case AlbumGroupsKind.TIERS: {
-      return (album: IAlbum) => getTierId(album.tier);
+      return (album: IAlbum) => getTierId(album.data.tier);
     }
     case AlbumGroupsKind.AUTHORS: {
       return (album: IAlbum) => {
-        if(album.author) {
-          return album.author;
+        if(album.data.author) {
+          return album.data.author;
         }
         return 'Unknown';
       }
