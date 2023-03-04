@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IAlbum, getTierId } from '../../Data/Data';
+import { IAlbum, TierGroupId, getTierId } from '../../Data/Data';
 import AlbumGroup from '../AlbumGroup/AlbumGroup';
 import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
@@ -25,7 +25,8 @@ const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
     setModalAlbumId(id);
   }
 
-  const albums = props.albumsSnap.data;
+  const { data: albums, tiersOrder: order} 
+    = {...props.albumsSnap};
 
   const groups = mapGroupElements(
     props.groupsKind, props.albumsSnap, onAlbumClick
@@ -66,16 +67,28 @@ const mapGroups = (
   albumsSnap: Immutable<AlbumsSnapshot>
 ) => {
   const distributor = getGroupDistributor(type);
-  const albums = albumsSnap.data;
+  const { data: albums, tiersOrder: order} 
+    = {...albumsSnap};
 
   const albumsMap: AlbumsMap = Object.create({});
-  for(const id in albums) {
-    const album = albums[id];
-    const groupId = distributor(album);
-    if(!albumsMap[groupId]) {
-      albumsMap[groupId] = [];
+  if(type === AlbumGroupsKind.TIERS) {
+    for(const tierId in order) {
+      const orderGroup = order[tierId as TierGroupId];
+      albumsMap[tierId] = orderGroup.map((id) => {
+        const album = albums[id];
+        return album;
+      })
     }
-    albumsMap[groupId].push(album);
+  }
+  else {
+    for(const id in albums) {
+      const album = albums[id];
+      const groupId = distributor(album);
+      if(!albumsMap[groupId]) {
+        albumsMap[groupId] = [];
+      }
+      albumsMap[groupId].push(album);
+    }
   }
 
   const groups = Object.keys(albumsMap).map((id) => {
