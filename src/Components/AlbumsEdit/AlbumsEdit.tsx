@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DragDropContext, DragUpdate, DraggableLocation, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import AlbumEditGroup from '../AlbumEditGroup/AlbumEditGroup';
 import './AlbumsEdit.css'
-import { AlbumsDispatch, AlbumsDispatchRedo, AlbumsDispatchReorder, AlbumsDispatchSetTier, AlbumsDispatchUndo, AlbumsSnapshot } from '../../Context/AlbumsContext';
+import { AlbumsDispatch, AlbumsDispatchRedo, AlbumsDispatchReorder, AlbumsDispatchSetTier, AlbumsDispatchUndo, AlbumsSnapshot, TiersOrder } from '../../Context/AlbumsContext';
 import { IAlbumsCollectionData, NoTierId, NoTierName, TierGroupId, TierNames, getTierById, getTierId } from '../../Data/Data';
 import { Immutable } from 'immer';
 import { AlbumsMapTiers, ITierGroup } from '../../Types/AlbumGroups';
@@ -13,10 +13,11 @@ export interface IAlbumsEditProps {
 }
 
 const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
-  const albums = props.albumsSnap.data;
+  const { data: albums, tiersOrder: order} 
+    = {...props.albumsSnap};
   const albumsDispatch = props.albumsDispatch;
 
-  const tierGroups = mapTierGroups(albums);
+  const tierGroups = mapTierGroups(albums, order);
 
   const onDragEnd = (result: DragUpdate) => {
     dispatchDragResult(result.source, result.destination, props.albumsSnap, albumsDispatch);
@@ -53,7 +54,10 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   );
 }
 
-const mapAlbums = (albums: IAlbumsCollectionData) => {
+const mapAlbums = (
+  albums: IAlbumsCollectionData,
+  order: Immutable<TiersOrder>
+) => {
   const albumsMap: AlbumsMapTiers = Object.create({});
   TierNames.forEach((tier) => {
     const id = getTierId(tier);
@@ -61,17 +65,23 @@ const mapAlbums = (albums: IAlbumsCollectionData) => {
   });
   albumsMap['No Tier'] = [];
 
-  for(const id in albums) {
-    const album = albums[id];
-    const tierId = getTierId(album.tier);
-    albumsMap[tierId].push(album);
+  for(const tierId in order) {
+    const orderGroup = order[tierId as TierGroupId];
+    albumsMap[tierId as TierGroupId] =
+      orderGroup.map((id) => {
+        const album = albums[id];
+        return album;
+    })
   }
 
   return albumsMap;
 }
 
-const mapTierGroups = (albums: IAlbumsCollectionData) => {
-  const albumsMap = mapAlbums(albums);
+const mapTierGroups = (
+  albums: IAlbumsCollectionData,
+  order: Immutable<TiersOrder>
+) => {
+  const albumsMap = mapAlbums(albums, order);
   const tierGroupsArray = initializeTierGroups(albumsMap);
   const tierGroups = tierGroupsArray.map((group) => {
     return (

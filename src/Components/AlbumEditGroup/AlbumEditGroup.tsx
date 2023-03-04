@@ -57,6 +57,7 @@ const mapAlbumItems = (
               <Album
                 edit={true}
                 {...album}
+                tier={null}
                 draggable={true}
                 key={album.id}
               />

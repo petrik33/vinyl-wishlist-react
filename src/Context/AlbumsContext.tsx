@@ -292,9 +292,6 @@ const initializeTierOrder = (
   tierOrder['No Tier'] = [];
   for(const id in albums) {
     const album = albums[id];
-    if(album.tier === undefined) {
-      continue;
-    }
     const tierId = getTierId(album.tier);
     tierOrder[tierId].push(id);
   }
