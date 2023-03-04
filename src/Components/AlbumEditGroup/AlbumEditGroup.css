@@ -48,7 +48,7 @@
 }
 
 .album-group-name.tiered {
-  width: 3em;
+  min-width: 3em;
   background-color: rgb(var(--tier-color, var(--secondary-color)));
   color: black;
 }
