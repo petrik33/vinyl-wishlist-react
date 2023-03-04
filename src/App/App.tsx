@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
 import TierList from '../Components/TierList/TierList';
-import { TierGroupsProvider } from '../Context/TierGroupsContext';
+import { AlbumsProvider } from '../Context/AlbumsContext';
 
 function App() {
   const handleScroll = React.useCallback(() => {
@@ -18,9 +18,9 @@ function App() {
 
   return (
     <div>
-      <TierGroupsProvider>
+      <AlbumsProvider>
         <TierList />
-      </TierGroupsProvider>
+      </AlbumsProvider>
     </div>
   );
 }

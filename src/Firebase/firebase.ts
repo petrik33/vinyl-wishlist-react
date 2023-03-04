@@ -1,5 +1,6 @@
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import { CollectionReference, DocumentData, Query, collection, collectionGroup, getFirestore } from 'firebase/firestore';
+import { IAlbumData, IAuthorData } from '../Data/Data';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPN5OyIr39yg95jCUtkfIr8qURd_eEUyM",
@@ -11,7 +12,7 @@ const firebaseConfig = {
   measurementId: "G-BT8W55LY3G"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
@@ -22,7 +23,10 @@ const createCollectionGroup = <T = DocumentData>(groupName: string) => {
   return collectionGroup(db, groupName) as Query<T>;
 }
 
+export const authorsCollecion
+  = createCollection<IAuthorData>('authors');
+
 export const albumsCollection 
-  = createCollectionGroup('albums');
+  = createCollectionGroup<IAlbumData>('albums');
 
 export default db;

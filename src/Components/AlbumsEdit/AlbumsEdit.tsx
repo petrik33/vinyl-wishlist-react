@@ -1,21 +1,25 @@
 import * as React from 'react';
-import { NoTierId, TierGroup, TierGroups, TierGroupsActionKind, TierGroupsDispatch, TierName, TierNames, useTierGroups, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
 import { DragDropContext, DragUpdate, DraggableLocation, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import AlbumEditGroup from '../AlbumEditGroup/AlbumEditGroup';
 import './AlbumsEdit.css'
+import { AlbumsDispatch, AlbumsDispatchRedo, AlbumsDispatchReorder, AlbumsDispatchSetTier, AlbumsDispatchUndo, AlbumsSnapshot } from '../../Context/AlbumsContext';
+import { IAlbumsCollectionData, NoTierId, NoTierName, TierGroupId, TierNames, getTierById, getTierId } from '../../Data/Data';
+import { Immutable } from 'immer';
+import { AlbumsMapTiers, ITierGroup } from '../../Types/AlbumGroups';
 
 export interface IAlbumsEditProps {
-  tierGroups: TierGroups;
-  tierGroupsDispatch: TierGroupsDispatch;
+  albumsSnap: Immutable<AlbumsSnapshot>;
+  albumsDispatch: AlbumsDispatch;
 }
 
 const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
-  const tierGroups = props.tierGroups;
-  const tierGroupsDispatch = props.tierGroupsDispatch;
-  const albumGroups = mapTiers(tierGroups);
+  const albums = props.albumsSnap.data;
+  const albumsDispatch = props.albumsDispatch;
+
+  const tierGroups = mapTierGroups(albums);
 
   const onDragEnd = (result: DragUpdate) => {
-    dispatchDragResult(result.source, result.destination, tierGroupsDispatch);
+    dispatchDragResult(result.source, result.destination, props.albumsSnap, albumsDispatch);
   }
 
   const onShortCutPressed = React.useCallback((event: KeyboardEvent) => {
@@ -24,14 +28,14 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
     }
 
     if(event.key.toUpperCase() === 'Z') {
-      dispatchUndo(tierGroupsDispatch);
+      AlbumsDispatchUndo(albumsDispatch);
       return;
     }
 
     if(event.key.toUpperCase() === 'Y') {
-      dispatchDoAgain(tierGroupsDispatch);
+      AlbumsDispatchRedo(albumsDispatch);
     }
-  }, [tierGroupsDispatch]);
+  }, [albumsDispatch]);
 
   React.useEffect(() => {
     document.addEventListener('keydown', onShortCutPressed);
@@ -43,61 +47,79 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   return (
     <div className='edit-groups-container'>
       <DragDropContext  onDragEnd={onDragEnd}> 
-        {albumGroups}
+        {tierGroups}
       </DragDropContext>
     </div>
   );
 }
 
-const mapTiers = (tierGroups: TierGroups) => {
-  const namedGroups = mapTierNames(tierGroups);
-  const noTierGroup = mapTierGroup(tierGroups[NoTierId]);
-  return [...namedGroups, noTierGroup];
-}
-
-const mapTierNames = (tierGroups: TierGroups) => {
-  return TierNames.map((tier) => {
-    return mapTierGroup(tierGroups[tier]);
+const mapAlbums = (albums: IAlbumsCollectionData) => {
+  const albumsMap: AlbumsMapTiers = Object.create({});
+  TierNames.forEach((tier) => {
+    const id = getTierId(tier);
+    albumsMap[id] = [];
   });
+  albumsMap['No Tier'] = [];
+
+  for(const id in albums) {
+    const album = albums[id];
+    const tierId = getTierId(album.tier);
+    albumsMap[tierId].push(album);
+  }
+
+  return albumsMap;
 }
 
-const mapTierGroup = (group: TierGroup) => {
-  return (
-    <Droppable direction='horizontal' droppableId={group.id} key={group.id}>
-      {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-        <AlbumEditGroup
-          {...group}
-          innerRef={provided.innerRef}
-          {...provided.droppableProps}
-          droppablePlaceHolder={provided.placeholder}
-          isDraggingOver={snapshot.isDraggingOver}
-          key={group.id}
-        />
-      )}
-    </Droppable>
-  )
+const mapTierGroups = (albums: IAlbumsCollectionData) => {
+  const albumsMap = mapAlbums(albums);
+  const tierGroupsArray = initializeTierGroups(albumsMap);
+  const tierGroups = tierGroupsArray.map((group) => {
+    return (
+      <Droppable direction='horizontal' droppableId={group.id} key={group.id}>
+        {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+          <AlbumEditGroup
+            {...group}
+            innerRef={provided.innerRef}
+            {...provided.droppableProps}
+            droppablePlaceHolder={provided.placeholder}
+            isDraggingOver={snapshot.isDraggingOver}
+            key={group.id}
+          />
+        )}
+      </Droppable>
+    )
+  })
+  return tierGroups;
 }
 
-export const dispatchUndo = (
-  dispatch: TierGroupsDispatch
+const initializeTierGroups = (
+  albumsMap: AlbumsMapTiers
 ) => {
-  dispatch({
-    type: TierGroupsActionKind.UNDO
+  const tierGroupsArray: ITierGroup[] = [];
+  TierNames.forEach((tier) => {
+    const id = getTierId(tier);
+    tierGroupsArray.push({
+      id: id,
+      albums: albumsMap[id],
+      name: tier,
+      tier: tier
+    })
   });
-}
-
-export const dispatchDoAgain = (
-  dispatch: TierGroupsDispatch
-) => {
-  dispatch({
-    type: TierGroupsActionKind.DO_AGAIN
+  tierGroupsArray.push({
+    id: NoTierId,
+    albums: albumsMap[NoTierId],
+    name: NoTierName,
+    tier: null
   });
+  
+  return tierGroupsArray;
 }
 
 const dispatchDragResult = (
   source: DraggableLocation,
   destination: DraggableLocation | null | undefined,
-  dispatch: TierGroupsDispatch) => {
+  albumsSnap: Immutable<AlbumsSnapshot>,
+  dispatch: AlbumsDispatch) => {
     if(!destination) {
       return;
     }
@@ -106,24 +128,30 @@ const dispatchDragResult = (
       return;
     }
 
+    const sourceTierId = source.droppableId as TierGroupId;
+    const id = 
+      albumsSnap.tiersOrder[sourceTierId][source.index];
+
     if(source.droppableId === destination.droppableId) {
-      dispatch({
-        type: TierGroupsActionKind.REORDER,
-        tier: source.droppableId as TierName,
-        sourceIndex: source.index,
-        destinationIndex: destination.index
-      });
+      AlbumsDispatchReorder(
+        dispatch,
+        sourceTierId,
+        source.index,
+        destination.index
+      );
 
       return;
     }
 
-    dispatch({
-      type: TierGroupsActionKind.MOVE_ALBUM_IDX,
-      sourceTier: source.droppableId as TierName,
-      sourceIndex: source.index,
-      destinationTier: destination.droppableId as TierName,
-      destinationIndex: destination.index
-    });
+    const destinationTierId = destination.droppableId as TierGroupId;
+
+    AlbumsDispatchSetTier(
+      dispatch,
+      id,
+      getTierById(destinationTierId),
+      source.index,
+      destination.index
+    )
 }
 
 const droppedBack = (source : DraggableLocation,

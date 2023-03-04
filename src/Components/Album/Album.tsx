@@ -1,10 +1,8 @@
 import * as React from 'react';
 import WebImage from '../Utilities/WebImage';
-import { IAlbum } from '../../Data/Data';
-import { TierName } from '../../Context/TierGroupsContext';
+import { IAlbum, Tier } from '../../Data/Data';
 import './Album.css';
 import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
-import { Tier } from '../../Context/TierGroupsContext';
 
 export enum AlbumMode {
   VIEW = 'view',
@@ -12,7 +10,6 @@ export enum AlbumMode {
 }
 
 export interface IAlbumProps extends IAlbum {
-  tier: Tier;
   draggable: boolean;
   edit: boolean;
 }
@@ -27,7 +24,7 @@ const Album : React.FC<IAlbumProps> = (props) => {
     >
         <WebImage
           src={props.src}
-          alt={getAlbumCoverAlt(props.name)}
+          alt={props.alt}
           key={props.id}
           draggable={props.draggable}
         />
@@ -35,7 +32,7 @@ const Album : React.FC<IAlbumProps> = (props) => {
   );
 }
 
-const getAlbumClass = (tier: TierName | null, edit: boolean) => {
+const getAlbumClass = (tier: Tier, edit: boolean) => {
   let className = 'album';
 
   if(tier) {

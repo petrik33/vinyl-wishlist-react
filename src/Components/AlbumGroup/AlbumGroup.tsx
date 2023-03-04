@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { AlbumsData } from '../../Data/Data';
 import Album from '../Album/Album';
-import { RankedAlbum } from '../AlbumsView/AlbumsView';
 import './AlbumGroup.css'
+import { IAlbum } from '../../Data/Data';
 
 export interface IAlbumGroupProps {
   name: string;
-  id: string;
-  rankedAlbums: RankedAlbum[];
+  order?: string[];
+  albums: readonly IAlbum[]
   onAlbumClick: (id: string) => void;
 }
 
 const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
-  const albumItems = mapAlbums(props.rankedAlbums, props.onAlbumClick);
+  const albumItems = mapAlbums(props);
 
   return (
     <div className='album-group view named'>
@@ -25,10 +24,9 @@ const AlbumGroup : React.FC<IAlbumGroupProps> = (props) => {
 }
 
 const mapAlbums = (
-  rankedAlbums: readonly RankedAlbum[],
-  onAlbumClick: (id: string) => void) => {
-  return rankedAlbums.map((album) => {
-    const albumData = AlbumsData[album.id];
+  { albums, onAlbumClick }: IAlbumGroupProps
+) => {
+  return albums.map((album) => {
     return (
       <div
         className='album view'
@@ -37,9 +35,8 @@ const mapAlbums = (
         key={album.id}
       >
         <Album
-          {...albumData}
+          {...album}
           edit={false}
-          tier={album.tier}
           draggable={false}
           key={album.id}
         />

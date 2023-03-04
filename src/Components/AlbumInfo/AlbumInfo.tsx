@@ -1,23 +1,20 @@
 import * as React from 'react';
 import './AlbumInfo.css'
-import { AlbumsData, AuthorsData } from '../../Data/Data';
 import WebImage from '../Utilities/WebImage';
-import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
+import { IAlbum } from '../../Data/Data';
 
 export interface IAlbumInfoProps {
-  albumId: string;
+  album: IAlbum;
   onClose: () => void;
 }
 
 const AlbumInfo : React.FC<IAlbumInfoProps> = (props) => {
-  const albumData = AlbumsData[props.albumId];
-  const authorData = AuthorsData[albumData.authorId];
-
+  const { album, onClose } = {...props};
   const onClick = (event: React.MouseEvent) => {
     const nodeClicked = event.target as HTMLElement;
     const infoClicked = nodeClicked.closest('.album-modal-info');
     if(!infoClicked) {
-      props.onClose();
+      onClose();
     }
   }
 
@@ -25,13 +22,17 @@ const AlbumInfo : React.FC<IAlbumInfoProps> = (props) => {
     <div className='modal-div' onClick={onClick}>
       <div className='album-modal-info'>
         <WebImage
-          src={albumData.src}
-          alt={getAlbumCoverAlt(albumData.name)}
+          src={album.src}
+          alt={album.alt}
           className='album-modal-image'
         />
         <div className='album-modal-data'>
-          <div className='album-modal-author'>{authorData.name}</div>
-          <div className='album-modal-name'>{albumData.name}</div>
+          <div className='album-modal-author'>
+            {album.author}
+          </div>
+          <div className='album-modal-name'>
+            {album.name}
+          </div>
         </div>
       </div>
     </div>

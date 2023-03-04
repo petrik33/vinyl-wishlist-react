@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface IWebImageProps {
   src: string;
-  alt: string;
+  alt?: string;
   sources?: Array<JSX.Element>;
   srcSet?: string;
   sizes?: string;

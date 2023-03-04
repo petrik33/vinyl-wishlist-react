@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Tier, TierGroup, TierName } from '../../Context/TierGroupsContext';
-import { AlbumsData } from '../../Data/Data';
 import Album from '../Album/Album';
 import './AlbumEditGroup.css';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, DroppableProvided } from 'react-beautiful-dnd';
+import { ITierGroup } from '../../Types/AlbumGroups';
+import { IAlbum, Tier } from '../../Data/Data';
 
-export interface IAlbumEditGroupProps extends TierGroup {
+export interface IAlbumEditGroupProps extends ITierGroup {
   isDraggingOver: boolean;
   innerRef?: DroppableProvided['innerRef'];
   droppablePlaceHolder?: React.ReactNode;
@@ -29,30 +29,36 @@ const AlbumEditGroup : React.FC<IAlbumEditGroupProps> = (props) => {
   );
 }
 
-const mapAlbumItems = (albums: readonly string[], tier: Tier) => {
+const mapAlbumItems = (
+  albums: readonly IAlbum[], tier: Tier
+) => {
   if(albums.length === 0) {
     return null;
   }
 
   return albums.map((album, idx) => {
-    const albumData = AlbumsData[album];
     return (
-      <Draggable draggableId={album} index={idx} key={album}>
+      <Draggable 
+        draggableId={album.id} 
+        index={idx} 
+        key={album.id}
+      >
         {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
           return (
             <div
-              className={getDraggableClass(snapshot.isDragging)}
+              className={
+                getDraggableClass(snapshot.isDragging)
+              }
               ref={provided.innerRef}
               {...provided.dragHandleProps}
               {...provided.draggableProps}
-              key={album}
+              key={album.id}
             >
               <Album
                 edit={true}
-                {...albumData}
-                tier={null}
+                {...album}
                 draggable={true}
-                key={album}
+                key={album.id}
               />
             </div>
           )}
@@ -83,7 +89,7 @@ const getGroupContainerClass = () => {
   return className;
 }
 
-const getGroupNameClass = (tier: TierName | null) => {
+const getGroupNameClass = (tier: Tier) => {
   let className = 'album-group-name';
 
   if(tier) {
@@ -103,15 +109,5 @@ const getDraggableClass = (isDragging: boolean) => {
 
   return className;
 }
-
-// const getAlbumTier = (groupTier: Tier, isDragging: boolean) => {
-//   let tier = groupTier;
-
-//   if(isDragging) {
-//     tier = null;
-//   }
-
-//   return tier;
-// }
 
 export default AlbumEditGroup;
