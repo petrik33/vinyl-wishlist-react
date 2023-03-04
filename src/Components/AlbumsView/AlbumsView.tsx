@@ -3,7 +3,7 @@ import { IAlbum, getTierId } from '../../Data/Data';
 import AlbumGroup from '../AlbumGroup/AlbumGroup';
 import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
-import { AlbumsSnapshot, getCurrentAlbums } from '../../Context/AlbumsContext';
+import { AlbumsSnapshot } from '../../Context/AlbumsContext';
 import { Immutable } from 'immer';
 import { AlbumsMap } from '../../Types/AlbumGroups';
 

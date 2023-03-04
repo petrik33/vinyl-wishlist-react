@@ -2,7 +2,6 @@ import * as React from 'react';
 import WebImage from '../Utilities/WebImage';
 import { IAlbum, Tier } from '../../Data/Data';
 import './Album.css';
-import { getAlbumCoverAlt } from '../../Utilities/getAlbumCoverAlt';
 
 export enum AlbumMode {
   VIEW = 'view',

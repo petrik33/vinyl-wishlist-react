@@ -61,24 +61,49 @@ const fetchAlbums = async (dispatch: AlbumsDispatch) => {
   const albumDocs = 
     await getDocs(query(albumsCollection));
 
-  const albumsCollectionData = mapAlbumDocs(albumDocs);
+  const albumsCollectionData = 
+    await mapAlbumDocs(albumDocs);
 
   AlbumsDispatchLoad(
     dispatch, albumsCollectionData);
 }
 
-const mapAlbumDocs = 
-  (docs: QuerySnapshot<IAlbumData>) => {
+const mapAlbumDocs = async (
+  docs: QuerySnapshot<IAlbumData>
+) => {
     const albumsCollectionData: IAlbumsCollectionData = {};
-    docs.forEach((doc) => {
+    docs.forEach(async (doc) => {
       const data = doc.data();
       const album: IAlbum = {
+        ...data,
         id: doc.id,
-        ...data
       }
       albumsCollectionData[album.id] = album;
     })
     return albumsCollectionData;
 }
+
+// const albumDocGetAuthor = async (
+//   doc: QueryDocumentSnapshot<IAlbumData>
+// ) => {
+//   const parent = getDocParentRef(doc);
+//   if(parent) {
+//     const parentDoc = await getDoc(parent);
+//     const author = parentDoc.data();
+//     if(author && typeof author.name === 'string') {
+//       return author.name;
+//     }
+//   }
+//   return undefined;
+// }
+
+// const getDocParentRef = <T,>(
+//   doc : QueryDocumentSnapshot<T>
+// ) => {
+//   const docRef = doc.ref;
+//   const parentContainerRef = docRef.parent;
+//   const parentDocRef = parentContainerRef.parent;
+//   return parentDocRef;
+// }
 
 export default AlbumsTierList;
