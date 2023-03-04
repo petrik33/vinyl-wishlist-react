@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { Tier, TierNames, useTierGroups, TierGroups, NoTierName, NoTierId } from '../../Context/TierGroupsContext';
-import { AlbumsData, AuthorsData, IAlbum } from '../../Data/Data';
-import AlbumGroup, { IAlbumGroupProps } from '../AlbumGroup/AlbumGroup';
+import { IAlbum, TierGroupId, getTierId } from '../../Data/Data';
+import AlbumGroup from '../AlbumGroup/AlbumGroup';
 import './AlbumsView.css'
 import AlbumInfo from '../AlbumInfo/AlbumInfo';
+import { AlbumsSnapshot } from '../../Context/AlbumsContext';
+import { Immutable } from 'immer';
+import { AlbumsMap } from '../../Types/AlbumGroups';
 
 export interface IAlbumsViewProps {
-  tierGroups: TierGroups;
+  albumsSnap: Immutable<AlbumsSnapshot>;
   groupsKind: AlbumGroupsKind;
 }
 
@@ -16,151 +18,101 @@ export enum AlbumGroupsKind {
 }
 
 const AlbumsView : React.FC<IAlbumsViewProps> = (props) => {
-  const [modalAlbumId, setModalAlbumId] = React.useState("");
-  const tierGroups = props.tierGroups;
+  const [modalAlbumId, setModalAlbumId] = 
+    React.useState("");
 
   const onAlbumClick = (id: string) => {
     setModalAlbumId(id);
   }
 
-  const albumGroupsMap = getGroupsMap(props.groupsKind, tierGroups);
-  const albumGroups = mapGroupKeys(albumGroupsMap, onAlbumClick);
+  const { data: albums, tiersOrder: order} 
+    = {...props.albumsSnap};
+
+  const groups = mapGroupElements(
+    props.groupsKind, props.albumsSnap, onAlbumClick
+  );
 
   return (
     <div className='album-groups-container'>
-      {albumGroups}
+      {groups}
       {modalAlbumId.length > 0 && 
         <AlbumInfo 
           onClose={() => {setModalAlbumId("")}} 
-          albumId={modalAlbumId}
+          album={albums[modalAlbumId]}
         />
       }
     </div>
   );
 }
 
-const mapGroupKeys = (albumGroupsMap: GroupsMap,
-  onAlbumClick: (id: string) => void) => {
-    const groupKeys = Object.keys(albumGroupsMap);
-    return groupKeys.map((key) => {
-      if(albumGroupsMap[key].rankedAlbums.length === 0) {
-        return null;
-      }
-      
-      return (
-        <AlbumGroup
-          {...albumGroupsMap[key]}
-          onAlbumClick={onAlbumClick}
-          key={key}
-        />
-      )
-    })
+const mapGroupElements = (
+  type: AlbumGroupsKind,
+  albumsSnap: Immutable<AlbumsSnapshot>,
+  onAlbumClick: (id: string) => void
+) => {
+  const groups = mapGroups(type, albumsSnap);
+  return groups.map((group) => {
+    return (
+      <AlbumGroup
+        {...group}
+        onAlbumClick={onAlbumClick}
+        key={group.name}
+      />
+    )
+  })
 }
 
-export type GroupsMap = {
-  [id: string]: IAlbumGroupProps;
-};
+const mapGroups = (
+  type: AlbumGroupsKind,
+  albumsSnap: Immutable<AlbumsSnapshot>
+) => {
+  const distributor = getGroupDistributor(type);
+  const { data: albums, tiersOrder: order} 
+    = {...albumsSnap};
 
-export type GroupDistributor = (album: IAlbum) => string;//id
-
-export type RankedAlbum = {
-  id: string,
-  tier: Tier;
-}
-
-const getGroupsMap = (type: AlbumGroupsKind, tierGroups: TierGroups)
-  : GroupsMap => {
-  switch(type) {
-    case AlbumGroupsKind.TIERS: {
-      const groupsMap = Object.create({});
-
-      const rankedGroups = TierNames.map((tier) => {
-          const tierGroup = tierGroups[tier];
-          return {
-            name: tierGroup.name,
-            id: tierGroup.id,
-            rankedAlbums: tierGroup.albums.map((id) => {
-              return {
-                id: id,
-                tier: tier
-              }
-            })
-          }
-      });
-
-      const unrankedGroup = {
-        name: NoTierName,
-        id: NoTierId,
-        rankedAlbums: tierGroups['No-Tier'].albums.map((id) => {
-          return {
-            id: id,
-            tier: null
-          }
-        })
-      }
-
-      TierNames.forEach((tier, idx) => {
-        groupsMap[tier] = rankedGroups[idx];
-      });
-
-      groupsMap[NoTierId] = unrankedGroup;
-
-      return groupsMap;
-    }
-
-    default: {
-      const groupDistributor = getGroupDistributor(type);
-      const groupNames = getGroupNames(type);
-      const groupIds = getGroupIds(type);
-
-      let rankedAlbumsMap : {[key:string]: RankedAlbum[]} = {};
-
-      groupIds.forEach((groupId, idx) => {
-        rankedAlbumsMap[groupId] = [];
+  const albumsMap: AlbumsMap = Object.create({});
+  if(type === AlbumGroupsKind.TIERS) {
+    for(const tierId in order) {
+      const orderGroup = order[tierId as TierGroupId];
+      albumsMap[tierId] = orderGroup.map((id) => {
+        const album = albums[id];
+        return album;
       })
-
-      TierNames.forEach((tier) => {
-        const tierGroup = tierGroups[tier];
-        tierGroup.albums.forEach((id) => {
-          const distributedGroupId = groupDistributor(AlbumsData[id]);
-          rankedAlbumsMap[distributedGroupId].push({
-            id: id,
-            tier: tier
-          });
-        })
-      })
-      
-      const unrankedGroup = tierGroups['No-Tier'];
-
-      unrankedGroup.albums.forEach((id) => {
-        const distributedGroupId = groupDistributor(AlbumsData[id]);
-        rankedAlbumsMap[distributedGroupId].push({
-          id: id,
-          tier: null
-        })
-      })
-
-      const groupsMap = Object.create({});
-
-      groupIds.forEach((groupId, idx) => {
-        groupsMap[groupId] = {
-          name: groupNames[idx],
-          id: groupId,
-          rankedAlbums: rankedAlbumsMap[groupId]
-        }
-      })
-
-      return groupsMap;
     }
   }
+  else {
+    for(const id in albums) {
+      const album = albums[id];
+      const groupId = distributor(album);
+      if(!albumsMap[groupId]) {
+        albumsMap[groupId] = [];
+      }
+      albumsMap[groupId].push(album);
+    }
+  }
+
+  const groups = Object.keys(albumsMap).map((id) => {
+    return {
+      name: id,
+      albums: albumsMap[id]
+    }
+  });
+
+  return groups;
 }
 
 const getGroupDistributor = (type: AlbumGroupsKind) 
   : GroupDistributor => {
   switch(type) {
+    case AlbumGroupsKind.TIERS: {
+      return (album: IAlbum) => getTierId(album.tier);
+    }
     case AlbumGroupsKind.AUTHORS: {
       return (album: IAlbum) => {
-        return album.authorId;
+        if(album.author) {
+          return album.author;
+        }
+        return 'Unknown';
       }
     }
     default: {
@@ -171,36 +123,6 @@ const getGroupDistributor = (type: AlbumGroupsKind)
   }
 }
 
-const getGroupNames = (type: AlbumGroupsKind) : readonly string[] => {
-  switch(type) {
-    case AlbumGroupsKind.AUTHORS: {
-      let authorNames: string[] = [];
-      for(const id in AuthorsData) {
-        const author = AuthorsData[id];
-        authorNames.push(author.name);
-      }
-      return authorNames;
-    }
-    default: {
-      return Object.keys(AlbumsData).map(key => AlbumsData[key].name);
-    }
-  }
-}
-
-const getGroupIds = (type: AlbumGroupsKind) : readonly string[] => {
-  switch(type) {
-    case AlbumGroupsKind.AUTHORS: {
-      let authorIds: string[] = [];
-      for(const id in AuthorsData) {
-        const author = AuthorsData[id];
-        authorIds.push(author.id);
-      }
-      return authorIds;
-    }
-    default: {
-      return Object.keys(AlbumsData);
-    }
-  }
-}
+export type GroupDistributor = (album: IAlbum) => string;
 
 export default AlbumsView;

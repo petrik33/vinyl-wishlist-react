@@ -5,8 +5,7 @@ import Toolbar from '../Toolbar/Toolbar';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { AlbumGroupsKind } from '../AlbumsView/AlbumsView';
 import PushButton from '../PushButton/PushButton';
-import { dispatchDoAgain, dispatchUndo } from '../AlbumsEdit/AlbumsEdit';
-import { TierGroupsActionKind, TierGroupsDispatch, useTierGroupsDispatch } from '../../Context/TierGroupsContext';
+import { AlbumsActionKind, AlbumsDispatch, AlbumsDispatchRedo, AlbumsDispatchUndo } from '../../Context/AlbumsContext';
 import TierListViewEditButtonLine from '../TierListViewEditButtonLine/TierListViewEditButtonLine';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import {ReactComponent as AuthorsIcon} from '../../Icons/free-icon-font-user-3917688.svg';
@@ -20,11 +19,11 @@ export interface ITierListTopPinProps {
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   viewGroupsKind: AlbumGroupsKind;
   setViewGroupsKind: React.Dispatch<React.SetStateAction<AlbumGroupsKind>>;
-  tierGroupsDispatch: TierGroupsDispatch;
+  albumsDispatch: AlbumsDispatch;
 }
 
 const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
-  const tierGroupsDispatch = props.tierGroupsDispatch;
+  const albumsDispatch = props.albumsDispatch;
 
   return (
     <TopPin>
@@ -53,15 +52,19 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
         <ButtonGroup>
           <PushButton
             icon={<UndoIcon />}
-            onClick={() => {dispatchUndo(tierGroupsDispatch)}}
+            onClick={() => {
+              AlbumsDispatchUndo(albumsDispatch)
+            }}
           />
           <PushButton
             icon={<DoAgainIcon />}
-            onClick={() => {dispatchDoAgain(tierGroupsDispatch)}}
+            onClick={() => {
+              AlbumsDispatchRedo(albumsDispatch)
+            }}
           />
           <PushButton
             icon={<ResetIcon />}
-            onClick={() => {dispatchDebugGroups(tierGroupsDispatch)}}
+            onClick={() => {dispatchDebugGroups(albumsDispatch)}}
           />
         </ButtonGroup>
         }
@@ -70,10 +73,10 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
   );
 }
 
-export const dispatchDebugGroups = (dispatch: TierGroupsDispatch) => {
+export const dispatchDebugGroups = (dispatch: AlbumsDispatch) => {
   dispatch({
-    type: TierGroupsActionKind.RESET_TO_DEBUG,
-    parts: 4
+    type: AlbumsActionKind.RESET_TO_DEBUG,
+    load: { parts: 4 }
   });
 }
 
