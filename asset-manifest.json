@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/vinyl-wishlist-react/static/css/main.2a7e193e.css",
-    "main.js": "/vinyl-wishlist-react/static/js/main.0822090b.js",
+    "main.css": "/vinyl-wishlist-react/static/css/main.b76195ee.css",
+    "main.js": "/vinyl-wishlist-react/static/js/main.08ce7400.js",
     "static/media/free-icon-font-rotate-right-3917289.svg": "/vinyl-wishlist-react/static/media/free-icon-font-rotate-right-3917289.32c444047b9f2b645355fc79359663d5.svg",
     "index.html": "/vinyl-wishlist-react/index.html",
     "static/media/free-icon-font-eye-3917052.svg": "/vinyl-wishlist-react/static/media/free-icon-font-eye-3917052.5ba783ad3870313d4823a9526f678018.svg",
@@ -9,11 +9,11 @@
     "static/media/free-icon-font-rotate-left-7434925.svg": "/vinyl-wishlist-react/static/media/free-icon-font-rotate-left-7434925.d793b061052f7781a2aea06c4f237bf3.svg",
     "static/media/free-icon-font-pencil-3917563.svg": "/vinyl-wishlist-react/static/media/free-icon-font-pencil-3917563.6c58e04e592c970dd9e8affe82402179.svg",
     "static/media/free-icon-font-user-3917688.svg": "/vinyl-wishlist-react/static/media/free-icon-font-user-3917688.38cfdb1bd4866f7ba811aff361223f76.svg",
-    "main.2a7e193e.css.map": "/vinyl-wishlist-react/static/css/main.2a7e193e.css.map",
-    "main.0822090b.js.map": "/vinyl-wishlist-react/static/js/main.0822090b.js.map"
+    "main.b76195ee.css.map": "/vinyl-wishlist-react/static/css/main.b76195ee.css.map",
+    "main.08ce7400.js.map": "/vinyl-wishlist-react/static/js/main.08ce7400.js.map"
   },
   "entrypoints": [
-    "static/css/main.2a7e193e.css",
-    "static/js/main.0822090b.js"
+    "static/css/main.b76195ee.css",
+    "static/js/main.08ce7400.js"
   ]
 }
