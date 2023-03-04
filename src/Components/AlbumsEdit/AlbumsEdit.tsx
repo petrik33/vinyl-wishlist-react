@@ -6,6 +6,8 @@ import { AlbumsDispatch, AlbumsDispatchRedo, AlbumsDispatchReorder, AlbumsDispat
 import { IAlbumsCollectionData, NoTierId, NoTierName, TierGroupId, TierNames, getTierById, getTierId } from '../../Data/Data';
 import { Immutable } from 'immer';
 import { AlbumsMapTiers, ITierGroup } from '../../Types/AlbumGroups';
+import { deleteField, getDocs, query, setDoc, updateDoc } from 'firebase/firestore';
+import { albumsCollection } from '../../Firebase/firebase';
 
 export interface IAlbumsEditProps {
   albumsSnap: Immutable<AlbumsSnapshot>;
@@ -23,8 +25,14 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
     dispatchDragResult(result.source, result.destination, props.albumsSnap, albumsDispatch);
   }
 
-  const onShortCutPressed = React.useCallback((event: KeyboardEvent) => {
+  const onShortCutPressed = React.useCallback(async (event: KeyboardEvent) => {
     if(!event.ctrlKey) {
+      return;
+    }
+
+    if(event.key.toUpperCase() === 'S') {
+      event.preventDefault();
+      await postAlbums(albums);
       return;
     }
 
@@ -36,7 +44,7 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
     if(event.key.toUpperCase() === 'Y') {
       AlbumsDispatchRedo(albumsDispatch);
     }
-  }, [albumsDispatch]);
+  }, [albumsDispatch, albums]);
 
   React.useEffect(() => {
     document.addEventListener('keydown', onShortCutPressed);
@@ -52,6 +60,22 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
       </DragDropContext>
     </div>
   );
+}
+
+const postAlbums = async (
+  albums: IAlbumsCollectionData
+) => {
+  console.log('Post!');
+  const albumDocs = await getDocs(query(albumsCollection));
+  albumDocs.forEach(async (doc) => {
+    const id = doc.id;
+    const album = albums[id];
+    const tier = album.data.tier;
+    const update = {
+      tier: tier ? tier : deleteField()
+    }
+    await updateDoc(doc.ref, update);
+  })
 }
 
 const mapAlbums = (
