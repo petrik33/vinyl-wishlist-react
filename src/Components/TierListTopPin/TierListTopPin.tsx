@@ -62,10 +62,10 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
               AlbumsDispatchRedo(albumsDispatch)
             }}
           />
-          <PushButton
+          {/* <PushButton
             icon={<ResetIcon />}
             onClick={() => {dispatchDebugGroups(albumsDispatch)}}
-          />
+          /> */}
         </ButtonGroup>
         }
       </Toolbar>
