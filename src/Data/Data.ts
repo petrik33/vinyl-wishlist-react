@@ -21,9 +21,9 @@ export interface IAlbumData {
   alt?: string;
   tier?: Tier;
   author?: string;
-  size?: number;
-  width?: number;
-  height?: number;
+  size?: number | string;
+  width?: number | string;
+  height?: number | string;
 }
 
 export interface IAlbum extends IAlbumData {
