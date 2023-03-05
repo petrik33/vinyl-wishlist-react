@@ -39,6 +39,7 @@ const AlbumsTierList : React.FC<IAlbumsTierListProps> = (props) => {
         viewGroupsKind={viewGroupsKind}
         setViewGroupsKind={setViewGroupsKind}
         albumsDispatch={albumsDispatch}
+        albums={albumsCurrentSnap.data}
       />
 
       {!editing && 

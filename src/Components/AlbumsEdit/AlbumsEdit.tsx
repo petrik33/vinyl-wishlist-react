@@ -65,7 +65,7 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   );
 }
 
-const postAlbums = async (
+export const postAlbums = async (
   albums: IAlbumsCollectionData,
   loggedIn: boolean,
   setLoggedIn: SetStateBoolean

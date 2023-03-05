@@ -12,6 +12,10 @@ import {ReactComponent as AuthorsIcon} from '../../Icons/free-icon-font-user-391
 import {ReactComponent as TiersIcon} from '../../Icons/free-icon-font-heart-3916585.svg';
 import {ReactComponent as UndoIcon} from '../../Icons/free-icon-font-rotate-left-7434925.svg';
 import {ReactComponent as DoAgainIcon} from '../../Icons/free-icon-font-rotate-right-3917289.svg';
+import { ReactComponent as SaveIcon } from '../../Icons/disk.svg';
+import { postAlbums } from '../AlbumsEdit/AlbumsEdit';
+import { IAlbumsCollectionData } from '../../Data/Data';
+import { useLoggedIn, useSetLoggedIn } from '../../Context/LoginContext';
 // import {ReactComponent as ResetIcon} from '../../Icons/free-icon-font-refresh-3917293.svg';
 
 export interface ITierListTopPinProps {
@@ -20,10 +24,13 @@ export interface ITierListTopPinProps {
   viewGroupsKind: AlbumGroupsKind;
   setViewGroupsKind: React.Dispatch<React.SetStateAction<AlbumGroupsKind>>;
   albumsDispatch: AlbumsDispatch;
+  albums: IAlbumsCollectionData;
 }
 
 const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
   const albumsDispatch = props.albumsDispatch;
+  const loggedIn = useLoggedIn();
+  const setLoggedIn = useSetLoggedIn();
 
   return (
     <TopPin>
@@ -60,6 +67,16 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
             icon={<DoAgainIcon />}
             onClick={() => {
               AlbumsDispatchRedo(albumsDispatch)
+            }}
+          />
+          <PushButton
+            icon={<SaveIcon />}
+            onClick={async () => {
+              await postAlbums(
+                props.albums,
+                loggedIn,
+                setLoggedIn
+              )
             }}
           />
           {/* <PushButton
