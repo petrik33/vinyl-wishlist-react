@@ -6,8 +6,9 @@ import { AlbumsDispatch, AlbumsDispatchRedo, AlbumsDispatchReorder, AlbumsDispat
 import { IAlbumsCollectionData, NoTierId, NoTierName, TierGroupId, TierNames, getTierById, getTierId } from '../../Data/Data';
 import { Immutable } from 'immer';
 import { AlbumsMapTiers, ITierGroup } from '../../Types/AlbumGroups';
-import { deleteField, getDocs, query, setDoc, updateDoc } from 'firebase/firestore';
-import { albumsCollection } from '../../Firebase/firebase';
+import { deleteField, doc, getDoc, getDocs, query, setDoc, updateDoc } from 'firebase/firestore';
+import db, { albumsCollection, serverAdminDoc } from '../../Firebase/firebase';
+import { SetStateBoolean, useLoggedIn, useSetLoggedIn } from '../../Context/LoginContext';
 
 export interface IAlbumsEditProps {
   albumsSnap: Immutable<AlbumsSnapshot>;
@@ -18,6 +19,8 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   const { data: albums, tiersOrder: order} 
     = {...props.albumsSnap};
   const albumsDispatch = props.albumsDispatch;
+  const loggedIn = useLoggedIn();
+  const setLoggedIn = useSetLoggedIn();
 
   const tierGroups = mapTierGroups(albums, order);
 
@@ -32,7 +35,7 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
 
     if(event.key.toUpperCase() === 'S') {
       event.preventDefault();
-      await postAlbums(albums);
+      await postAlbums(albums, loggedIn, setLoggedIn);
       return;
     }
 
@@ -62,10 +65,14 @@ const AlbumsEdit : React.FC<IAlbumsEditProps> = (props) => {
   );
 }
 
-const postAlbums = async (
-  albums: IAlbumsCollectionData
+export const postAlbums = async (
+  albums: IAlbumsCollectionData,
+  loggedIn: boolean,
+  setLoggedIn: SetStateBoolean
 ) => {
-  console.log('Post!');
+  if(!(await checkLogin(loggedIn, setLoggedIn))) {
+    return false;
+  }
   const albumDocs = await getDocs(query(albumsCollection));
   albumDocs.forEach(async (doc) => {
     const id = doc.id;
@@ -76,6 +83,29 @@ const postAlbums = async (
     }
     await updateDoc(doc.ref, update);
   })
+}
+
+const checkLogin = async (
+  loggedIn: boolean,
+  setLoggedIn: SetStateBoolean
+) => {
+  if(loggedIn) {
+    return true;
+  }
+  let password = prompt(loginPropmt);
+  while(password !== await getPassword()) {
+    if(password === null) {
+      return false;
+    }
+    password = prompt(tryAgainPropmt);
+  }
+  setLoggedIn(true);
+  return true;
+}
+
+const getPassword = async () => {
+  const doc = await getDoc(serverAdminDoc);
+  return doc.data()?.password;
 }
 
 const mapAlbums = (
@@ -193,5 +223,9 @@ const droppedBack = (source : DraggableLocation,
     return (destination.droppableId === source.droppableId &&
       destination.index === source.index);
 }
+
+const loginPropmt = 'You have to login as a server administrator to save changes. Password?';
+
+const tryAgainPropmt = 'Wrong password. Try again please:';
 
 export default AlbumsEdit;
