@@ -4,6 +4,7 @@ import { AlbumsDebugData, IAlbumsCollectionData, Tier, TierGroupId, TierNames, g
 import { ImmerReducer, useImmerReducer} from 'use-immer';
 import { Immutable } from 'immer';
 import { moveArrayElement } from '../Utilities/ArrayUtilities';
+import { cloneDeep } from 'lodash';
 
 export type TiersOrder = {
   [key in TierGroupId]: string[]
@@ -21,6 +22,15 @@ export type AlbumsState = Immutable<{
   current: number
 }>;
 
+export enum AlbumsActionKind {
+  SET_TIER = 'album-set-tier',
+  UNDO = 'undo',
+  REDO = 'redo',
+  RESET_TO_DEBUG = 'reset-to-debug',
+  LOAD = 'load',
+  REORDER = 'reorder'
+};
+
 export type AlbumsDispatch = React.Dispatch<AlbumsAction>;
 
 const AlbumsContext = 
@@ -34,8 +44,105 @@ export interface IProviderProps {
 }
 
 export const AlbumsProvider : React.FC<IProviderProps> = (props) => {
-  const [albums, dispatch] = useImmerReducer(
-    AlbumsReducer,
+  const [albums, dispatch] 
+    = useImmerReducer<AlbumsState, AlbumsAction>(
+    (draft, action) => {
+      switch (action.type) {
+        case AlbumsActionKind.SET_TIER: {
+          const current = draft.current;
+    
+          const nextAlbumsSnap 
+            = cloneDeep(draft.history[current]);
+          const {data: nextAlbums, tiersOrder: order} 
+            = nextAlbumsSnap;
+    
+          const { tier, id, sourceIdx, destintionIdx } 
+            = {...action.load};
+    
+          const sourceTier = nextAlbums[id].data.tier;
+          nextAlbums[id].data.tier = tier;
+    
+          const sourceTierId = getTierId(sourceTier);
+          order[sourceTierId].splice(sourceIdx, 1);
+    
+          const destTierId = getTierId(tier);
+          order[destTierId].splice(destintionIdx, 0, id);
+    
+          draft.history
+            .splice(current + 1, Infinity, nextAlbumsSnap);
+          draft.current++;
+    
+          break;
+        }
+    
+        case AlbumsActionKind.UNDO: {
+          draft.current = Math.max(0, draft.current - 1);
+          break;
+        }
+    
+        case AlbumsActionKind.REDO: {
+          draft.current = Math.min(draft.current + 1, draft.history.length - 1);
+          break;
+        }
+    
+        case AlbumsActionKind.RESET_TO_DEBUG: {
+          const nextAlbums = getDebugAlbums(action.load.parts);
+    
+          const nextAlbumsSnap : AlbumsSnapshot = {
+            data: nextAlbums,
+            tiersOrder: initializeTierOrder(nextAlbums)
+          }
+    
+          draft.history = [nextAlbumsSnap];
+          draft.current = 0;
+    
+          break;
+        }
+    
+        case AlbumsActionKind.LOAD: {
+          const nextAlbums = action.load.albumsCollectionData;
+          const nextAlbumsSnap : AlbumsSnapshot = {
+            data: nextAlbums,
+            tiersOrder: action.load.tiersOrder 
+              ? action.load.tiersOrder 
+              : initializeTierOrder(nextAlbums)
+          }
+    
+          draft.history = [nextAlbumsSnap];
+          draft.current = 0;
+    
+          break;
+        }
+    
+        case AlbumsActionKind.REORDER: {
+          const current = draft.current;
+          const nextAlbumsSnap 
+            = cloneDeep(draft.history[current]);
+          const nextOrder = nextAlbumsSnap.tiersOrder;
+    
+          const { destinationIdx, sourceIdx, tierId } 
+            = {...action.load};
+    
+          let tierOrder = nextOrder[tierId];
+          if(!tierOrder) {
+            
+          }
+          
+          moveArrayElement(
+            tierOrder, sourceIdx, destinationIdx);
+    
+          draft.history
+            .splice(current + 1, Infinity, nextAlbumsSnap);
+          draft.current++;
+    
+          break;
+        }
+    
+        default: {
+          throw Error('Unknown action');
+        }
+      }
+    },
     InitialAlbumsState
   );
 
@@ -59,15 +166,6 @@ export const getCurrentAlbums = (state: AlbumsState) => {
 export const useAlbumsDispatch = () => {
   return useContext(AlbumsDispatchContext);
 }
-
-export enum AlbumsActionKind {
-  SET_TIER = 'album-set-tier',
-  UNDO = 'undo',
-  REDO = 'redo',
-  RESET_TO_DEBUG = 'reset-to-debug',
-  LOAD = 'load',
-  REORDER = 'reorder'
-};
 
 export const AlbumsDispatchLoad = (
   dispatch: AlbumsDispatch, 
@@ -181,106 +279,9 @@ export type AlbumsAction =
   | AlbumsActionLoad
   | AlbumsActionReorder
 
-const AlbumsReducer : ImmerReducer<AlbumsState, AlbumsAction> = (draft, action) => {
-	switch (action.type) {
-    case AlbumsActionKind.SET_TIER: {
-      const current = draft.current;
-
-      const nextAlbumsSnap = {...draft.history[current]};
-      const {data: nextAlbums, tiersOrder: order} 
-        = nextAlbumsSnap;
-
-      const { tier, id, sourceIdx, destintionIdx } 
-        = {...action.load};
-
-      const sourceTier = nextAlbums[id].data.tier;
-      nextAlbums[id].data.tier = tier;
-
-      const sourceTierId = getTierId(sourceTier);
-      order[sourceTierId].splice(sourceIdx, 1);
-
-      const destTierId = getTierId(tier);
-      order[destTierId].splice(destintionIdx, 0, id);
-
-      draft.history = [
-        ...draft.history.slice(0, current),
-        nextAlbumsSnap
-      ];
-
-      break;
-    }
-
-    case AlbumsActionKind.UNDO: {
-      draft.current = Math.max(0, draft.current - 1);
-      break;
-    }
-
-    case AlbumsActionKind.REDO: {
-      draft.current = Math.min(draft.current + 1, draft.history.length - 1);
-      break;
-    }
-
-		case AlbumsActionKind.RESET_TO_DEBUG: {
-      const current = draft.current;
-      const nextAlbums = getDebugAlbums(action.load.parts);
-
-      const nextAlbumsSnap : AlbumsSnapshot = {
-        data: nextAlbums,
-        tiersOrder: initializeTierOrder(nextAlbums)
-      }
-
-      draft.history = [
-        ...draft.history.slice(0, current),
-        nextAlbumsSnap
-      ];
-      break;
-		}
-
-    case AlbumsActionKind.LOAD: {
-      const current = draft.current;
-      const nextAlbums = action.load.albumsCollectionData;
-      const nextAlbumsSnap : AlbumsSnapshot = {
-        data: nextAlbums,
-        tiersOrder: action.load.tiersOrder 
-          ? action.load.tiersOrder 
-          : initializeTierOrder(nextAlbums)
-      }
-
-      draft.history = [
-        ...draft.history.slice(0, current),
-        nextAlbumsSnap
-      ];
-      break;
-    }
-
-    case AlbumsActionKind.REORDER: {
-      const current = draft.current;
-      const nextAlbumsSnap = {...draft.history[current]};
-      const nextOrder = nextAlbumsSnap.tiersOrder;
-
-      const { destinationIdx, sourceIdx, tierId } 
-        = {...action.load};
-
-      let tierOrder = nextOrder[tierId];
-      if(!tierOrder) {
-        
-      }
-      
-      moveArrayElement(
-        tierOrder, sourceIdx, destinationIdx);
-
-      draft.history = [
-        ...draft.history.slice(0, current),
-        nextAlbumsSnap
-      ];
-      break;
-    }
-
-		default: {
-			throw Error('Unknown action');
-		}
-	}
-}
+// const AlbumsReducer : ImmerReducer<AlbumsState, AlbumsAction> = (draft, action) => {
+	
+// }
 
 const initializeTierOrder = (
   albums: IAlbumsCollectionData
