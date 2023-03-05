@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import TierList from '../Components/TierList/TierList';
 import { AlbumsProvider } from '../Context/AlbumsContext';
+import LoggedInProvider from '../Context/LoginContext';
 
 function App() {
   const handleScroll = React.useCallback(() => {
@@ -18,9 +19,11 @@ function App() {
 
   return (
     <div>
-      <AlbumsProvider>
-        <TierList />
-      </AlbumsProvider>
+      <LoggedInProvider>
+        <AlbumsProvider>
+          <TierList />
+        </AlbumsProvider>
+      </LoggedInProvider>
     </div>
   );
 }
