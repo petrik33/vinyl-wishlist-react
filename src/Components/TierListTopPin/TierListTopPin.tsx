@@ -27,10 +27,30 @@ export interface ITierListTopPinProps {
   albums: IAlbumsCollectionData;
 }
 
+const minLandWidth = 768;
+
 const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
   const albumsDispatch = props.albumsDispatch;
   const loggedIn = useLoggedIn();
   const setLoggedIn = useSetLoggedIn();
+
+  const [buttonsActive, setButtonsActive] = React.useState(true);
+  const [screenSize, setScreenSize] 
+    = React.useState({} as number);
+
+  React.useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    setButtonsActive(screenSize >= minLandWidth);
+  }, [screenSize])
 
   return (
     <TopPin>
@@ -57,18 +77,22 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
         />}
         {props.editing &&
         <ButtonGroup>
-          <PushButton
-            icon={<UndoIcon />}
-            onClick={() => {
-              AlbumsDispatchUndo(albumsDispatch)
-            }}
-          />
-          <PushButton
-            icon={<DoAgainIcon />}
-            onClick={() => {
-              AlbumsDispatchRedo(albumsDispatch)
-            }}
-          />
+          {buttonsActive && (
+            <>
+              <PushButton
+                icon={<UndoIcon />}
+                onClick={() => {
+                  AlbumsDispatchUndo(albumsDispatch)
+                }}
+              />
+              <PushButton
+                icon={<DoAgainIcon />}
+                onClick={() => {
+                  AlbumsDispatchRedo(albumsDispatch)
+                }}
+              />
+            </>
+          )}
           <PushButton
             icon={<SaveIcon />}
             onClick={async () => {
@@ -79,10 +103,6 @@ const TierListTopPin : React.FC<ITierListTopPinProps> = (props) => {
               )
             }}
           />
-          {/* <PushButton
-            icon={<ResetIcon />}
-            onClick={() => {dispatchDebugGroups(albumsDispatch)}}
-          /> */}
         </ButtonGroup>
         }
       </Toolbar>

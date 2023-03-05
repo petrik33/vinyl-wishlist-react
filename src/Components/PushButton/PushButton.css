@@ -5,7 +5,7 @@
   box-sizing: border-box;
   width: var(--push-button-size);
   height: var(--push-button-size);
-  padding: 5%;
+  padding: 0.6em;
   border: 1px solid rgba(var(--state-color));
   border-radius: 50%;
   cursor: pointer;
