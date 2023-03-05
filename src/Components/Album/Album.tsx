@@ -24,11 +24,24 @@ const Album : React.FC<IAlbumProps> = (props) => {
         <WebImage
           src={src}
           alt={alt}
+          sizes={`${getStringProp(props.data.size)}px`}
+          width={getStringProp(props.data.width)}
+          height={getStringProp(props.data.height)}
           key={props.id}
           draggable={props.draggable}
         />
     </div>
   );
+}
+
+const getStringProp = (prop?: string | number) => {
+  if(!prop) {
+    return undefined;
+  }
+  if(typeof prop === 'number') {
+    prop = prop.toString();
+  }
+  return prop;
 }
 
 const getAlbumClass = (tier: Tier, edit: boolean) => {
