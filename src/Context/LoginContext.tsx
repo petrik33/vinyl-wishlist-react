@@ -23,11 +23,11 @@ export const LoggedInProvider : React.FC<IProviderProps> = (
 }
 
 export const useLoggedIn = () => {
-  useContext(LoggedInContext);
+  return useContext(LoggedInContext);
 }
 
 export const useSetLoggedIn = () => {
-  useContext(SetLoggedInContext);
+  return useContext(SetLoggedInContext);
 }
 
 export default LoggedInProvider;

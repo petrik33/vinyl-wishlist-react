@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { CollectionReference, DocumentData, Query, collection, collectionGroup, getFirestore } from 'firebase/firestore';
+import { CollectionReference, DocumentData, DocumentReference, Query, collection, collectionGroup, doc, getFirestore } from 'firebase/firestore';
 import { IAlbumData, IAuthorData } from '../Data/Data';
+import { IServerAdminData } from '../Types/ServerAdmin';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPN5OyIr39yg95jCUtkfIr8qURd_eEUyM",
@@ -15,6 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const createDoc = <T = DocumentData>(name: string) => {
+  return doc(db, name) as DocumentReference<T>;
+}
+
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>
 }
@@ -28,5 +33,9 @@ export const authorsCollecion
 
 export const albumsCollection 
   = createCollectionGroup<IAlbumData>('albums');
+
+export const serverAdminDoc
+  = createDoc<IServerAdminData>('data/server-admin');
+
 
 export default db;
