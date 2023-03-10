@@ -22,8 +22,6 @@ Technologies used:
 * React
 * Typescript
 * Firebase: Firestore(NoSQL), Cloud Storage
-* Jest
-* React Testing Library
 * Immer
 * Lodash
 * React-Beautiful-DnD
